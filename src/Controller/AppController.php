@@ -15,7 +15,10 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Database\Type;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
+use Cake\I18n\Number;
 
 /**
  * Application Controller
@@ -44,6 +47,57 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+            'authorize' => [
+                'Acl.Actions' => ['actionPath' => 'controllers/']
+            ],
+            'loginAction' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'logoutRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => false
+            ],
+            //'authError' => 'Vous n\'avez pas les autorisations nécéssaire pour accéder à cette page.',
+            'flash' => [
+                'element' => 'warning'
+            ]
+        ]);
+
+        // Configuration I18N
+        //I18n::locale(APP_DEFAULT_LOCALE);
+       // Type::build('datetime')->useLocaleParser()->setLocaleFormat(APP_ICU_DATE_FORMAT);
+
+        Number::config('fr-CH', \NumberFormatter::CURRENCY, [
+            'before' => '',
+            'after' => '',
+            'zero' => '-',
+            'places' => 2,
+            'precision' => 2,
+            'locale' => 'fr_CH',
+            'fractionSymbol' => '.-',
+            'fractionPosition' => 'after',
+            'pattern' => '#,##0.00'
+        ]);
+        Number::defaultCurrency('CHF');
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -51,7 +105,6 @@ class AppController extends Controller
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
     }
-
     /**
      * Before render callback.
      *
