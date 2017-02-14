@@ -51,6 +51,11 @@ class UsersTable extends Table
             'foreignKey' => 'group_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsToMany('SchoolClasses', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'school_class_id',
+            'joinTable' => 'school_classes_users'
+        ]);
     }
 
     /**

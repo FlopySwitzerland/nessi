@@ -64,7 +64,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '4b3a73b97b5574af194609fa8175e3bce6d77b438e7f59adf1057e975ee1e809'),
+        'salt' => env('SECURITY_SALT', 'i;151#'),
     ],
 
     /**
@@ -222,15 +222,15 @@ return [
             'className' => 'Cake\Database\Connection',
             'driver' => 'Cake\Database\Driver\Mysql',
             'persistent' => false,
-            'host' => '127.0.0.1',
+            'host' => '159.100.249.211',
             /**
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'root',
-            'password' => '',
+            'username' => 'mysqlagent',
+            'password' => 'aYFt9JKAQcA^xs2YHWKHpfNvcr@n*ImuNcekrJewa2',
             'database' => 'nessi_dev',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
