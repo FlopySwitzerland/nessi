@@ -13,7 +13,7 @@ $this->layout = 'landing';
                         <h1 class="h1 font-light text-white w-full">Register your marks, calculates your averages and much more.</h1>
                         <h4 class="text-light w-full">
                             With Nessi you calculate your grades and track your average progress in a fully responsive web app.<br>
-                            Our app is optimally adaptable for working regardless of your school or grading scales.
+                            Our app works regardless of your school or grading scales.
                         </h4>
                         <a href="" class="btn btn-white-bordered">Learn More</a>
                     </div>
@@ -34,7 +34,7 @@ $this->layout = 'landing';
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-custom btn-sm btn-block">Start Now</button>
                         </div>
-                        <span class="help-block m-b-0 m-t-20 text-muted"><small>By registering you agree to the Nessi <a href="#">Terms of Use</a></small></span>
+                        <span class="help-block m-b-0 m-t-20 text-muted"><small>By registering, you agree to the Nessi <a href="#">Terms of Use</a></small></span>
                     </form>
                 </div><!-- end col -->
             </div>
@@ -61,30 +61,31 @@ $this->layout = 'landing';
                 <div class="features-box">
                     <i class="pe-7s-rocket"></i>
                     <h4 class="text-white">Unlimited Classes</h4>
-                    <p class="text-muted">Nessi adapts to your student life. You can have multiple courses with different grading scales and terms dates.</p>
+                    <p class="text-muted">Nessi adapts to your student life. You can have multiple courses with different grading scales, terms, classes and even schools!</p>
                 </div>
             </div>
 
             <div class="col-sm-4">
                 <div class="features-box">
                     <i class="pe-7s-display1"></i>
-                    <h4 class="text-white">Beautiful Chart</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu odio bibendum enim suscipit dignissim.</p>
+                    <h4 class="text-white">Beautiful Interface</h4>
+                    <p class="text-muted"><?=__('A friendly interface that suits each of your device. Whether  you\'re on your computer, your phone, or your tablet, Nessi is always there for you.')?></p>
                 </div>
             </div>
 
             <div class="col-sm-4">
                 <div class="features-box">
+                    <!--                    TODO: Find a better suiting     icon-->
                     <i class="pe-7s-refresh-2"></i>
-                    <h4 class="text-white">Sync</h4>
-                    <p class="text-muted">Cross platform awesomeness. Your data seamlessly syncs across all of your devices and is accessible even when you're offline.</p>
+                    <h4 class="text-white">Free</h4>
+                    <p class="text-muted"><?=__('Nessi will always be free and without adds. Because we know students do not have a lot of money, we are here to help')?></p>
                 </div>
             </div>
 
         </div> <!-- end row -->
 
 
-        </div> <!-- end row -->
+    </div> <!-- end row -->
 
     </div> <!-- end container -->
 </section>
@@ -135,7 +136,10 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-6 text-left">
                 <h3 class="title">Let your leader see</h3>
-                <p class="text-muted sub-title">Nullam vehicula sem vel aliquet condimentum. Vestibulum molestie non ante in commodo. Etiam hendrerit dictum sem, sed aliquam turpis lobortis in. </p>
+                <p class="text-muted sub-title">If your are in an apprenticeship, you can let your manager see your grades, so that you do not have to e-mail him every time you get a new mark. </p>
+            </div>
+            <div class="col-sm-6 text-center">
+                <?= $this->Html->image('boss.svg',['width' => '30%']);?>
             </div>
         </div>
         <!-- end row -->
@@ -149,8 +153,8 @@ $this->layout = 'landing';
 
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h3 class="title text-white">Be engaged Newsletter</h3>
-                <p class="text-light sub-title">//TODO: so much sub-title to fill......</p>
+                <h3 class="title text-white"><?=('Subscribe to our newsletter')?></h3>
+                <p class="text-light sub-title">If you want to be kept in the known......</p>
             </div>
         </div><!-- End row -->
 

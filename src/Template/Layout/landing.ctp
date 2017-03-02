@@ -78,9 +78,9 @@
         <!-- end container -->
     </div></div>
 
-    <?= $this->Flash->render() ?>
+<?= $this->Flash->render() ?>
 
-        <?= $this->fetch('content') ?>
+<?= $this->fetch('content') ?>
 
 
 <!-- FOOTER -->
@@ -98,7 +98,7 @@
             </div>
 
             <div class="col-md-3 col-sm-6">
-                //TODO: Maybe we can put....
+                //TODO: Maybe we can <put class=". ."></put>
             </div>
 
             <div class="col-md-3 col-sm-6">
