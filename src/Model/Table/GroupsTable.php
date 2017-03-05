@@ -34,9 +34,9 @@ class GroupsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('groups');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('groups');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

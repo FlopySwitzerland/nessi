@@ -34,9 +34,9 @@ class MarksTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('marks');
-        $this->displayField('id');
-        $this->primaryKey(['id', 'branche_id']);
+        $this->setTable('marks');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

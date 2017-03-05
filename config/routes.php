@@ -56,6 +56,13 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
+    /** API  */
+    $routes->extensions(['json', 'xml']);
+    $routes->resources('Cocktails');
+    $routes->resources('Users');
+    Router::connect('/users/register', ['controller' => 'Users', 'action' => 'add']);
+
+
     /**
      * Connect catchall routes for all controllers.
      *
@@ -79,6 +86,8 @@ Router::prefix('Admin', function ($routes) {
 
     $routes->fallbacks('InflectedRoute');
 });
+
+
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.

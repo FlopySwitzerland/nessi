@@ -25,7 +25,14 @@ class GroupsTableTest extends TestCase
      */
     public $fixtures = [
         'app.groups',
-        'app.users'
+        'app.users',
+        'app.school_classes',
+        'app.establishments',
+        'app.academicyears',
+        'app.terms',
+        'app.branches',
+        'app.branches_school_classes',
+        'app.school_classes_users'
     ];
 
     /**

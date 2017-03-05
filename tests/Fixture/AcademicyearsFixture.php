@@ -27,7 +27,7 @@ class AcademicyearsFixture extends TestFixture
         ],
         '_options' => [
             'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
+            'collation' => 'latin1_swedish_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -40,10 +40,10 @@ class AcademicyearsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'start_date' => '2017-02-14 11:26:49',
-            'end_date' => '2017-02-14 11:26:49',
-            'created' => '2017-02-14 11:26:49',
-            'modified' => '2017-02-14 11:26:49'
+            'start_date' => '2017-03-05 13:01:46',
+            'end_date' => '2017-03-05 13:01:46',
+            'created' => '2017-03-05 13:01:46',
+            'modified' => '2017-03-05 13:01:46'
         ],
     ];
 }

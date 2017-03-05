@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller\Admin;
+use Cake\Event\Event;
 
 /**
  * Groups Controller
@@ -8,7 +9,6 @@ namespace App\Controller\Admin;
  */
 class GroupsController extends AdminAppController
 {
-
     /**
      * Index method
      *
@@ -42,20 +42,19 @@ class GroupsController extends AdminAppController
     /**
      * Add method
      *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
         $group = $this->Groups->newEntity();
         if ($this->request->is('post')) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('The group could not be saved. Please, try again.'));
         }
         $this->set(compact('group'));
         $this->set('_serialize', ['group']);
@@ -65,7 +64,7 @@ class GroupsController extends AdminAppController
      * Edit method
      *
      * @param string|null $id Group id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -74,14 +73,13 @@ class GroupsController extends AdminAppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('The group could not be saved. Please, try again.'));
         }
         $this->set(compact('group'));
         $this->set('_serialize', ['group']);

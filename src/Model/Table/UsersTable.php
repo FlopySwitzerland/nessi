@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $ParentUsers
  * @property \Cake\ORM\Association\BelongsTo $Groups
+ * @property \Cake\ORM\Association\HasMany $ChildUsers
+ * @property \Cake\ORM\Association\BelongsToMany $SchoolClasses
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -36,9 +38,9 @@ class UsersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('users');
-        $this->displayField('id');
-        $this->primaryKey(['id', 'group_id']);
+        $this->setTable('users');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tree');
@@ -50,6 +52,10 @@ class UsersTable extends Table
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('ChildUsers', [
+            'className' => 'Users',
+            'foreignKey' => 'parent_id'
         ]);
         $this->belongsToMany('SchoolClasses', [
             'foreignKey' => 'user_id',

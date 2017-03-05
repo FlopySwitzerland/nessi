@@ -34,9 +34,9 @@ class TermsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('terms');
-        $this->displayField('id');
-        $this->primaryKey(['id', 'academicyear_id']);
+        $this->setTable('terms');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

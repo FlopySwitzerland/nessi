@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
  * SchoolClasses Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Establishments
+ * @property \Cake\ORM\Association\BelongsToMany $Branches
+ * @property \Cake\ORM\Association\BelongsToMany $Users
  *
  * @method \App\Model\Entity\SchoolClass get($primaryKey, $options = [])
  * @method \App\Model\Entity\SchoolClass newEntity($data = null, array $options = [])
@@ -34,15 +36,25 @@ class SchoolClassesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('school_classes');
-        $this->displayField('name');
-        $this->primaryKey(['id', 'establishment_id']);
+        $this->setTable('school_classes');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Establishments', [
             'foreignKey' => 'establishment_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsToMany('Branches', [
+            'foreignKey' => 'school_class_id',
+            'targetForeignKey' => 'branch_id',
+            'joinTable' => 'branches_school_classes'
+        ]);
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'school_class_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'school_classes_users'
         ]);
     }
 

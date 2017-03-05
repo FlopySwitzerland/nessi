@@ -29,7 +29,6 @@ class Establishment extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
-        'academicyear_id' => false
+        'id' => false
     ];
 }

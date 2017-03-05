@@ -34,9 +34,9 @@ class BranchesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('branches');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('branches');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

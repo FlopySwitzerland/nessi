@@ -34,9 +34,9 @@ class EstablishmentsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('establishments');
-        $this->displayField('name');
-        $this->primaryKey(['id', 'academicyear_id']);
+        $this->setTable('establishments');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

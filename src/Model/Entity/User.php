@@ -3,7 +3,6 @@ namespace App\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -20,8 +19,10 @@ use Cake\ORM\TableRegistry;
  * @property int $lft
  * @property int $rght
  *
- * @property \App\Model\Entity\ParentUser $parent_user
+ * @property \App\Model\Entity\User $parent_user
  * @property \App\Model\Entity\Group $group
+ * @property \App\Model\Entity\User[] $child_users
+ * @property \App\Model\Entity\SchoolClass[] $school_classes
  */
 class User extends Entity
 {
@@ -39,38 +40,6 @@ class User extends Entity
         '*' => true,
         'id' => false
     ];
-    /**
-     * Méthode requise par @AclBehavior pour déterminer le groupe d'appartenance de l'utilisateur
-     * @return Group|null Groupe utilisateur
-     */
-    public function parentNode()
-    {
-        if (!$this->id) {
-            return null;
-        }
-        if (isset($this->group_id)) {
-            $group_id = $this->group_id;
-        } else {
-            $users_table = TableRegistry::get('Users');
-            $user = $users_table->find('all', ['fields' => ['group_id']])->where(['id' => $this->id])->first();
-            $group_id = $user->group_id;
-        }
-        if (!$group_id) {
-            return null;
-        }
-
-        return ['Groups' => ['id' => $group_id]];
-    }
-
-    /**
-     * Encodage du mot de passe
-     * @param string $password Mot de passe à encoder
-     * @return bool|string
-     */
-    protected function _setPassword($password)
-    {
-        return (new DefaultPasswordHasher)->hash($password);
-    }
 
     /**
      * Fields that are excluded from JSON versions of the entity.
@@ -80,4 +49,9 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+
+    protected function _setPassword($password)
+    {
+        return (new DefaultPasswordHasher)->hash($password);
+    }
 }

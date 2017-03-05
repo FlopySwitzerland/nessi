@@ -12,6 +12,13 @@
  * @since         0.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+?>
+<CakePHPBakeOpenTagphp
+/**
+  * @var \<?= $namespace ?>\View\AppView $this
+  */
+CakePHPBakeCloseTag>
+<?php
 use Cake\Utility\Inflector;
 
 $associations += ['BelongsTo' => [], 'HasOne' => [], 'HasMany' => [], 'BelongsToMany' => []];

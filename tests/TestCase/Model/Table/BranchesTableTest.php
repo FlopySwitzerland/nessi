@@ -26,7 +26,13 @@ class BranchesTableTest extends TestCase
     public $fixtures = [
         'app.branches',
         'app.school_classes',
-        'app.branches_school_classes'
+        'app.establishments',
+        'app.academicyears',
+        'app.terms',
+        'app.branches_school_classes',
+        'app.users',
+        'app.groups',
+        'app.school_classes_users'
     ];
 
     /**

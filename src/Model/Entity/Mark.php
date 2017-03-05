@@ -30,7 +30,6 @@ class Mark extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
-        'branche_id' => false
+        'id' => false
     ];
 }

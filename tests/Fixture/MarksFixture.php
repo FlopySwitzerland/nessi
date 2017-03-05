@@ -24,16 +24,12 @@ class MarksFixture extends TestFixture
         'exam_date' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        '_indexes' => [
-            'fk_marks_branches1_idx' => ['type' => 'index', 'columns' => ['branche_id'], 'length' => []],
-        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id', 'branche_id'], 'length' => []],
-            'fk_marks_branches1' => ['type' => 'foreign', 'columns' => ['branche_id'], 'references' => ['branches', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
+            'collation' => 'latin1_swedish_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -49,9 +45,9 @@ class MarksFixture extends TestFixture
             'branche_id' => 1,
             'value' => 1,
             'coefficient' => 1,
-            'exam_date' => '2017-02-14 11:27:45',
-            'created' => '2017-02-14 11:27:45',
-            'modified' => '2017-02-14 11:27:45'
+            'exam_date' => '2017-03-05 13:01:52',
+            'created' => '2017-03-05 13:01:52',
+            'modified' => '2017-03-05 13:01:52'
         ],
     ];
 }

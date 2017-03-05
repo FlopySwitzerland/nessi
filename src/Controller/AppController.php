@@ -48,8 +48,34 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         $this->loadComponent('Auth', [
-            'authorize' => [
-                'Acl.Actions' => ['actionPath' => 'controllers/']
+            'storage' => 'Memory',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                    ]
+                ],
+                'ADmad/JwtAuth.Jwt' => [
+                    'parameter' => 'token',
+                    'userModel' => 'Users',
+                    'scope' => ['Users.active' => 1],
+                    'fields' => [
+                        'username' => 'id'
+                    ],
+                    'queryDatasource' => true
+                ]
+            ],
+            'unauthorizedRedirect' => false,
+            'checkAuthIn' => 'Controller.initialize'
+        ]);
+        /*
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                    ]
+                ]
             ],
             'loginAction' => [
                 'prefix' => false,
@@ -80,7 +106,7 @@ class AppController extends Controller
                 'element' => 'warning'
             ]
         ]);
-
+*/
         // Configuration I18N
         //I18n::locale(APP_DEFAULT_LOCALE);
        // Type::build('datetime')->useLocaleParser()->setLocaleFormat(APP_ICU_DATE_FORMAT);
@@ -113,10 +139,28 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
+        if($this->request->is('ajax')){
+            $this->RequestHandler->renderAs($this, 'json');
+            $this->response->type('application/json');
+        }
+
+        if (!array_key_exists('_serialize', $this->viewVars) && in_array($this->response->type(), ['application/json', 'application/xml'])) {
             $this->set('_serialize', true);
         }
+
+        /*$this->response->header('Access-Control-Allow-Origin', 'http://localhost:4200');
+        $this->response->header('Access-Control-Allow-Headers', 'origin, x-requested-with, content-type, Authorization');
+        $this->response->header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');*/
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        if($this->request->is("options")){
+            // Set the headers
+            $this->response->withHeader('Access-Control-Allow-Origin','*');
+            $this->response->withHeader('Access-Control-Allow-Methods','*');
+            $this->response->withHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
+        }
+        return parent::beforeFilter($event);
     }
 }

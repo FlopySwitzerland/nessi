@@ -18,4 +18,14 @@
   * @var \<?= $namespace ?>\View\AppView $this
   */
 CakePHPBakeCloseTag>
-<?= $this->element('form');
+<div class="<?= $pluralVar ?> form">
+<CakePHPBakeOpenTag= $this->Flash->render('auth') CakePHPBakeCloseTag>
+    <CakePHPBakeOpenTag= $this->Form->create() CakePHPBakeCloseTag>
+    <fieldset>
+        <legend><CakePHPBakeOpenTag= __('Please enter your username and password') CakePHPBakeCloseTag></legend>
+        <CakePHPBakeOpenTag= $this->Form->control('username') CakePHPBakeCloseTag>
+        <CakePHPBakeOpenTag= $this->Form->control('password') CakePHPBakeCloseTag>
+    </fieldset>
+    <CakePHPBakeOpenTag= $this->Form->button(__('Login')); CakePHPBakeCloseTag>
+    <CakePHPBakeOpenTag= $this->Form->end() CakePHPBakeCloseTag>
+</div>

@@ -29,11 +29,10 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
-
-    public function beforeFilter(Event $event)
+    public function initialize()
     {
+        parent::initialize();
         $this->Auth->allow('display');
-        return parent::beforeFilter($event);
     }
 
     /**

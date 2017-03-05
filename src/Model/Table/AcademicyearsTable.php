@@ -35,9 +35,9 @@ class AcademicyearsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('academicyears');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('academicyears');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

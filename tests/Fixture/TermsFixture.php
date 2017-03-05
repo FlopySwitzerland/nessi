@@ -23,16 +23,12 @@ class TermsFixture extends TestFixture
         'end_date' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modifed' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        '_indexes' => [
-            'fk_terms_academicyears1_idx' => ['type' => 'index', 'columns' => ['academicyear_id'], 'length' => []],
-        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id', 'academicyear_id'], 'length' => []],
-            'fk_terms_academicyears1' => ['type' => 'foreign', 'columns' => ['academicyear_id'], 'references' => ['academicyears', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
+            'collation' => 'latin1_swedish_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -46,10 +42,10 @@ class TermsFixture extends TestFixture
         [
             'id' => 1,
             'academicyear_id' => 1,
-            'start_date' => '2017-02-14 11:27:04',
-            'end_date' => '2017-02-14 11:27:04',
-            'created' => '2017-02-14 11:27:04',
-            'modifed' => '2017-02-14 11:27:04'
+            'start_date' => '2017-03-05 13:04:22',
+            'end_date' => '2017-03-05 13:04:22',
+            'created' => '2017-03-05 13:04:22',
+            'modifed' => '2017-03-05 13:04:22'
         ],
     ];
 }

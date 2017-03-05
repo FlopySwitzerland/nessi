@@ -25,7 +25,9 @@ class SchoolClassesTableTest extends TestCase
      */
     public $fixtures = [
         'app.school_classes',
-        'app.establishments'
+        'app.establishments',
+        'app.academicyears',
+        'app.terms'
     ];
 
     /**

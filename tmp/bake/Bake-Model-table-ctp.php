@@ -63,16 +63,16 @@ class <?= $name ?>Table extends Table
         parent::initialize($config);
 
 <?php if (!empty($table)): ?>
-        $this->table('<?= $table ?>');
+        $this->setTable('<?= $table ?>');
 <?php endif ?>
 <?php if (!empty($displayField)): ?>
-        $this->displayField('<?= $displayField ?>');
+        $this->setDisplayField('<?= $displayField ?>');
 <?php endif ?>
 <?php if (!empty($primaryKey)): ?>
 <?php if (count($primaryKey) > 1): ?>
-        $this->primaryKey([<?= $this->Bake->stringifyList((array)$primaryKey, ['indent' => false]) ?>]);
+        $this->setPrimaryKey([<?= $this->Bake->stringifyList((array)$primaryKey, ['indent' => false]) ?>]);
 <?php else: ?>
-        $this->primaryKey('<?= current((array)$primaryKey) ?>');
+        $this->setPrimaryKey('<?= current((array)$primaryKey) ?>');
 <?php endif ?>
 <?php endif ?>
 <?php if (!empty($behaviors)): ?>
