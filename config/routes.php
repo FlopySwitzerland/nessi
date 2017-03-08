@@ -58,9 +58,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     /** API  */
     $routes->extensions(['json', 'xml']);
-    $routes->resources('Cocktails');
     $routes->resources('Users');
-    Router::connect('/users/register', ['controller' => 'Users', 'action' => 'add']);
+    $routes->connect('/users/register', ['controller' => 'Users', 'action' => 'add']);
+    $routes->connect('/users/register', ['controller' => 'Users', 'action' => 'add', 'ext' => 'json']);
 
 
     /**

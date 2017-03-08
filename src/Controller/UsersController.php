@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\UnauthorizedException;
 use Cake\Utility\Security;
@@ -48,8 +49,11 @@ class UsersController extends AppController
     public function add()
     {
         if ($this->request->is('POST')) {
+            // TODO: Regarder pourquoi ça ne fonctionne pas
             $this->RequestHandler->renderAs($this, 'json');
             $this->response->type('application/json');
+
+            $this->request->data = $this->request->input('json_decode', true);
 
             $user = $this->Users->patchEntity($this->Users->newEntity(), $this->request->getData());
             if ($this->Users->save($user)) {
@@ -104,11 +108,12 @@ class UsersController extends AppController
                     $msg = 'unknow_error';
                 }
 
-                $this->response->getStatusCode(400);
+             /*   $this->response->getStatusCode(400);
                 $this->set([
                     'code' => $code,
                     'error' => $msg
-                ]);
+                ]);*/
+                throw new BadRequestException($msg);
             }
         }else{
             throw new InternalErrorException('Only POST request are accepted');
