@@ -19,20 +19,9 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['add', 'token']);
+        $this->Auth->allow(['login', 'token', 'add']);
     }
 
-    public function login()
-    {
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->Flash->error(__('Invalid username or password, try again'));
-        }
-    }
 
     public function logout()
     {
@@ -135,6 +124,34 @@ class UsersController extends AppController
         $this->set([
             'success' => true,
             'data' => [
+                'token' => JWT::encode([
+                    'sub' => $user['id'],
+                    'exp' =>  time() + 604800
+                ],
+                    Security::salt())
+            ],
+            '_serialize' => ['success', 'data']
+        ]);
+    }
+
+    public function login()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        $this->response->type('application/json');
+
+        $this->request->data = $this->request->input('json_decode', true);
+        $user = $this->Auth->identify();
+        if (!$user) {
+            throw new UnauthorizedException('Invalid email or password');
+        }
+
+        $this->set([
+            'success' => true,
+            'data' => [
+                'id' => $user['id'],
+                'group_id' => $user['group_id'],
+                'firstname' => $user['firstname'],
+                'lastname' => $user['lastname'],
                 'token' => JWT::encode([
                     'sub' => $user['id'],
                     'exp' =>  time() + 604800
