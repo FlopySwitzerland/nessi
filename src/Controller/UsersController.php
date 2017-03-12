@@ -152,6 +152,7 @@ class UsersController extends AppController
                 'group_id' => $user['group_id'],
                 'firstname' => $user['firstname'],
                 'lastname' => $user['lastname'],
+                'email' => $user['email'],
                 'token' => JWT::encode([
                     'sub' => $user['id'],
                     'exp' =>  time() + 604800
