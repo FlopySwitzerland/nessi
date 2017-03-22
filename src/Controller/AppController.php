@@ -163,4 +163,121 @@ class AppController extends Controller
         }
         return parent::beforeFilter($event);
     }
+
+    /**
+     * find
+     *
+     * @param string $type
+     */
+    public function find($type = 'all'){
+
+        $arguments = ['select' => null, 'limit' => 100, 'page' => 1, 'order' => [$this->{$model}->displayField => 'ASC'], 'orderasc' => [$this->{$model}->displayField => 'ASC'], 'orderdesc' => [$this->{$model}->displayField => 'DESC']];
+
+        /* Argument SELECT
+         * Accepted : string (comma separated)
+         * Default : array
+         * */
+        $select = [];
+        if(!empty($this->request->getQuery('select'))){
+            $select = explode(",", $this->request->getQuery('select'));
+        }
+
+        /* Argument LIMIT
+         * Accepted : int, null
+         * Default : null
+         * */
+        $limit = null;
+        if(isset($this->request->query['limit'])){
+            $limit = $this->request->query['limit'];
+            unset($this->request->query['limit']);
+        }
+
+        /* Argument PAGE
+         * Accepted : int, null
+         * Default : 0
+         * */
+        $page = 1;
+        if(isset($this->request->query['page'])){
+            $page = $this->request->query['page'];
+            unset($this->request->query['page']);
+        }
+
+
+        /* Argument ORDER
+         * Accepted : string
+         * Default : null
+         * */
+        $order = null;
+        if(isset($this->request->query['order'])){
+            $order = [$this->request->query['order'] => 'ASC'];
+            unset($this->request->query['order']);
+        }
+
+        /* Argument ORDERASC
+         * Accepted : string
+         * Default : null
+         * */
+        if(isset($this->request->query['orderasc'])){
+            $order = [$this->request->query['orderasc'] => 'ASC'];
+            unset($this->request->query['orderasc']);
+        }
+
+        /* Argument ORDERDESC
+         * Accepted : string
+         * Default : null
+         * */
+        if(isset($this->request->query['orderdesc'])){
+            $order = [$this->request->query['orderdesc'] => 'DESC'];
+            unset($this->request->query['orderdesc']);
+        }
+
+        /* Argument RENDER
+         * Accepted : xml, json, jsonp
+         * Default : json
+         * */
+        $render = 'json';
+        if(isset($this->request->query['render'])){
+            if(in_array($this->request->query['render'], ['xml', 'json', 'jsonp'])) {
+                if ($this->request->query['render'] == 'jsonp') {
+                    $this->set(['_jsonp' => true]);
+                }else{
+                    $render = $this->request->query['render'];
+                }
+            }
+            unset($this->request->query['render']);
+        }
+
+        $filters = $this->request->query;
+
+        if($type == 'list'){
+            $typeParams = ['keyField' => 'id', 'valueField' => 'name'];
+            $select = [];
+        }elseif($type == 'first'){
+            $type = "all";
+            $limit = 1;
+            $typeParams = [];
+        }else{
+            $typeParams = [];
+        }
+
+        try{
+            $results = $this->Beers->find($type, $typeParams)->contain(['Breweries'])->select($select)->limit($limit)->page($page)->where($filters)->order($order);
+        }catch (\Exception $e){
+            $this->response->statusCode(500);
+            $this->set([
+                'error' => 'error',
+                '_serialize' => ['error']
+            ]);
+        }
+
+        if($results->count() == 0){
+            $this->response->statusCode(204);
+        }
+
+        $this->RequestHandler->renderAs($this, $render);
+        $this->response->type('application/'.$render);
+        $this->set(['results' => $results->toArray(), '_serialize' => ['results']]);
+
+
+    }
 }

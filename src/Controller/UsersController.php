@@ -42,6 +42,7 @@ class UsersController extends AppController
             $this->RequestHandler->renderAs($this, 'json');
             $this->response->type('application/json');
 
+            // TODO: correct this, that so deprecated
             $this->request->data = $this->request->input('json_decode', true);
 
             $user = $this->Users->patchEntity($this->Users->newEntity(), $this->request->getData());
