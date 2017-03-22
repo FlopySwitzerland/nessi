@@ -58,7 +58,6 @@ class AppController extends Controller
                 'ADmad/JwtAuth.Jwt' => [
                     'parameter' => 'token',
                     'userModel' => 'Users',
-                    'scope' => ['Users.active' => 1],
                     'fields' => [
                         'username' => 'id'
                     ],
@@ -169,85 +168,32 @@ class AppController extends Controller
      *
      * @param string $type
      */
-    public function find($type = 'all'){
+    public function apiSearch($model, $type, $render, $defaultContain){
 
-        $arguments = ['select' => null, 'limit' => 100, 'page' => 1, 'order' => [$this->{$model}->displayField => 'ASC'], 'orderasc' => [$this->{$model}->displayField => 'ASC'], 'orderdesc' => [$this->{$model}->displayField => 'DESC']];
+        $defaultArguments = ['select' => null, 'limit' => 100, 'page' => 1, 'order' => ['created' => 'ASC'], 'orderasc' => ['created' => 'ASC'], 'orderdesc' => ['modified' => 'DESC']];
 
-        /* Argument SELECT
-         * Accepted : string (comma separated)
-         * Default : array
-         * */
-        $select = [];
-        if(!empty($this->request->getQuery('select'))){
-            $select = explode(",", $this->request->getQuery('select'));
+        $filters = $this->request->getQueryParams();
+        foreach ($defaultArguments as $argument => $defaultvalue) {
+            if(!empty($this->request->getQuery($argument))){
+                $$argument = explode(",", $this->request->getQuery($argument));
+            }else{
+                $$argument = $defaultvalue;
+            }
         }
 
-        /* Argument LIMIT
-         * Accepted : int, null
-         * Default : null
-         * */
-        $limit = null;
-        if(isset($this->request->query['limit'])){
-            $limit = $this->request->query['limit'];
-            unset($this->request->query['limit']);
-        }
-
-        /* Argument PAGE
-         * Accepted : int, null
-         * Default : 0
-         * */
-        $page = 1;
-        if(isset($this->request->query['page'])){
-            $page = $this->request->query['page'];
-            unset($this->request->query['page']);
-        }
-
-
-        /* Argument ORDER
-         * Accepted : string
-         * Default : null
-         * */
-        $order = null;
-        if(isset($this->request->query['order'])){
-            $order = [$this->request->query['order'] => 'ASC'];
-            unset($this->request->query['order']);
-        }
-
-        /* Argument ORDERASC
-         * Accepted : string
-         * Default : null
-         * */
-        if(isset($this->request->query['orderasc'])){
-            $order = [$this->request->query['orderasc'] => 'ASC'];
-            unset($this->request->query['orderasc']);
-        }
-
-        /* Argument ORDERDESC
-         * Accepted : string
-         * Default : null
-         * */
-        if(isset($this->request->query['orderdesc'])){
-            $order = [$this->request->query['orderdesc'] => 'DESC'];
-            unset($this->request->query['orderdesc']);
-        }
 
         /* Argument RENDER
          * Accepted : xml, json, jsonp
          * Default : json
          * */
-        $render = 'json';
-        if(isset($this->request->query['render'])){
-            if(in_array($this->request->query['render'], ['xml', 'json', 'jsonp'])) {
-                if ($this->request->query['render'] == 'jsonp') {
-                    $this->set(['_jsonp' => true]);
-                }else{
-                    $render = $this->request->query['render'];
-                }
+        if(in_array($render, ['xml', 'json', 'jsonp'])) {
+            if ($render == 'jsonp') {
+                $this->set(['_jsonp' => true]);
+                $render = 'json';
             }
-            unset($this->request->query['render']);
         }
 
-        $filters = $this->request->query;
+
 
         if($type == 'list'){
             $typeParams = ['keyField' => 'id', 'valueField' => 'name'];
@@ -261,7 +207,7 @@ class AppController extends Controller
         }
 
         try{
-            $results = $this->Beers->find($type, $typeParams)->contain(['Breweries'])->select($select)->limit($limit)->page($page)->where($filters)->order($order);
+            $results = $this->{$model}->find($type, $typeParams)->contain($contain)->select($select)->limit($limit)->page($page)->where($filters)->order($order);
         }catch (\Exception $e){
             $this->response->statusCode(500);
             $this->set([

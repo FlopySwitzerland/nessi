@@ -12,6 +12,10 @@ class MarksController extends AppController
 {
 
 
+    public function find($type = "all", $render = "json"){
+        $this->apiSearch('Marks', $type, $render);
+    }
+
 
     /**
      * Index method
