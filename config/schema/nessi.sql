@@ -71,16 +71,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `nessi_dev`.`marks` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `branche_id` INT NOT NULL,
+  `branch_id` INT NOT NULL,
   `value` FLOAT NOT NULL,
   `coefficient` FLOAT NOT NULL,
   `exam_date` DATETIME NULL,
   `created` DATETIME NOT NULL,
   `modified` DATETIME NOT NULL,
-  PRIMARY KEY (`id`, `branche_id`),
-  INDEX `fk_marks_branches1_idx` (`branche_id` ASC),
+  PRIMARY KEY (`id`, `branch_id`),
+  INDEX `fk_marks_branches1_idx` (`branch_id` ASC),
   CONSTRAINT `fk_marks_branches1`
-    FOREIGN KEY (`branche_id`)
+    FOREIGN KEY (`branch_id`)
     REFERENCES `nessi_dev`.`branches` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -144,16 +144,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `nessi_dev`.`branches_school_classes` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `branche_id` INT NOT NULL,
+  `branch_id` INT NOT NULL,
   `school_class_id` INT NOT NULL,
   `avg_round` VARCHAR(45) NULL,
   `avg_semester` VARCHAR(255) NULL,
   `avg_sup` TINYINT(1) NULL DEFAULT 1,
-  PRIMARY KEY (`id`, `branche_id`, `school_class_id`),
-  INDEX `fk_branches_grades_branches_idx` (`branche_id` ASC),
+  PRIMARY KEY (`id`, `branch_id`, `school_class_id`),
+  INDEX `fk_branches_grades_branches_idx` (`branch_id` ASC),
   INDEX `fk_branches_grades_grades1_idx` (`school_class_id` ASC),
   CONSTRAINT `fk_branches_grades_branches`
-    FOREIGN KEY (`branche_id`)
+    FOREIGN KEY (`branch_id`)
     REFERENCES `nessi_dev`.`branches` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,

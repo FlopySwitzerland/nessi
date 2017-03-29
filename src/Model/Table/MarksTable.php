@@ -41,7 +41,7 @@ class MarksTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Branches', [
-            'foreignKey' => 'branche_id',
+            'foreignKey' => 'branch_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -84,7 +84,7 @@ class MarksTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['branche_id'], 'Branches'));
+        $rules->add($rules->existsIn(['branch_id'], 'Branches'));
 
         return $rules;
     }

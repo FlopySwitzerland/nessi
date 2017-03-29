@@ -17,6 +17,49 @@ class MarksController extends AppController
     }
 
 
+    public function getMarks($render){
+        $userId = $this->Auth->user('id');
+        if(in_array($render, ['xml', 'json', 'jsonp'])) {
+            if ($render == 'jsonp') {
+                $this->set(['_jsonp' => true]);
+                $render = 'json';
+            }
+        }else{
+            $render = 'json';
+        }
+
+        try{
+            $results = $this->Marks->find()
+                ->select(['Branches.name','Marks.value', 'Marks.value'])
+                ->contain([
+                    'Branches.SchoolClasses' => [
+                            'fields' => [
+                                'SchoolClasses.name'
+                            ]
+                    ]
+                ])->contain([
+                    'Branches.SchoolClasses.Users' =>  function ($q) use ($userId) {
+                        return $q->where(['Users.id' => $userId]);
+                    }
+                ]);
+            /*
+            $results = $this->Marks->find()
+                ->select(['Branches.name', 'SchoolClasses.name', 'Marks.value', 'Marks.value'])
+                ->contain(['Branches' => ['SchoolClasses' => 'Establishments']])
+                ->matching('Branches.SchoolClasses.Users', function ($q) use ($userId) {
+                    return $q->where(['Users.id' => $userId]);
+                });
+            */
+        }catch (\Exception $e){
+            $this->response->withStatus(500, 'Unable to find the marks with the current filter');
+        }
+
+        $this->RequestHandler->renderAs($this, $render);
+        $this->response->type('application/'.$render);
+        $this->set(['results' => $results->toArray(), '_serialize' => ['results']]);
+    }
+
+
     /**
      * Index method
      *

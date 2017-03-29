@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Mark Entity
  *
  * @property int $id
- * @property int $branche_id
+ * @property int $branch_id
  * @property float $value
  * @property float $coefficient
  * @property \Cake\I18n\Time $exam_date
