@@ -4,16 +4,24 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Branch Entity
+ * Subject Entity
  *
  * @property int $id
+ * @property int $school_class_id
  * @property string $name
+ * @property string $img
+ * @property int $marks_count
+ * @property float $avg_round
+ * @property float $avg_semester
+ * @property int $avg_sup
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *
- * @property \App\Model\Entity\SchoolClass[] $school_classes
+ * @property \App\Model\Entity\SchoolClass $school_class
+ * @property \App\Model\Entity\Mark[] $marks
+ * @property \App\Model\Entity\Term[] $terms
  */
-class Branch extends Entity
+class Subject extends Entity
 {
 
     /**

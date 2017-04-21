@@ -45,10 +45,10 @@ class TermsTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        $this->belongsToMany('Branches', [
+        $this->belongsToMany('Subjects', [
             'foreignKey' => 'term_id',
-            'targetForeignKey' => 'branch_id',
-            'joinTable' => 'branches_terms'
+            'targetForeignKey' => 'subject_id',
+            'joinTable' => 'subjects_terms'
         ]);
 
     }

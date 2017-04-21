@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Marks Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Branches
+ * @property \Cake\ORM\Association\BelongsTo $Subjects
  *
  * @method \App\Model\Entity\Mark get($primaryKey, $options = [])
  * @method \App\Model\Entity\Mark newEntity($data = null, array $options = [])
@@ -40,13 +40,13 @@ class MarksTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Branches', [
-            'foreignKey' => 'branch_id',
+        $this->belongsTo('Subjects', [
+            'foreignKey' => 'subject_id',
             'joinType' => 'INNER'
         ]);
 
         $this->addBehavior('CounterCache', [
-            'Branches' => ['marks_count']
+            'Subjects' => ['marks_count']
         ]);
     }
 
@@ -88,7 +88,7 @@ class MarksTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['branch_id'], 'Branches'));
+        $rules->add($rules->existsIn(['subject_id'], 'Subjects'));
 
         return $rules;
     }

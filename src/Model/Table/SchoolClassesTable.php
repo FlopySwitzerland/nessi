@@ -47,8 +47,8 @@ class SchoolClassesTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        $this->hasMany('Branches', [
-            'className' => 'Branches',
+        $this->hasMany('Subjects', [
+            'className' => 'Subjects',
             'foreignKey' => 'school_class_id'
         ]);
 
