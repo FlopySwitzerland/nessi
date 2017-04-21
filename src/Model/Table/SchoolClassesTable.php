@@ -46,15 +46,15 @@ class SchoolClassesTable extends Table
             'foreignKey' => 'establishment_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsToMany('Branches', [
-            'foreignKey' => 'school_class_id',
-            'targetForeignKey' => 'branch_id',
-            'joinTable' => 'branches_school_classes'
+
+        $this->hasMany('Branches', [
+            'className' => 'Branches',
+            'foreignKey' => 'school_class_id'
         ]);
-        $this->belongsToMany('Users', [
-            'foreignKey' => 'school_class_id',
-            'targetForeignKey' => 'user_id',
-            'joinTable' => 'school_classes_users'
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
         ]);
     }
 

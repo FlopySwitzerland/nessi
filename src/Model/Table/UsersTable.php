@@ -57,10 +57,9 @@ class UsersTable extends Table
             'className' => 'Users',
             'foreignKey' => 'parent_id'
         ]);
-        $this->belongsToMany('SchoolClasses', [
-            'foreignKey' => 'user_id',
-            'targetForeignKey' => 'school_class_id',
-            'joinTable' => 'school_classes_users'
+        $this->hasMany('SchoolClasses', [
+            'className' => 'SchoolClasses',
+            'foreignKey' => 'user_id'
         ]);
     }
 

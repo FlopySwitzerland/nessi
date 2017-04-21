@@ -40,10 +40,20 @@ class BranchesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsToMany('SchoolClasses', [
+        $this->belongsToMany('Terms', [
             'foreignKey' => 'branch_id',
-            'targetForeignKey' => 'school_class_id',
-            'joinTable' => 'branches_school_classes'
+            'targetForeignKey' => 'term_id',
+            'joinTable' => 'branches_terms'
+        ]);
+
+        $this->belongsTo('SchoolClasses', [
+            'foreignKey' => 'school_class_id',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->hasMany('Marks', [
+            'className' => 'Marks',
+            'foreignKey' => 'branch_id'
         ]);
     }
 

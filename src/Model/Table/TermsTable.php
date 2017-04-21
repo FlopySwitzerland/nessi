@@ -44,6 +44,13 @@ class TermsTable extends Table
             'foreignKey' => 'academicyear_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsToMany('Branches', [
+            'foreignKey' => 'term_id',
+            'targetForeignKey' => 'branch_id',
+            'joinTable' => 'branches_terms'
+        ]);
+
     }
 
     /**

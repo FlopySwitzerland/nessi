@@ -44,6 +44,10 @@ class MarksTable extends Table
             'foreignKey' => 'branch_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->addBehavior('CounterCache', [
+            'Branches' => ['marks_count']
+        ]);
     }
 
     /**

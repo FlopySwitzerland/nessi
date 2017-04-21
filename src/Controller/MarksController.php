@@ -2,13 +2,14 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Marks Controller
  *
  * @property \App\Model\Table\MarksTable $Marks
  */
-class MarksController extends AppController
+class MarksController extends ApiController
 {
 
 
@@ -18,6 +19,9 @@ class MarksController extends AppController
 
 
     public function getMarks($render){
+        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
+        $tblBranches = TableRegistry::get('Branches');
+
         $userId = $this->Auth->user('id');
         if(in_array($render, ['xml', 'json', 'jsonp'])) {
             if ($render == 'jsonp') {
@@ -29,27 +33,11 @@ class MarksController extends AppController
         }
 
         try{
-            $results = $this->Marks->find()
-                ->select(['Branches.name','Marks.value', 'Marks.value'])
-                ->contain([
-                    'Branches.SchoolClasses' => [
-                            'fields' => [
-                                'SchoolClasses.name'
-                            ]
-                    ]
-                ])->contain([
-                    'Branches.SchoolClasses.Users' =>  function ($q) use ($userId) {
-                        return $q->where(['Users.id' => $userId]);
-                    }
-                ]);
-            /*
-            $results = $this->Marks->find()
-                ->select(['Branches.name', 'SchoolClasses.name', 'Marks.value', 'Marks.value'])
-                ->contain(['Branches' => ['SchoolClasses' => 'Establishments']])
-                ->matching('Branches.SchoolClasses.Users', function ($q) use ($userId) {
-                    return $q->where(['Users.id' => $userId]);
+            $results = $tblBranches->find()
+                ->select(['Branches.name', 'Branches.img', 'marks_count'])
+                ->matching('SchoolClasses.Users', function(\Cake\ORM\Query $q) {
+                    return $q->where(['Users.id' => 3]);
                 });
-            */
         }catch (\Exception $e){
             $this->response->withStatus(500, 'Unable to find the marks with the current filter');
         }
