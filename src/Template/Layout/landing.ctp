@@ -132,13 +132,13 @@
 <!-- Back to top -->
 <a href="#" class="back-to-top" id="back-to-top"> <i class="pe-7s-angle-up"> </i> </a>
 
-<?= $this->Html->script('jquery/jquery-2.1.4.min.js') ?>
+<?= $this->Html->script('jquery/jquery-2.2.0.min.js') ?>
 <?= $this->Html->script('bootstrap/bootstrap.min.js') ?>
 
-<?= $this->Html->script('jquery/jquery.easing.1.3.min.js') ?>
-<?= $this->Html->script('jquery/jquery.sticky.js') ?>
-<?= $this->Html->script('jquery/jquery.magnific-popup.min.js') ?>
-<?= $this->Html->script('jquery/jquery.ajaxchimp.js') ?>
+<?= $this->Html->script('jquery/jquery-easing/jquery.easing.1.3.min.js') ?>
+<?= $this->Html->script('jquery/jquery-sticky/jquery.sticky.js') ?>
+<?= $this->Html->script('jquery/jquery-magnificpopup/jquery.magnific-popup.min.js') ?>
+<?= $this->Html->script('jquery/jquery-ajaxchimp/jquery.ajaxchimp.js') ?>
 <?= $this->Html->script('jquery/jquery.app.js') ?>
 
 </body>

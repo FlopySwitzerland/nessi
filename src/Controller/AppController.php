@@ -48,27 +48,6 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         $this->loadComponent('Auth', [
-            'storage' => 'Memory',
-            'authenticate' => [
-                'Form' => [
-                    'fields' => [
-                        'username' => 'email',
-                    ]
-                ],
-                'ADmad/JwtAuth.Jwt' => [
-                    'parameter' => 'token',
-                    'userModel' => 'Users',
-                    'fields' => [
-                        'username' => 'id'
-                    ],
-                    'queryDatasource' => true
-                ]
-            ],
-            'unauthorizedRedirect' => false,
-            'checkAuthIn' => 'Controller.initialize'
-        ]);
-        /*
-        $this->loadComponent('Auth', [
             'authenticate' => [
                 'Form' => [
                     'fields' => [
@@ -105,7 +84,7 @@ class AppController extends Controller
                 'element' => 'warning'
             ]
         ]);
-*/
+
         // Configuration I18N
         //I18n::locale(APP_DEFAULT_LOCALE);
        // Type::build('datetime')->useLocaleParser()->setLocaleFormat(APP_ICU_DATE_FORMAT);

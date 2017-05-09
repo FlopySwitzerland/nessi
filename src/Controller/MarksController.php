@@ -2,51 +2,14 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\ORM\TableRegistry;
 
 /**
  * Marks Controller
  *
  * @property \App\Model\Table\MarksTable $Marks
  */
-class MarksController extends ApiController
+class MarksController extends AppController
 {
-
-
-    public function find($type = "all", $render = "json"){
-        $this->apiSearch('Marks', $type, $render);
-    }
-
-
-    public function getMarks($render){
-        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
-        $tblBranches = TableRegistry::get('Branches');
-
-        $userId = $this->Auth->user('id');
-        if(in_array($render, ['xml', 'json', 'jsonp'])) {
-            if ($render == 'jsonp') {
-                $this->set(['_jsonp' => true]);
-                $render = 'json';
-            }
-        }else{
-            $render = 'json';
-        }
-
-        try{
-            $results = $tblBranches->find()
-                ->select(['Branches.name', 'Branches.img', 'marks_count'])
-                ->matching('SchoolClasses.Users', function(\Cake\ORM\Query $q) {
-                    return $q->where(['Users.id' => 3]);
-                });
-        }catch (\Exception $e){
-            $this->response->withStatus(500, 'Unable to find the marks with the current filter');
-        }
-
-        $this->RequestHandler->renderAs($this, $render);
-        $this->response->type('application/'.$render);
-        $this->set(['results' => $results->toArray(), '_serialize' => ['results']]);
-    }
-
 
     /**
      * Index method
@@ -56,7 +19,7 @@ class MarksController extends ApiController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Branches']
+            'contain' => ['Subjects']
         ];
         $marks = $this->paginate($this->Marks);
 
@@ -74,7 +37,7 @@ class MarksController extends ApiController
     public function view($id = null)
     {
         $mark = $this->Marks->get($id, [
-            'contain' => ['Branches']
+            'contain' => ['Subjects']
         ]);
 
         $this->set('mark', $mark);
@@ -98,8 +61,8 @@ class MarksController extends ApiController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $branches = $this->Marks->Branches->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'branches'));
+        $subjects = $this->Marks->Subjects->find('list', ['limit' => 200]);
+        $this->set(compact('mark', 'subjects'));
         $this->set('_serialize', ['mark']);
     }
 
@@ -124,8 +87,8 @@ class MarksController extends ApiController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $branches = $this->Marks->Branches->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'branches'));
+        $subjects = $this->Marks->Subjects->find('list', ['limit' => 200]);
+        $this->set(compact('mark', 'subjects'));
         $this->set('_serialize', ['mark']);
     }
 
