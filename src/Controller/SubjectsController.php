@@ -16,9 +16,8 @@ class SubjectsController extends ApiController
 
     /**
      * getSubjects
-     * @param $render
      */
-    public function getSubjects($render){
+    public function getSubjects(){
         // Retrieve the current user id
         $userId = $this->Auth->user('id');
 

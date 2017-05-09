@@ -2,13 +2,14 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Aura\Intl\Exception;
 
 /**
- * SchoolClasses Controller
+ * Schoolclasses Controller
  *
- * @property \App\Model\Table\SchoolClassesTable $SchoolClasses
+ * @property \App\Model\Table\SchoolclassesTable $Schoolclasses
  */
-class SchoolClassesController extends AppController
+class SchoolclassesController extends AppController
 {
 
     /**
@@ -21,10 +22,10 @@ class SchoolClassesController extends AppController
         $this->paginate = [
             'contain' => ['Establishments']
         ];
-        $schoolClasses = $this->paginate($this->SchoolClasses);
+        $Schoolclasses = $this->paginate($this->Schoolclasses);
 
-        $this->set(compact('schoolClasses'));
-        $this->set('_serialize', ['schoolClasses']);
+        $this->set(compact('Schoolclasses'));
+        $this->set('_serialize', ['Schoolclasses']);
     }
 
     /**
@@ -36,8 +37,8 @@ class SchoolClassesController extends AppController
      */
     public function view($id = null)
     {
-        $schoolClass = $this->SchoolClasses->get($id, [
-            'contain' => ['Establishments', 'Branches', 'Users']
+        $schoolClass = $this->Schoolclasses->get($id, [
+            'contain' => ['Establishments', 'Subjects', 'Users']
         ]);
 
         $this->set('schoolClass', $schoolClass);
@@ -51,21 +52,25 @@ class SchoolClassesController extends AppController
      */
     public function add()
     {
-        $schoolClass = $this->SchoolClasses->newEntity();
+        $schoolClass = $this->Schoolclasses->newEntity();
         if ($this->request->is('post')) {
-            $schoolClass = $this->SchoolClasses->patchEntity($schoolClass, $this->request->getData());
-            if ($this->SchoolClasses->save($schoolClass)) {
-                $this->Flash->success(__('The school class has been saved.'));
+            $jsonData =  $this->request->input('json_decode');
+            $schoolClass->user_id = $this->Auth->user('id');
+            $schoolClass->establishment_id = 1;
+            $schoolClass = $this->Schoolclasses->patchEntity($schoolClass, $jsonData);
 
-                return $this->redirect(['action' => 'index']);
+            try {
+                $this->Schoolclasses->save($schoolClass);
+                $msg = __('The school class has been saved.');
+                $success = true;
+            }catch (Exception $e){
+                $msg =  __('The school class could not be saved. Please, try again.');
+                $success = false;
             }
-            $this->Flash->error(__('The school class could not be saved. Please, try again.'));
+
         }
-        $establishments = $this->SchoolClasses->Establishments->find('list', ['limit' => 200]);
-        $branches = $this->SchoolClasses->Branches->find('list', ['limit' => 200]);
-        $users = $this->SchoolClasses->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schoolClass', 'establishments', 'branches', 'users'));
-        $this->set('_serialize', ['schoolClass']);
+        $this->set(compact('success', 'msg'));
+        $this->set('_serialize', ['success', 'msg']);
     }
 
     /**
@@ -77,21 +82,21 @@ class SchoolClassesController extends AppController
      */
     public function edit($id = null)
     {
-        $schoolClass = $this->SchoolClasses->get($id, [
+        $schoolClass = $this->Schoolclasses->get($id, [
             'contain' => ['Branches', 'Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $schoolClass = $this->SchoolClasses->patchEntity($schoolClass, $this->request->getData());
-            if ($this->SchoolClasses->save($schoolClass)) {
+            $schoolClass = $this->Schoolclasses->patchEntity($schoolClass, $this->request->getData());
+            if ($this->Schoolclasses->save($schoolClass)) {
                 $this->Flash->success(__('The school class has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The school class could not be saved. Please, try again.'));
         }
-        $establishments = $this->SchoolClasses->Establishments->find('list', ['limit' => 200]);
-        $branches = $this->SchoolClasses->Branches->find('list', ['limit' => 200]);
-        $users = $this->SchoolClasses->Users->find('list', ['limit' => 200]);
+        $establishments = $this->Schoolclasses->Establishments->find('list', ['limit' => 200]);
+        $branches = $this->Schoolclasses->Branches->find('list', ['limit' => 200]);
+        $users = $this->Schoolclasses->Users->find('list', ['limit' => 200]);
         $this->set(compact('schoolClass', 'establishments', 'branches', 'users'));
         $this->set('_serialize', ['schoolClass']);
     }
@@ -106,8 +111,8 @@ class SchoolClassesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $schoolClass = $this->SchoolClasses->get($id);
-        if ($this->SchoolClasses->delete($schoolClass)) {
+        $schoolClass = $this->Schoolclasses->get($id);
+        if ($this->Schoolclasses->delete($schoolClass)) {
             $this->Flash->success(__('The school class has been deleted.'));
         } else {
             $this->Flash->error(__('The school class could not be deleted. Please, try again.'));
