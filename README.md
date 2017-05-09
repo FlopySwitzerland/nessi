@@ -1,5 +1,7 @@
 # Nessi
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com) 
+[![forthebadge](http://forthebadge.com/images/badges/contains-cat-gifs.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](http://forthebadge.com)
 
 Nessi (**N**otes des **É**coles **S**econdaires **S**upérieures et d'**I**ngénieures) is a fully responsive web app for students to register marks, calculate grades and track average progress.
 
