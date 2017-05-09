@@ -1,8 +1,10 @@
 # Nessi
-Marks Web Application
+[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com) 
 
-## Description
-This is the API behind [Nessi](https://github.com/FlopySwitzerland/nessi).
+Nessi (**N**otes des **É**coles **S**econdaires **S**upérieures et d'**I**ngénieures) is a fully responsive web app for students to register marks, calculate grades and track average progress.
+
+
+**Please note :** This version **2.0.x** content the front office.
 
 ## Prerequisites
 
@@ -15,7 +17,7 @@ This is the API behind [Nessi](https://github.com/FlopySwitzerland/nessi).
 2. Download [Composer](http://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
 3. Run `composer update` in the project path.
 
-You should now be able to visit the path to where you installed the app and see the default home page.
+You should now be able to visit the path to where you installed the app and see the landing page.
 
 ## Configuration
 
