@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  */
+
+$this->assign('bodyClass', 'signin-page');
 ?>
 <span class="card-title">Log In</span>
 <div class="row">
@@ -13,7 +15,7 @@
         <?= $this->Form->control('password') ?>
     </div>
     <div class="col s12 right-align m-t-sm">
-        <a href="sign-up.html" class="waves-effect waves-grey btn-flat">sign up</a>
+        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'register', 'prefix' => false, 'plugin' => false]) ?>" class="waves-effect waves-grey btn-flat">sign up</a>
         <?= $this->Form->button(__('Login'), ['class' => 'waves-effect waves-light btn teal']); ?>
     </div>
     <?= $this->Form->end() ?>

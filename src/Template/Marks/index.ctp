@@ -41,10 +41,10 @@
                             <td>
                                 <a class="dropdown-button" href="#" data-activates="action_<?= $mark->id ?>"><i class="material-icons">more_vert</i></a>
                                 <ul id="action_<?= $mark->id ?>" class="dropdown-content">
-                                    <li><?= $this->Html->link(__('View'), ['action' => 'view', $mark->id], ['escape' => false]) ?></li>
-                                    <li><?= $this->Html->link(__('Edit'), ['action' => 'edit', $mark->id], ['escape' => false]) ?></li>
+                                    <li><?= $this->Html->link('<i class="material-icons">remove_red_eye</i>'.__('View'), ['action' => 'view', $mark->id], ['escape' => false]) ?></li>
+                                    <li><?= $this->Html->link('<i class="material-icons">mode_edit</i>'.__('Edit'), ['action' => 'edit', $mark->id], ['escape' => false]) ?></li>
                                     <li class="divider"></li>
-                                    <li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $mark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id), 'escape' => false]) ?></li>
+                                    <li><?= $this->Form->postLink('<i class="material-icons">delete_forever</i>'.__('Delete'), ['action' => 'delete', $mark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id), 'escape' => false]) ?></li>
                                 </ul>
                             </td>
                         </tr>

@@ -43,7 +43,7 @@ $cakeDescription = 'Nessi';
     <![endif]-->
 
 </head>
-<body class="signin-page">
+<body class="<?= $this->fetch('bodyClass'); ?> loaded">
 
     <div class="mn-content valign-wrapper">
         <main class="mn-inner container">
@@ -65,7 +65,7 @@ $cakeDescription = 'Nessi';
     <!-- Javascripts -->
     <?= $this->Html->script('jquery/jquery-2.2.0.min.js') ?>
     <?= $this->Html->script('materialize.min.js') ?>
-    <?= $this->Html->script('material-preloader/materialPreloader.min.js') ?>
+
     <?= $this->Html->script('jquery/jquery-blockui/jquery.blockui.js') ?>
     <?= $this->Html->script('alpha.min.js') ?>
 

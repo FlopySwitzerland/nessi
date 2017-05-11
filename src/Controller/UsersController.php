@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\User;
 use Cake\Event\Event;
 
 class UsersController extends AppController
@@ -24,6 +25,31 @@ class UsersController extends AppController
         }
     }
 
+    public function register()
+    {
+        $this->viewBuilder()->setLayout('login');
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+
+
+            if($this->request->getData('password') == $this->request->getData('confirmPassword')){
+                $user = $this->Users->patchEntity($user, $this->request->getData());
+                $user->group_id = User::DEFAULT_GROUP;
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__("Welcome to nessi ! Happy to see you here !"));
+                    $user = $this->Auth->identify();
+                    if ($user) {
+                        $this->Auth->setUser($user);
+                        return $this->redirect($this->Auth->redirectUrl());
+                    }
+                }
+                $this->Flash->error(__('There was errors in the form. Please, try again.'));
+            }
+            $this->Flash->error(__('The password doesn\'t match. Please, try again.'));
+
+        }
+        $this->set('user', $user);
+    }
     /**
      * logout
      *

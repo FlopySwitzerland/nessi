@@ -27,6 +27,7 @@ use Cake\ORM\Entity;
 class User extends Entity
 {
 
+    const DEFAULT_GROUP = 2;
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

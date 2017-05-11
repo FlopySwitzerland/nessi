@@ -1,3 +1,33 @@
 .green.darken-3 {
     background-color: #1E824C !important;
 }
+
+.rating-system{
+    font-family: 'Material Icons';
+    letter-spacing: -3px;
+    font-size: 17px;
+    color: #f9a825;
+}
+
+.rating-1:after{
+    content: 'star star_border star_border star_border star_border';
+}
+.rating-2:after{
+    content: 'star star star_border star_border star_border';
+}
+.rating-3:after{
+    content: 'star star star star_border star_border';
+}
+.rating-4:after{
+    content: 'star star star star star_border';
+}
+.rating-5:after{
+    content: 'star star star star star';
+}
+
+.valign-sup{
+    vertical-align: super;
+}
+.f-s-42{
+    font-size: 42px;
+}

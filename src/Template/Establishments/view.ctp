@@ -8,9 +8,8 @@ $this->assign('title', __('Establishment'));
 <div class="row">
     <div class="col s12 m4 l3">
         <div class="card">
-            <div class="card-content center-align">
-                <img src="assets/images/profile-image-1.png" class="responsive-img circle" width="128px" alt="">
-                <p class="m-t-lg flow-text"><?= $googledetails['result']['name'] ?></p>
+            <div class="card-content">
+                <p class="m-t-lg flow-text f-s-42"><?= $googledetails['result']['name'] ?></p>
                 <p><?= $googledetails['result']['formatted_address'] ?></p>
 
             </div>
@@ -25,14 +24,10 @@ $this->assign('title', __('Establishment'));
                         </div>
                         <div class="col s10">
                             <a class="black-text" href="<?= $review['author_url'] ?>" target="_blank"><?= $review['author_name'] ?></a>
-                            <p> <?php
-                                for($i = 0; $i = $review['text']; $i++){
-                                    ?>
-                                    <i class="material-icons">add</i>
-                            <?php
-                                }
-                            ?>
-                            <?= $review['relative_time_description'] ?></p>
+                            <p>
+                                <span class="rating-system rating-<?= $review['rating']; ?>"></span>
+                                <span class="valign-sup"> - <?= $review['relative_time_description'] ?></span>
+                            </p>
                             <p><?= $review['text'] ?></p>
                         </div>
                     </div>
@@ -49,7 +44,7 @@ $this->assign('title', __('Establishment'));
                             width="100%"
                             height="100%"
                             frameborder="0" style="border:0"
-                            src="https://www.google.com/maps/embed/v1/place?key=<?= GMAPS_API ?>&q=EPSIC" allowfullscreen>
+                            src="https://www.google.com/maps/embed/v1/place?key=<?= GMAPS_API ?>&q=<?= $googledetails['result']['name'] ?>" allowfullscreen>
                     </iframe>
                 </div>
             </div>

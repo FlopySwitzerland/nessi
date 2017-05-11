@@ -65,10 +65,10 @@
                 <!-- Navbar right -->
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="">Login</a>
+                        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>">Login</a>
                     </li>
                     <li>
-                        <a href="" class="btn btn-white-fill navbar-btn">Sign Up</a>
+                        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'register', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-fill navbar-btn">Sign Up</a>
                     </li>
                 </ul>
 
