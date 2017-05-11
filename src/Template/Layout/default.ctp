@@ -47,7 +47,7 @@ $cakeDescription = 'Nessi';
 <body>
 <div class="mn-content fixed-sidebar">
     <header class="mn-header navbar-fixed">
-        <nav class="green darken-4">
+        <nav class="green darken-3">
             <div class="nav-wrapper row">
                 <section class="material-design-hamburger navigation-toggle">
                     <a href="#" data-activates="slide-out" class="button-collapse show-on-large material-design-hamburger__icon">
@@ -266,10 +266,10 @@ $cakeDescription = 'Nessi';
         <div class="row">
             <div class="col s12">
                 <div class="page-title"><?= $this->fetch('title'); ?></div>
-                <?= $this->Flash->render() ?>
-                <?= $this->fetch('content') ?>
             </div>
         </div>
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
     </main>
 </div>
 <div class="left-sidebar-hover"></div>

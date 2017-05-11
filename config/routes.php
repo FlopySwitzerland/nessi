@@ -50,18 +50,15 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/register', ['controller' => 'Users', 'action' => 'register', 'plugin' => false, 'prefix' => false]);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login', 'plugin' => false, 'prefix' => false]);
+    $routes->connect('/twofactor', ['controller' => 'TwoFactorAuth', 'action' => 'verify', 'plugin' => 'TwoFactorAuth', 'prefix' => false]);
+
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
-    /** API  */
-    $routes->extensions(['json', 'xml']);
-    $routes->resources('Users');
-    $routes->connect('/users/register', ['controller' => 'Users', 'action' => 'add']);
-    $routes->connect('/users/register', ['controller' => 'Users', 'action' => 'add', 'ext' => 'json']);
-
 
     /**
      * Connect catchall routes for all controllers.
@@ -87,9 +84,8 @@ Router::prefix('Admin', function ($routes) {
     $routes->fallbacks('InflectedRoute');
 });
 
-
 /**
- * Load all plugin routes.  See the Plugin documentation on
+ * Load all plugin routes. See the Plugin documentation on
  * how to customize the loading of plugin routes.
  */
 Plugin::routes();

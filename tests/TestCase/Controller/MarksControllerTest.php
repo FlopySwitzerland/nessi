@@ -17,15 +17,14 @@ class MarksControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.marks',
-        'app.branches',
+        'app.subjects',
         'app.school_classes',
         'app.establishments',
         'app.academicyears',
         'app.terms',
-        'app.branches_school_classes',
+        'app.subjects_terms',
         'app.users',
-        'app.groups',
-        'app.school_classes_users'
+        'app.groups'
     ];
 
     /**

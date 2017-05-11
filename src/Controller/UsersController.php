@@ -3,31 +3,14 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\Network\Exception\UnauthorizedException;
-use Cake\Utility\Security;
-use Firebase\JWT\JWT;
 
-/**
- * Users Controller
- *
- * @property \App\Model\Table\UsersTable $Users
- */
 class UsersController extends AppController
 {
-    public function initialize()
-    {
-        parent::initialize();
-        $this->Auth->allow(['login', 'token', 'add']);
-    }
-
-
-    public function logout()
-    {
-        return $this->redirect($this->Auth->logout());
-    }
-
+    /**
+     * login
+     *
+     * @return \Cake\Http\Response|null
+     */
     public function login()
     {
         $this->viewBuilder()->setLayout('login');
@@ -36,11 +19,38 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
-            } else {
-                $this->Flash->error(__('Email ou mot de passe incorrect'));
             }
             $this->Flash->error(__('Invalid username or password, try again'));
         }
     }
 
+    /**
+     * logout
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * enableTwoFactor
+     *
+     */
+    public function enableTwoFactor(){
+        $udata = $this->Users->get($this->Auth->User('id'));
+        if(empty($udata->secret)){
+            $secret = $this->Auth->tfa->createSecret();
+        }else{
+            $secret = $udata->secret;
+        }
+
+
+        $this->set('secretDataUri', $this->Auth->tfa->getQRCodeImageAsDataUri('Nessi', $secret));
+    }
+
+    public function settings(){
+
+    }
 }
