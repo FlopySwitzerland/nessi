@@ -15,49 +15,19 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title"><?= __('Marks') ?></span>
-                <table class="responsive-table bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('subject_id') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('value') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('coefficient') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('exam_date') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                        <th scope="col" class="actions"><?= __('Actions') ?></th>
-                    </tr>
-                    </thead>
+                <table class=" bordered">
                     <tbody>
-                    <?php foreach ($marks as $mark): ?>
+                    <?php foreach ($subjects as $subject){ ?>
                         <tr>
-                            <td><?= $this->Number->format($mark->id) ?></td>
-                            <td><?= $mark->has('subject') ? $this->Html->link($mark->subject->name, ['controller' => 'Subjects', 'action' => 'view', $mark->subject->id]) : '' ?></td>
-                            <td><?= $this->Number->format($mark->value) ?></td>
-                            <td><?= $this->Number->format($mark->coefficient) ?></td>
-                            <td><?= h($mark->exam_date) ?></td>
-                            <td><?= h($mark->created) ?></td>
-                            <td><?= h($mark->modified) ?></td>
-                            <td>
-                                <a class="dropdown-button" href="#" data-activates="action_<?= $mark->id ?>"><i class="material-icons">more_vert</i></a>
-                                <ul id="action_<?= $mark->id ?>" class="dropdown-content">
-                                    <li><?= $this->Html->link('<i class="material-icons">remove_red_eye</i>'.__('View'), ['action' => 'view', $mark->id], ['escape' => false]) ?></li>
-                                    <li><?= $this->Html->link('<i class="material-icons">mode_edit</i>'.__('Edit'), ['action' => 'edit', $mark->id], ['escape' => false]) ?></li>
-                                    <li class="divider"></li>
-                                    <li><?= $this->Form->postLink('<i class="material-icons">delete_forever</i>'.__('Delete'), ['action' => 'delete', $mark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id), 'escape' => false]) ?></li>
-                                </ul>
-                            </td>
+                            <td><?= $this->Html->link($subject->name, ['controller' => 'Subjects', 'action' => 'view', $subject->id]) ?></td>
+                            <?php foreach ($subject->marks as $mark){ ?>
+                                <td><?= $this->Number->format($mark->value) ?></td>
+                            <?php } ?>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tbody>
                 </table>
-                    <ul class="pagination">
-                        <?= $this->Paginator->prev('<i class="material-icons">chevron_left</i>', ['escape' => false, 'class' => 'waves-effect']) ?>
-                        <?= $this->Paginator->numbers(['class' => 'waves-effect']) ?>
-                        <?= $this->Paginator->next('<i class="material-icons">chevron_right</i>', ['escape' => false, 'class' => 'waves-effect'])  ?>
-                    </ul>
-                    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-
+                <div class=""></div>
             </div>
         </div>
     </div>
@@ -98,10 +68,14 @@
                 <td><?= h($mark->exam_date) ?></td>
                 <td><?= h($mark->created) ?></td>
                 <td><?= h($mark->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $mark->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $mark->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $mark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id)]) ?>
+                <td>
+                    <a class="dropdown-button" href="#" data-activates="action_<?= $mark->id ?>"><i class="material-icons">more_vert</i></a>
+                    <ul id="action_<?= $mark->id ?>" class="dropdown-content">
+                        <li><?= $this->Html->link('<i class="material-icons">remove_red_eye</i>'.__('View'), ['action' => 'view', $mark->id], ['escape' => false]) ?></li>
+                        <li><?= $this->Html->link('<i class="material-icons">mode_edit</i>'.__('Edit'), ['action' => 'edit', $mark->id], ['escape' => false]) ?></li>
+                        <li class="divider"></li>
+                        <li><?= $this->Form->postLink('<i class="material-icons">delete_forever</i>'.__('Delete'), ['action' => 'delete', $mark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id), 'escape' => false]) ?></li>
+                    </ul>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -109,11 +83,9 @@
     </table>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->prev('<i class="material-icons">chevron_left</i>', ['escape' => false, 'class' => 'waves-effect']) ?>
+            <?= $this->Paginator->numbers(['class' => 'waves-effect']) ?>
+            <?= $this->Paginator->next('<i class="material-icons">chevron_right</i>', ['escape' => false, 'class' => 'waves-effect'])  ?>
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>

@@ -6,6 +6,7 @@
  */
 
 $this->layout = 'login';
+$this->assign('bodyClass', 'signin-page');
 ?>
 <span class="card-title">Two-step verification</span>
 <div class="row">

@@ -121,22 +121,10 @@ class AppController extends Controller
                         'name' => 'TwoFactorAuth',
                         'httpOnly' => true,
                         'expires' => '+30 days'
-                    ],
-                    'verifyAction' => [
-                        'prefix' => false,
-                        'controller' => 'TwoFactorAuth',
-                        'action' => 'verify',
-                        'plugin' => 'TwoFactorAuth'
-                    ],
+                    ]
                 ],
             ],
             'TwoFactorAuth' => [
-                'fields' => [
-                    'username' => 'email',
-                    'password' => 'password',
-                    'secret' => 'secret', // database field
-                    'remember' => 'remember' // checkbox form field name for "Trust this device" feature
-                ],
                 'remember' => true, // enable "Trust this device" feature
                 'cookie' => [ // cookie settings for "Trust this device" feature
                     'name' => 'TwoFactorAuth',
@@ -149,6 +137,34 @@ class AppController extends Controller
                     'action' => 'verify',
                     'plugin' => 'TwoFactorAuth'
                 ]
+            ],
+            'loginAction' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Dashboard',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => false
+            ],
+            //'authError' => 'Vous n\'avez pas les autorisations nécéssaire pour accéder à cette page.',
+            'flash' => [
+                'element' => 'warning'
             ]
         ]);
     }

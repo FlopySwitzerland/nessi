@@ -82,7 +82,13 @@ class UsersController extends AppController
         $this->set('secretDataUri', $this->Auth->tfa->getQRCodeImageAsDataUri('Nessi', $secret));
     }
 
+    /**
+     * settings
+     *
+     */
     public function settings(){
+        $udata = $this->Users->get($this->Auth->User('id'));
 
+        $this->set(compact('udata'));
     }
 }

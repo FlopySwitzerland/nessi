@@ -8,10 +8,16 @@
 namespace App\Controller;
 
 
+use Cake\ORM\TableRegistry;
+
 class DashboardController extends AppController
 {
 
     public function index(){
+
+        $tblMarks = TableRegistry::get('Marks');
+
+
 
     }
 }

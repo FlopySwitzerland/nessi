@@ -20,13 +20,10 @@ class MarksController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Subjects']
-        ];
-        $marks = $this->paginate($this->Marks);
+        $subjects = $this->Marks->Subjects->find()->contain(['Marks']);
 
-        $this->set(compact('marks'));
-        $this->set('_serialize', ['marks']);
+        $this->set(compact('subjects'));
+        $this->set('_serialize', ['subjects']);
     }
 
     /**

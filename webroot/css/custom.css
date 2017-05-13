@@ -31,3 +31,78 @@
 .f-s-42{
     font-size: 42px;
 }
+
+
+    table.vertical-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: table;
+        position: relative;
+        /* sort out borders */
+    }
+    table.vertical-table td:empty:before {
+        content: '\00a0';
+    }
+    table.vertical-table th,
+    table.vertical-table td {
+        margin: 0;
+        vertical-align: top;
+    }
+    table.vertical-table th {
+        text-align: left;
+    }
+    table.vertical-table thead {
+        display: block;
+        float: left;
+    }
+    table.vertical-table thead tr {
+        display: block;
+        padding: 0 10px 0 0;
+    }
+    table.vertical-table thead tr th::before {
+        content: "\00a0";
+    }
+    table.vertical-table tbody {
+        display: block;
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table.vertical-table tbody tr {
+        display: inline-block;
+        vertical-align: top;
+    }
+    table.vertical-table th {
+        display: block;
+        text-align: right;
+    }
+    table.vertical-table td {
+        display: block;
+        min-height: 1.25em;
+        text-align: left;
+    }
+    table.vertical-table tr {
+        padding: 0 10px;
+    }
+    table.vertical-table thead {
+        border: 0;
+        border-right: 1px solid #d0d0d0;
+    }
+    table.vertical-table.bordered th {
+        border-bottom: 0;
+        border-left: 0;
+    }
+    table.vertical-table.bordered td {
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+    }
+    table.vertical-table.bordered tr {
+        border: 0;
+    }
+    table.vertical-table.bordered tbody tr {
+        border-right: 1px solid #d0d0d0;
+    }
+
