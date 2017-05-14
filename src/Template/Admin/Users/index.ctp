@@ -56,11 +56,9 @@ $this->assign('title', __('Users'));
                 </table>
                 <div class="paginator">
                     <ul class="pagination">
-                        <?= $this->Paginator->first('<< ' . __('first')) ?>
-                        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                        <?= $this->Paginator->numbers() ?>
-                        <?= $this->Paginator->next(__('next') . ' >') ?>
-                        <?= $this->Paginator->last(__('last') . ' >>') ?>
+                        <?= $this->Paginator->prev('<i class="material-icons">chevron_left</i>', ['escape' => false, 'class' => 'waves-effect']) ?>
+                        <?= $this->Paginator->numbers(['class' => 'waves-effect']) ?>
+                        <?= $this->Paginator->next('<i class="material-icons">chevron_right</i>', ['escape' => false, 'class' => 'waves-effect'])  ?>
                     </ul>
                     <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
                 </div>

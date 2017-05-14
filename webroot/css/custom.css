@@ -106,3 +106,10 @@
         border-right: 1px solid #d0d0d0;
     }
 
+label{
+    width: 100%;
+}
+
+.secondary-content{
+    color: #0277bb !important;
+}

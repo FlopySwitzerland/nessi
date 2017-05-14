@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-class UsersController extends AppController
+class UsersController extends AdminAppController
 {
 
     /**

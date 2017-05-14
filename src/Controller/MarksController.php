@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Marks Controller
@@ -20,10 +21,16 @@ class MarksController extends AppController
      */
     public function index()
     {
-        $subjects = $this->Marks->Subjects->find()->contain(['Marks']);
+        $tblschoolClasses = TableRegistry::get('SchoolClasses');
+        $schoolClasses = $tblschoolClasses
+            ->find()
+            ->contain(['Subjects' => ['Marks'], 'Establishments'])
+            ->where(['user_id' => $this->Auth->User('id')]);
 
-        $this->set(compact('subjects'));
-        $this->set('_serialize', ['subjects']);
+
+
+        $this->set(compact('schoolClasses'));
+        $this->set('_serialize', ['schoolClasses']);
     }
 
     /**
