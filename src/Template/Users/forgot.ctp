@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  */
+
+$this->assign('bodyClass', 'signin-page');
 ?>
 <span class="card-title">Forgot Password</span>
 <div class="row">

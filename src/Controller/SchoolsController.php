@@ -10,6 +10,11 @@ namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
 
+/**
+ * Class SchoolsController
+ *
+ * @package App\Controller
+ */
 class SchoolsController extends AppController
 {
 

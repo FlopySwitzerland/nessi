@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Model\Entity\User;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Class UsersController
@@ -20,7 +21,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['register']);
+        $this->Auth->allow(['register', 'forgot']);
     }
 
     /**
@@ -114,6 +115,31 @@ class UsersController extends AppController
      */
     public function profilePicture(){
 
+    }
+
+
+    public function forgot(){
+        $this->viewBuilder()->setLayout('login');
+        if ($this->request->is('post')) {
+            $email = $this->request->getData('email');
+            if($this->Users->exists(['email' => $email])){
+                $this->Users->query()
+                    ->update()
+                    ->set(['token' => $this->__uniqueCode()])
+                    ->where(['email' => $email])
+                    ->execute();
+
+            }
+        }
+    }
+
+    private function __uniqueCode($length = 42){
+        $tokens = $this->Users->find('list',['keyField' => 'id', 'valueField' => 'token'])->toArray();
+        do{
+            $return = bin2hex(openssl_random_pseudo_bytes($length));
+        }while(in_array($return , $tokens));
+
+        return $return;
     }
 
     /**
