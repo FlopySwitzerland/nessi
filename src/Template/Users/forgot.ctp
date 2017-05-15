@@ -12,7 +12,7 @@ $this->assign('bodyClass', 'signin-page');
         <?= $this->Form->control('email') ?>
     </div>
     <div class="col s12 right-align m-t-sm">
-        <a href="sign-up.html" class="waves-effect waves-grey btn-flat">I remember now</a>
+        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>" class="waves-effect waves-grey btn-flat">I remember now</a>
         <?= $this->Form->button(__('Reset'), ['class' => 'waves-effect waves-light btn teal']); ?>
     </div>
     <?= $this->Form->end() ?>

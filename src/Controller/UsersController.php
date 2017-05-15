@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Model\Entity\User;
 use Cake\Event\Event;
+use Cake\I18n\Time;
+use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -121,26 +123,34 @@ class UsersController extends AppController
     public function forgot(){
         $this->viewBuilder()->setLayout('login');
         if ($this->request->is('post')) {
-            $email = $this->request->getData('email');
-            if($this->Users->exists(['email' => $email])){
-                $this->Users->query()
+            $emailaddress = $this->request->getData('email');
+            if($this->Users->exists(['email' => $emailaddress])){
+                $token = $this->__uniqueCode();
+                $user = $this->Users->query()
                     ->update()
-                    ->set(['token' => $this->__uniqueCode()])
-                    ->where(['email' => $email])
+                    ->set(['token' => $token])
+                    ->set(['token_expiration' => Time::now()->addDay()])
+                    ->where(['email' => $emailaddress])
                     ->execute();
+
+                $mail = new Email('default');
+                $mail->setTemplate('forgot')
+                    ->setLayout('default')
+                    ->setEmailFormat('html')
+                    ->setTo($emailaddress)
+                    ->setSubject('Nessi Password Reset')
+                    ->setViewVars(['token' => $token]);
+
+                if($mail->send()){
+                    $this->Flash->success(__('Please check your email for instructions.'));
+                    return $this->redirect(['action' => 'login']);
+                }
+
 
             }
         }
     }
 
-    private function __uniqueCode($length = 42){
-        $tokens = $this->Users->find('list',['keyField' => 'id', 'valueField' => 'token'])->toArray();
-        do{
-            $return = bin2hex(openssl_random_pseudo_bytes($length));
-        }while(in_array($return , $tokens));
-
-        return $return;
-    }
 
     /**
      * enableTwoFactor
@@ -223,5 +233,22 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+
+
+    /**
+     * __uniqueCode
+     * Generate a unique code based on the timestamp
+     *
+     * @param int $length
+     * @return string
+     */
+    private function __uniqueCode($length = 42){
+        $tokens = $this->Users->find('list',['keyField' => 'id', 'valueField' => 'token'])->toArray();
+        do{
+            $return = bin2hex(openssl_random_pseudo_bytes($length));
+        }while(in_array($return , $tokens));
+
+        return $return;
     }
 }
