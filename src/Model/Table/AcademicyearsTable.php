@@ -41,9 +41,6 @@ class AcademicyearsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Establishments', [
-            'foreignKey' => 'academicyear_id'
-        ]);
         $this->hasMany('Terms', [
             'foreignKey' => 'academicyear_id'
         ]);

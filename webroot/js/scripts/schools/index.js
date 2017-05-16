@@ -9,13 +9,11 @@ $( document ).ready(function() {
         type: 'GET', // your request type
         url: baseUrl+'establishments/list.json',
         success: function (response) {
-            $('input.autocomplete').autocomplete({
+            $('#establishment-id').select2({
+                placeholder: "Select an option",
                 data: response.establishments
-            });
+            }).val(null).trigger("change");
         }
     });
-
-
-
 
 });

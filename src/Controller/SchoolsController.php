@@ -17,7 +17,9 @@ use Cake\ORM\TableRegistry;
  */
 class SchoolsController extends AppController
 {
-
+    /**
+     * index
+     */
     public function index(){
         $tblschoolClasses = TableRegistry::get('SchoolClasses');
         $schoolClasses = $tblschoolClasses

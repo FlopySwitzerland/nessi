@@ -113,3 +113,29 @@ label{
 .secondary-content{
     color: #0277bb !important;
 }
+
+.message{
+    height: 60px;
+    line-height: 60px;
+    padding: 0 30px;
+}
+.message.error{
+    color: #fff;
+    background-color: #f44336;
+}
+.message.error{
+    color: #fff;
+    background-color: #f44336;
+}
+.message.success{
+    color: #fff;
+    background-color: #1E824C;
+}
+.message.warning{
+    color: #fff;
+    background-color: #ff9800;
+}
+.message.info{
+    color: #fff;
+    background-color: #03a9f4;
+}

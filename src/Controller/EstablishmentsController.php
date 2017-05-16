@@ -21,9 +21,6 @@ class EstablishmentsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Academicyears']
-        ];
         $establishments = $this->paginate($this->Establishments);
 
         $this->set(compact('establishments'));
@@ -31,7 +28,7 @@ class EstablishmentsController extends AppController
     }
 
     public function list(){
-        $establishments = $this->Establishments->find('list', ['keyField' => 'name'])->extract('name');
+        $establishments = $this->Establishments->find()->select(['id' => 'id', 'text' => 'name']);
 
         $this->set(compact('establishments'));
         $this->set('_serialize', ['establishments']);
@@ -48,9 +45,7 @@ class EstablishmentsController extends AppController
     {
 
         $http = new Client();
-        $establishment = $this->Establishments->get($id, [
-            'contain' => ['Academicyears']
-        ]);
+        $establishment = $this->Establishments->get($id);
         $placedetails = $http->get('https://maps.googleapis.com/maps/api/place/details/json?placeid='.$establishment->gmapid.'&key='.GMAPS_API);
 
         $this->set('googledetails', $placedetails->json);
@@ -75,8 +70,7 @@ class EstablishmentsController extends AppController
             }
             $this->Flash->error(__('The establishment could not be saved. Please, try again.'));
         }
-        $academicyears = $this->Establishments->Academicyears->find('list', ['limit' => 200]);
-        $this->set(compact('establishment', 'academicyears'));
+        $this->set(compact('establishment'));
         $this->set('_serialize', ['establishment']);
     }
 

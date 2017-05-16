@@ -6,6 +6,8 @@
  */
 
 $this->assign('title', __('Schools & Classes'));
+echo $this->Html->css('select2/select2.css', ['block' => 'css']);
+echo $this->Html->script('select2/select2.min.js', ['block' => 'script']);
 echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
 ?>
 <div class="row">
@@ -14,7 +16,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
             <div class="card-content">
                 <span class="card-title">Schools</span>
                 <?php foreach ($schoolClasses->groupBy('establishment.name') as $establishment => $classes){ ?>
-                    <h4><?= $establishment ?> <a class="btn-floating waves-effect waves-light green tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Add a Class') ?>"><i class="material-icons">add</i></a></h4>
+                    <h4><?= $establishment ?></h4>
                     <ul class="collapsible" data-collapsible="accordion">
                         <?php foreach ($classes as $class){ ?>
                             <li>
@@ -36,7 +38,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                     </ul>
                     <div class="divider"></div>
                 <?php } ?>
-                <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-school">I'm in another School</a>
+                <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-school">Add a school class</a>
             </div>
         </div>
     </div>
@@ -82,25 +84,25 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
 </div>
 
 <div id="modal-add-school" class="modal modal-fixed-footer">
+    <?= $this->Form->create() ?>
     <div class="modal-content">
         <div class="row">
             <div class="col s12 m-b-xs">
-                <h4>Please find your school establishment in this list.</h4>
+                <h4>Add a School Class</h4>
             </div>
             <div class="input-field col s12">
-                <i class="material-icons prefix">school</i>
-                <input type="text" id="autocomplete-establishment" class="autocomplete">
-                <label for="autocomplete-establishment">School Establishment</label>
+                <?= $this->Form->control('establishment_id', ['class' => 'browser-default', 'style' => 'width: 100%;', 'label' => ['class' => 'active']]); ?>
             </div>
             <div class="col s12 m-b-xs">
-                <p>If your school is not in this list, you can add it by clicking the button below. <br>
-                    You will need your school terms dates.</p>
-                <a class="waves-effect waves-teal btn-flat" href="<?= $this->Url->build(['controller' => 'establishments', 'action' => 'add']) ?>">I doesn't find my school</a>
+                <p>If your school is not in this list, you can add it by clicking <a href="<?= $this->Url->build(['controller' => 'establishments', 'action' => 'add']) ?>">here</a>.</p>
+            </div>
+            <div class="input-field col s12">
+                <?= $this->Form->control('name'); ?>
             </div>
         </div>
-
     </div>
     <div class="modal-footer">
-
+        <?= $this->Form->button(__('Save'), ['class' => 'modal-action waves-effect waves-green btn-flat']) ?>
     </div>
+    <?= $this->Form->end() ?>
 </div>
