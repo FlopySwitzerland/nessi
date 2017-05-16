@@ -51,7 +51,7 @@ $this->layout = 'landing';
 
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h3 class="title text-white">//TODO: Find a cool slogan</h3>
+                <h3 class="title text-white">Powerful Yet Simple Features</h3>
                 <p class="text-muted sub-title">//TODO: Fill this line...</p>
             </div>
         </div> <!-- end row -->

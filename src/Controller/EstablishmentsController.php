@@ -30,6 +30,13 @@ class EstablishmentsController extends AppController
         $this->set('_serialize', ['establishments']);
     }
 
+    public function list(){
+        $establishments = $this->Establishments->find('list', ['keyField' => 'name'])->extract('name');
+
+        $this->set(compact('establishments'));
+        $this->set('_serialize', ['establishments']);
+    }
+
     /**
      * View method
      *

@@ -13,10 +13,9 @@ $this->assign('bodyClass', 'signin-page');
     </div>
     <div class="input-field col s12">
         <?= $this->Form->control('password') ?>
+        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'forgot', 'prefix' => false, 'plugin' => false]) ?>" class="blue-grey-text" style="font-size: 12px">I forgot my password</a>
     </div>
-    <div class="input-field col s12">
-        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'forgot', 'prefix' => false, 'plugin' => false]) ?>" class="">I've forgot my password</a>
-    </div>
+    <br>
     <div class="col s12 right-align m-t-sm">
         <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'register', 'prefix' => false, 'plugin' => false]) ?>" class="waves-effect waves-grey btn-flat">sign up</a>
         <?= $this->Form->button(__('Login'), ['class' => 'waves-effect waves-light btn teal']); ?>
