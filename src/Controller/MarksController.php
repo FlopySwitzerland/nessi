@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * Marks Controller
@@ -21,15 +22,26 @@ class MarksController extends AppController
      */
     public function index()
     {
-        $tblschoolClasses = TableRegistry::get('SchoolClasses');
-        $schoolClasses = $tblschoolClasses
+        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
+        $tblSubjects = TableRegistry::get('Subjects');
+        $tblTerms = TableRegistry::get('Terms');
+        $schoolClasses = $tblSchoolClasses
             ->find()
-            ->contain(['Subjects' => ['Marks'], 'Establishments'])
+            ->contain(['Subjects' => ['Marks', 'Terms' => 'Academicyears'], 'Establishments'])
             ->where(['user_id' => $this->Auth->User('id')]);
 
+        $subjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->combine('id', 'name', 'school_class.name');
 
+        $terms = $tblTerms
+            ->find();
 
-        $this->set(compact('schoolClasses'));
+        $maxMarksCount = $tblSubjects->find()->max('marks_count')->marks_count;
+
+        $this->set(compact('schoolClasses', 'subjects', 'maxMarksCount', 'terms'));
         $this->set('_serialize', ['schoolClasses']);
     }
 
@@ -67,8 +79,7 @@ class MarksController extends AppController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $subjects = $this->Marks->Subjects->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'subjects'));
+        $this->set(compact('mark'));
         $this->set('_serialize', ['mark']);
     }
 

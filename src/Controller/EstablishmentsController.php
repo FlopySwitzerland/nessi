@@ -66,7 +66,7 @@ class EstablishmentsController extends AppController
             if ($this->Establishments->save($establishment)) {
                 $this->Flash->success(__('The establishment has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The establishment could not be saved. Please, try again.'));
         }
