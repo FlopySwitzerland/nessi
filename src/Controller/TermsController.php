@@ -29,8 +29,13 @@ class TermsController extends AppController
         $this->set('_serialize', ['terms']);
     }
 
-    public function list(){
-        $establishments = $this->Terms->find()->select(['id' => 'id', 'text' => 'name']);
+    /**
+     * list
+     */
+    public function list($subject_id){
+        $establishments = $this->Terms
+            ->find()
+            ->select(['id' => 'id', 'text' => 'name']);
 
         $this->set(compact('establishments'));
         $this->set('_serialize', ['establishments']);

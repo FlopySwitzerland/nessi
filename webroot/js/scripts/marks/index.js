@@ -13,7 +13,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET', // your request type
             url: baseUrl+'terms/list.json',
-            data: "",
+            data: {subject: 1},
             success: function (response) {
 
             }
