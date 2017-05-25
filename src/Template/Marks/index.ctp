@@ -63,6 +63,7 @@ echo $this->Html->script('scripts/marks/index.js', ['block' => 'script']);
             <div class="col s8">
                 <?php
                 echo $this->Form->control('subject_id', ['options' => $subjects]);
+                echo $this->Form->control('term');
                 echo $this->Form->control('value');
                 echo $this->Form->control('coefficient');
                 echo $this->Form->control('exam_date', ['empty' => true, 'class' => 'datepicker']);
