@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
@@ -32,16 +33,30 @@ class MarksController extends AppController
 
         $subjects = $tblSubjects
             ->find()
-            ->contain(['SchoolClasses'])
+            ->contain(['SchoolClasses', 'Terms'])
             ->where(['user_id' => $this->Auth->User('id')])
             ->combine('id', 'name', 'school_class.name');
 
-        $terms = $tblTerms
-            ->find();
+        $qryTerms = $tblSubjects
+            ->find()
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ])->first();
+
+        $academicyears = (new Collection($qryTerms['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+
+
+
+
 
         $maxMarksCount = $tblSubjects->find()->max('marks_count')->marks_count;
 
-        $this->set(compact('schoolClasses', 'subjects', 'maxMarksCount', 'terms'));
+        $this->set(compact('schoolClasses', 'subjects', 'maxMarksCount', 'academicyears'));
         $this->set('_serialize', ['schoolClasses']);
     }
 

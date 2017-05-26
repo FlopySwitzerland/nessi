@@ -143,3 +143,6 @@ label{
 .subjectname{
     max-width: 25%;
 }
+.select-dropdown label{
+    width:auto !important;
+}

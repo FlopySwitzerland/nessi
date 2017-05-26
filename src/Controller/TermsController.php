@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
+use Cake\ORM\TableRegistry;
 
 /**
  * Terms Controller
@@ -32,13 +34,27 @@ class TermsController extends AppController
     /**
      * list
      */
-    public function list($subject_id){
-        $establishments = $this->Terms
+    public function list(){
+        $tblSubjects = TableRegistry::get('Subjects');
+        $qrySubjects = $tblSubjects
             ->find()
-            ->select(['id' => 'id', 'text' => 'name']);
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ]);
+        if(!empty($this->request->getQuery('subject_id'))){
+            $qrySubjects->where(['Subjects.id' => $this->request->getQuery('subject_id')]);
+        }
+        $results = $qrySubjects->first();
 
-        $this->set(compact('establishments'));
-        $this->set('_serialize', ['establishments']);
+        $results = (new Collection($results['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+
+        $this->set(compact('results'));
+        $this->set('_serialize', ['results']);
     }
 
     /**
