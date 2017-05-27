@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'GET',
-            url: baseUrl+'terms/list.json',
+            url: baseUrl+'terms/getList.json',
             data: {subject_id: 1},
             success: function (response) {
 

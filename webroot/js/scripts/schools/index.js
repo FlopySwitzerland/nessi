@@ -7,7 +7,7 @@ $( document ).ready(function() {
 
     $.ajax({
         type: 'GET', // your request type
-        url: baseUrl+'establishments/list.json',
+        url: baseUrl+'establishments/getList.json',
         success: function (response) {
             $('#establishment-id').select2({
                 placeholder: "Select an option",
@@ -29,7 +29,7 @@ $( document ).ready(function() {
 
         $.ajax({
             type: 'GET',
-            url: baseUrl+'terms/list.json',
+            url: baseUrl+'terms/getList.json',
             success: function (response) {
 
                 var termselect = modal.find('#terms-ids');

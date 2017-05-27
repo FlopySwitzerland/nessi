@@ -34,7 +34,7 @@ class TermsController extends AppController
     /**
      * list
      */
-    public function list(){
+    public function getList(){
         $tblSubjects = TableRegistry::get('Subjects');
         $qrySubjects = $tblSubjects
             ->find()

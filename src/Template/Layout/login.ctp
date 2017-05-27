@@ -29,7 +29,7 @@ $cakeDescription = 'Nessi';
 
     <!-- Styles -->
     <?= $this->Html->css('materialize.min.css') ?>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <?= $this->Html->css('alpha.min.css') ?>
     <?= $this->Html->css('custom.css') ?>
 

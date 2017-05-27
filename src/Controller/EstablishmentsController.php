@@ -27,7 +27,7 @@ class EstablishmentsController extends AppController
         $this->set('_serialize', ['establishments']);
     }
 
-    public function list(){
+    public function getList(){
         $establishments = $this->Establishments->find()->select(['id' => 'id', 'text' => 'name']);
 
         $this->set(compact('establishments'));
