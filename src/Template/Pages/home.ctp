@@ -20,6 +20,7 @@ $this->layout = 'landing';
                 </div> <!-- end col -->
 
                 <div class="col-md-4 col-md-offset-2 col-sm-5">
+                    <?php if (!$this->request->session()->read('Auth.User')) { ?>
                     <form role="form" class="intro-form">
                         <h3 class="text-center"> Register for free </h3>
                         <div class="form-group">
@@ -36,6 +37,7 @@ $this->layout = 'landing';
                         </div>
                         <span class="help-block m-b-0 m-t-20 text-muted"><small>By registering, you agree to the Nessi <a href="#">Terms of Use</a></small></span>
                     </form>
+                    <?php } ?>
                 </div><!-- end col -->
             </div>
         </div>

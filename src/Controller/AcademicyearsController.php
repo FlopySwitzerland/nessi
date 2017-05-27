@@ -52,16 +52,18 @@ class AcademicyearsController extends AppController
     {
         $academicyear = $this->Academicyears->newEntity();
         if ($this->request->is('post')) {
+            $academicyear->user_id = $this->Auth->User('id');
             $academicyear = $this->Academicyears->patchEntity($academicyear, $this->request->getData());
             if ($this->Academicyears->save($academicyear)) {
                 $this->Flash->success(__('The academicyear has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The academicyear could not be saved. Please, try again.'));
         }
         $this->set(compact('academicyear'));
         $this->set('_serialize', ['academicyear']);
+        return $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**

@@ -64,12 +64,18 @@
 
                 <!-- Navbar right -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>">Login</a>
-                    </li>
-                    <li>
-                        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'register', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-fill navbar-btn">Sign Up</a>
-                    </li>
+                    <?php if ($this->request->session()->read('Auth.User')) { ?>
+                        <li>
+                            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-fill navbar-btn">Go to app</a>
+                        </li>
+                    <?php }else{ ?>
+                        <li>
+                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>">Login</a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'register', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-fill navbar-btn">Sign Up</a>
+                        </li>
+                    <?php } ?>
                 </ul>
 
             </div>

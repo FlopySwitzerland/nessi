@@ -11,6 +11,40 @@ echo $this->Html->script('select2/select2.min.js', ['block' => 'script']);
 echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
 ?>
 <div class="row">
+    <div class="col m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Terms</span>
+                <?php foreach ($academicyears as $academicyear) { ?>
+                    <h4><?= $academicyear->start_date->year." - ".$academicyear->end_date->year ?></h4>
+                    <p><?= $academicyear->start_date->i18nFormat('MMMM d Y')." - ".$academicyear->end_date->i18nFormat('MMMM d Y') ?>
+                        <a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $academicyear->id]) ?>" class="tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></p>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <?php foreach ($academicyear->terms as $term) { ?>
+                            <li>
+                                <div class="collapsible-header"><?= $term->name ?></div>
+                                <div class="collapsible-body">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <ul class="collection">
+                                                <li class="collection-item"><div>From <b><?= $term->start_date->format('m/d/Y') ?></b> to <b><?= $term->end_date->format('m/d/Y') ?></b><a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $term->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></div></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php } ?>
+                        <li>
+                            <div class="collapsible-header"><a class="waves-effect waves-teal modal-trigger" href="#modal-add-term">Add a term</a></div>
+                        </li>
+                    </ul>
+
+                    <div class="divider"></div>
+                <?php } ?>
+                <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-year">Add an academic year</a>
+            </div>
+        </div>
+    </div>
     <div class="col m5">
         <div class="card">
             <div class="card-content">
@@ -39,34 +73,6 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                     <div class="divider"></div>
                 <?php } ?>
                 <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-school">Add a school class</a>
-            </div>
-        </div>
-    </div>
-    <div class="col m4">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">Terms</span>
-                <?php foreach ($academicyears as $academicyear => $terms) { ?>
-                    <h4><?= $academicyear ?></h4>
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <?php foreach ($terms as $termid => $term) { ?>
-                            <li>
-                                <div class="collapsible-header"><?= $term->name ?></div>
-                                <div class="collapsible-body">
-                                    <div class="row">
-                                        <div class="col s12">
-                                            <ul class="collection">
-                                                <li class="collection-item"><div>From <b><?= $term->start_date->format('m/d/Y') ?></b> to <b><?= $term->end_date->format('m/d/Y') ?></b><a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $term->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></div></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                    <div class="divider"></div>
-                <?php } ?>
-                <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-school">Add an academic year</a>
             </div>
         </div>
     </div>
@@ -112,6 +118,47 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
     </div>
     <?= $this->Form->end() ?>
 </div>
+
+<div id="modal-add-term" class="modal modal-fixed-footer">
+    <?= $this->Form->create(null, ['url' => ['controller' => 'Terms', 'action' => 'add']]) ?>
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s8">
+                <?= $this->Form->control('name', ['type' => 'text']) ?>
+                <?= $this->Form->control('start_date', ['class' => 'datepicker', 'type' => 'text']) ?>
+                <?= $this->Form->control('end_date', ['class' => 'datepicker', 'type' => 'text']) ?>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <?= $this->Form->button(__('Submit'), ['class' => 'modal-action waves-effect waves-green btn-flat']) ?>
+    </div>
+    <?= $this->Form->end() ?>
+</div>
+
+<div id="modal-add-year" class="modal modal-fixed-footer">
+    <?= $this->Form->create(null, ['url' => ['controller' => 'Academicyears', 'action' => 'add']]) ?>
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s8">
+                <?= $this->Form->control('start_date', ['class' => 'datepicker', 'type' => 'text']) ?>
+                <?= $this->Form->control('end_date', ['class' => 'datepicker', 'type' => 'text']) ?>
+            </div>
+            <div class="col s4">
+                <h4>What Are Academic Years?</h4>
+                <p>An academic year and its terms are used to represent your school year and any terms (eg. semesters, trimesters, quarters) that you may have.</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <?= $this->Form->button(__('Submit'), ['class' => 'modal-action waves-effect waves-green btn-flat']) ?>
+    </div>
+    <?= $this->Form->end() ?>
+</div>
+
+
 
 <div id="modal-add-school" class="modal modal-fixed-footer">
     <?= $this->Form->create(null, ['url' => ['controller' => 'SchoolClasses', 'action' => 'add']]) ?>

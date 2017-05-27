@@ -16,6 +16,11 @@ $( document ).ready(function() {
         }
     });
 
+    $('.datepicker').pickadate({
+        selectMonths: true,
+        selectYears: 2,
+        format: 'yyyy-mm-dd'
+    });
 
     $('.add-subject-trigger').click(function () {
         var modal = $('#modal-add-subject'),
