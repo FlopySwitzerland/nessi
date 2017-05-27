@@ -73,13 +73,11 @@ class SubjectsTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->requirePresence('img', 'create')
-            ->notEmpty('img');
+            ->allowEmpty('img');
 
         $validator
             ->integer('marks_count')
-            ->requirePresence('marks_count', 'create')
-            ->notEmpty('marks_count');
+            ->allowEmpty('marks_count');
 
         $validator
             ->numeric('avg_round')

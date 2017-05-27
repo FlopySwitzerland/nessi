@@ -55,18 +55,16 @@ class SchoolClassesController extends AppController
     {
         $schoolClass = $this->SchoolClasses->newEntity();
         if ($this->request->is('post')) {
+            $schoolClass->user_id = $this->Auth->User('id');
             $schoolClass = $this->SchoolClasses->patchEntity($schoolClass, $this->request->getData());
             if ($this->SchoolClasses->save($schoolClass)) {
                 $this->Flash->success(__('The school class has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The school class could not be saved. Please, try again.'));
         }
-        $establishments = $this->SchoolClasses->Establishments->find('list', ['limit' => 200]);
-        $users = $this->SchoolClasses->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schoolClass', 'establishments', 'users'));
-        $this->set('_serialize', ['schoolClass']);
+        $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**

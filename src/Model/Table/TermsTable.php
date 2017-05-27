@@ -45,6 +45,11 @@ class TermsTable extends Table
             'joinType' => 'INNER'
         ]);
 
+        $this->hasMany('Marks', [
+            'className' => 'Marks',
+            'foreignKey' => 'term_id'
+        ]);
+
         $this->belongsToMany('Subjects', [
             'foreignKey' => 'term_id',
             'targetForeignKey' => 'subject_id',

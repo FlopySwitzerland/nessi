@@ -2,7 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * Marks Controller
@@ -21,15 +23,40 @@ class MarksController extends AppController
      */
     public function index()
     {
-        $tblschoolClasses = TableRegistry::get('SchoolClasses');
-        $schoolClasses = $tblschoolClasses
+        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
+        $tblSubjects = TableRegistry::get('Subjects');
+        $tblTerms = TableRegistry::get('Terms');
+        $schoolClasses = $tblSchoolClasses
             ->find()
-            ->contain(['Subjects' => ['Marks'], 'Establishments'])
+            ->contain(['Subjects' => ['Marks', 'Terms' => 'Academicyears'], 'Establishments'])
             ->where(['user_id' => $this->Auth->User('id')]);
 
+        $subjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses', 'Terms'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->combine('id', 'name', 'school_class.name');
+
+        $qryTerms = $tblSubjects
+            ->find()
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ])->first();
+
+        $academicyears = (new Collection($qryTerms['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
 
 
-        $this->set(compact('schoolClasses'));
+
+
+
+        $maxMarksCount = $tblSubjects->find()->max('marks_count')->marks_count;
+
+        $this->set(compact('schoolClasses', 'subjects', 'maxMarksCount', 'academicyears'));
         $this->set('_serialize', ['schoolClasses']);
     }
 
@@ -67,8 +94,7 @@ class MarksController extends AppController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $subjects = $this->Marks->Subjects->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'subjects'));
+        $this->set(compact('mark'));
         $this->set('_serialize', ['mark']);
     }
 

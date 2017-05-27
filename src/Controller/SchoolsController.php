@@ -8,6 +8,7 @@
 namespace App\Controller;
 
 
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -27,7 +28,36 @@ class SchoolsController extends AppController
             ->contain(['Subjects', 'Establishments'])
             ->where(['user_id' => $this->Auth->User('id')]);
 
-        $this->set(compact('schoolClasses'));
+
+
+        $tblSubjects = TableRegistry::get('Subjects');
+        $qrySubjects = $tblSubjects
+            ->find()
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ]);
+        $results = $qrySubjects->first();
+
+        //$academicyears = (new Collection($results['terms']))->combine('id', function ($entity) { return $entity; }, function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+
+
+        $tblAcademicyears = TableRegistry::get('Academicyears');
+
+        $academicyears = $tblAcademicyears
+            ->find()
+            ->contain(['Terms'])
+            ->where([
+                'user_id' => $this->Auth->User('id')
+            ]);
+
+
+
+        $this->set(compact('schoolClasses', 'academicyears'));
         $this->set('_serialize', ['schoolClasses']);
     }
 }

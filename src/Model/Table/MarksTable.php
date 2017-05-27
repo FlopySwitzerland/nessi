@@ -45,6 +45,11 @@ class MarksTable extends Table
             'joinType' => 'INNER'
         ]);
 
+        $this->belongsTo('Terms', [
+            'foreignKey' => 'term_id',
+            'joinType' => 'INNER'
+        ]);
+
         $this->addBehavior('CounterCache', [
             'Subjects' => ['marks_count']
         ]);
@@ -73,7 +78,7 @@ class MarksTable extends Table
             ->notEmpty('coefficient');
 
         $validator
-            ->dateTime('exam_date')
+            ->date('exam_date')
             ->allowEmpty('exam_date');
 
         return $validator;

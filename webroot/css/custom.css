@@ -139,3 +139,10 @@ label{
     color: #fff;
     background-color: #03a9f4;
 }
+
+.subjectname{
+    max-width: 25%;
+}
+.select-dropdown label{
+    width:auto !important;
+}

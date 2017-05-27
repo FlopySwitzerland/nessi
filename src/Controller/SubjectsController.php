@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
+use Cake\ORM\TableRegistry;
 
 /**
  * Subjects Controller
@@ -55,18 +57,16 @@ class SubjectsController extends AppController
     {
         $subject = $this->Subjects->newEntity();
         if ($this->request->is('post')) {
+            $subject->user_id = $this->Auth->User('id');
             $subject = $this->Subjects->patchEntity($subject, $this->request->getData());
             if ($this->Subjects->save($subject)) {
                 $this->Flash->success(__('The subject has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The subject could not be saved. Please, try again.'));
         }
-        $schoolClasses = $this->Subjects->SchoolClasses->find('list', ['limit' => 200]);
-        $terms = $this->Subjects->Terms->find('list', ['limit' => 200]);
-        $this->set(compact('subject', 'schoolClasses', 'terms'));
-        $this->set('_serialize', ['subject']);
+        $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**
@@ -79,21 +79,42 @@ class SubjectsController extends AppController
     public function edit($id = null)
     {
         $subject = $this->Subjects->get($id, [
-            'contain' => ['Terms']
+            'contain' => ['Terms', 'SchoolClasses']
         ]);
+        if($subject->school_class->user_id == $this->Auth->User('id')){
+
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $subject = $this->Subjects->patchEntity($subject, $this->request->getData());
             if ($this->Subjects->save($subject)) {
                 $this->Flash->success(__('The subject has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The subject could not be saved. Please, try again.'));
         }
-        $schoolClasses = $this->Subjects->SchoolClasses->find('list', ['limit' => 200]);
-        $terms = $this->Subjects->Terms->find('list', ['limit' => 200]);
+        $schoolClasses = $this->Subjects->SchoolClasses->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->User('id')]);
+
+        $qrySubjects = $this->Subjects
+            ->find()
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ]);
+        $results = $qrySubjects->first();
+
+        $terms = (new Collection($results['terms']))->combine('id', function ($entity) { return $entity->name." (".$entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year.")"; });
+
         $this->set(compact('subject', 'schoolClasses', 'terms'));
         $this->set('_serialize', ['subject']);
+        }else{
+            $this->Flash->error(__('HEY ! You want to cheat ?'));
+            return $this->redirect(['controller' => 'schools', 'action' => 'index']);
+        }
     }
 
     /**

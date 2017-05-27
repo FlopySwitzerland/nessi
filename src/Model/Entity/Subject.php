@@ -37,4 +37,23 @@ class Subject extends Entity
         '*' => true,
         'id' => false
     ];
+
+
+    public function getAverage(){
+        if($this->marks_count > 0){
+            $avg = array_sum(array_map(function($value) { return $value->value; }, $this->marks))/ $this->marks_count;
+
+            if($this->avg_round == 0.5){
+                $avg_round = round($avg * 2) / 2;
+            }elseif($this->avg_round == 0.1){
+                $avg_round = round($avg, 1);
+            }else{
+                $avg_round = round($avg);
+            }
+
+            return $avg_round;
+        }else{
+            return "-";
+        }
+    }
 }
