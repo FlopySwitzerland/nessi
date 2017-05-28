@@ -87,7 +87,7 @@ class TermsController extends AppController
             if ($this->Terms->save($term)) {
                 $this->Flash->success(__('The term has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
             $this->Flash->error(__('The term could not be saved. Please, try again.'));
         }
@@ -95,6 +95,7 @@ class TermsController extends AppController
         $subjects = $this->Terms->Subjects->find('list', ['limit' => 200]);
         $this->set(compact('term', 'academicyears', 'subjects'));
         $this->set('_serialize', ['term']);
+        return $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**

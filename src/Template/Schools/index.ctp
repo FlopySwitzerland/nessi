@@ -35,7 +35,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                             </li>
                         <?php } ?>
                         <li>
-                            <div class="collapsible-header"><a class="waves-effect waves-teal modal-trigger" href="#modal-add-term">Add a term</a></div>
+                            <div class="collapsible-header"><a class="waves-effect waves-teal modal-trigger add-term-trigger" href="#modal-add-term" data-acid="<?= $academicyear->id ?>">Add a term</a></div>
                         </li>
                     </ul>
 
@@ -124,6 +124,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
     <div class="modal-content">
         <div class="row">
             <div class="col s8">
+                <?= $this->Form->hidden('academicyear_id', ['id' => 'academicyear-id']) ?>
                 <?= $this->Form->control('name', ['type' => 'text']) ?>
                 <?= $this->Form->control('start_date', ['class' => 'datepicker', 'type' => 'text']) ?>
                 <?= $this->Form->control('end_date', ['class' => 'datepicker', 'type' => 'text']) ?>

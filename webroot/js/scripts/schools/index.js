@@ -52,5 +52,14 @@ $( document ).ready(function() {
 
     });
 
+    $('.add-term-trigger').click(function () {
+        var modal = $('#modal-add-term'),
+            acid = $(this).data('acid');
+        modal.find('#academicyear-id').val(acid)
+
+
+
+    });
+
 
 });

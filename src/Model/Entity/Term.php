@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $start_date
  * @property \Cake\I18n\Time $end_date
  * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modifed
+ * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\Academicyear $academicyear
  */
