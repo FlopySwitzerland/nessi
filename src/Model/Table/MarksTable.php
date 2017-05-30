@@ -69,13 +69,11 @@ class MarksTable extends Table
 
         $validator
             ->numeric('value')
-            ->requirePresence('value', 'create')
-            ->notEmpty('value');
+            ->allowEmpty('value');
 
         $validator
             ->numeric('coefficient')
-            ->requirePresence('coefficient', 'create')
-            ->notEmpty('coefficient');
+            ->allowEmpty('coefficient');
 
         $validator
             ->date('exam_date')

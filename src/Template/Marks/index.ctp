@@ -66,8 +66,12 @@ use \Cake\Collection\Collection;
         <?php } ?>
     </div>
 
-    <div class="fixed-action-btn" style="top: 70px; right: 35px;">
-        <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#add-mark-modal"><i class="material-icons">add</i></a>
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light green darken-4"><i class="material-icons">add</i></a>
+        <ul>
+            <li><a class="btn-floating green darken-4" href="<?= $this->Url->build(['action' => 'bulkadd']) ?>" data-position="bottom" data-delay="10" data-tooltip="Bulk Add"><i class="material-icons">playlist_add</i></a></li>
+            <li><a class="btn-floating green darken-4 modal-trigger" href="#add-mark-modal" data-position="bottom" data-delay="10" data-tooltip="Add One"><i class="material-icons">add_circle</i></a></li>
+        </ul>
     </div>
 
     <div id="add-mark-modal" class="modal modal-fixed-footer">
