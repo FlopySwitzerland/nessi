@@ -6,53 +6,63 @@ echo $this->Html->script('vuejs/vue.js', ['block' => 'script']);
 echo $this->Html->script('lodash/lodash.min.js', ['block' => 'script']);
 echo $this->Html->script('axios/axios.min.js', ['block' => 'script']);
 echo $this->Html->script('scripts/marks/index.js', ['block' => 'script']);
+
+use \Cake\Collection\Collection;
 ?>
 <div id="el" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <?php foreach ($academicyears as $terms){ ?>
-            <div class="row">
-                <div class="col s12">
-                    <ul class="tabs tab-demo z-depth-1" style="width: 100%;">
-                        <?php foreach ($terms as $id => $term){ ?>
-                            <li class="tab col s3"><a href="#term<?= $id ?>"><?= $term ?></a></li>
-                        <?php } ?>
-                        <li class="tab col s3"><a href="#total>">Total</a></li>
-                    </ul>
-                </div>
-                <?php foreach ($terms as $id => $term){ ?>
-                    <div id="term<?= $id ?>" class="col s12">
-                        <?php foreach($schoolClasses as $schoolClass){ ?>
-                            <?php if(count($schoolClass->subjects) > 0){ ?>
-                                <div class="card">
-                                    <div class="card-content">
-                                        <span class="card-title"><?= $schoolClass->establishment->name." - ".$schoolClass->name ?></span>
-                                        <table class=" bordered">
-                                            <tbody>
-                                            <?php foreach($schoolClass->subjects as $subject){ ?>
-                                                <tr>
-                                                    <td><?= $this->Html->link($subject->name, ['controller' => 'Subjects', 'action' => 'view', $subject->id]) ?></td>
-                                                    <?php foreach($subject->marks as $mark){ ?>
-                                                        <?php if($mark->term_id == $id){ ?>
-                                                            <td><?= $this->Number->format($mark->value) ?></td>
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                                    <?php if($maxMarksCount-$subject->marks_count > 0){ ?>
-                                                        <td colspan="<?= $maxMarksCount-$subject->marks_count ?>"></td>
-                                                    <?php } ?>
-                                                    <td><b><?= $subject->getAverage() ?></b></td>
-                                                </tr>
-                                            <?php } ?>
-                                            </tbody>
-                                        </table>
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-                <div id="total" class="col s12"><p class="p-v-sm">Test 4</p></div>
+        <?php foreach ($acyears as $acyear){ ?>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs tab-demo z-depth-1" style="width: 100%;">
+                    <?php foreach ($acyear->terms as $term){ ?>
+                        <li class="tab col s3"><a href="#term<?= $term->id ?>"><?= $term->name ?></a></li>
+                    <?php } ?>
+                    <li class="tab col s3"><a href="#total>">Total</a></li>
+                </ul>
             </div>
+            <?php foreach ($acyear->terms as $term){ ?>
+                <div id="term<?= $term->id ?>" class="col s12">
+                    <?php if(count($term->subjects) > 0){
+                        $marks = (new Collection($term->marks))->groupBy('subject_id')->toArray();
+                        $count = array_map('count', $marks);
+                        $maxMarksCount = max(array_keys($count));
+                        ?>
+                        <?php foreach((new Collection($term->subjects))->groupBy('school_class.name') as $classname => $subjects){ ?>
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="card-title"><?= " - ".$classname ?></span>
+                                    <table class="bordered">
+                                        <tbody>
+                                        <?php foreach($subjects as $subject){ ?>
+                                            <tr>
+                                                <td style="width: 25%"><?= $this->Html->link($subject->name, ['controller' => 'Subjects', 'action' => 'view', $subject->id]) ?></td>
+                                                <?php if(isset($marks[$subject->id])){ ?>
+                                                    <?php foreach($marks[$subject->id] as $mark){ ?>
+                                                        <td style="width: <?= 65/$maxMarksCount ?>%"><?= $this->Number->format($mark->value) ?></td>
+                                                    <?php } ?>
+                                                    <?php if($maxMarksCount-count($marks[$subject->id]) > 0){
+                                                        for ($i = 1; $i <= $maxMarksCount-count($marks[$subject->id]); $i++) { ?>
+                                                        <td style="width: <?= 65/$maxMarksCount ?>%"> </td>
+                                                    <?php } } ?>
+                                                <?php }else{ ?>
+                                                    <td colspan="<?= $maxMarksCount ?>"></td>
+                                                <?php } ?>
+                                                <td style="width: 10%"><b><?= $subject->getAverage(@$marks[$subject->id]) ?></b></td>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php }else{ ?>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+            <div id="total" class="col s12"><p class="p-v-sm">Test 4</p></div>
+        </div>
         <?php } ?>
     </div>
 
@@ -66,7 +76,7 @@ echo $this->Html->script('scripts/marks/index.js', ['block' => 'script']);
             <div class="row">
                 <div class="col s8">
                     <?php
-                    echo $this->Form->control('subject_id', ['options' => $subjects], ['v-model' => 'subject']);
+                    echo $this->Form->control('subject_id', ['options' => $listsubjects], ['v-model' => 'subject']);
                     ?>
                     <div id="loading" style="display: none">
                         <div class="preloader-wrapper small active">

@@ -39,9 +39,16 @@ class Subject extends Entity
     ];
 
 
-    public function getAverage(){
-        if($this->marks_count > 0){
-            $avg = array_sum(array_map(function($value) { return $value->value; }, $this->marks))/ $this->marks_count;
+    /**
+     * getAverage
+     * Calculate the average for the given subject
+     *
+     * @param $marks
+     * @return float|int|string
+     */
+    public function getAverage($marks){
+        if(!is_null($marks)){
+            $avg = array_sum(array_map(function($value) { return $value->value; }, $marks))/ count($marks);
 
             if($this->avg_round == 0.5){
                 $avg_round = round($avg * 2) / 2;

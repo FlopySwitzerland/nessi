@@ -77,8 +77,7 @@ $this->layout = 'landing';
 
             <div class="col-sm-4">
                 <div class="features-box">
-                    <!--                    TODO: Find a better suiting     icon-->
-                    <i class="pe-7s-refresh-2"></i>
+                    <i class="pe-7s-piggy"></i>
                     <h4 class="text-white">Free</h4>
                     <p class="text-muted"><?=__('Nessi will always be free and without adds. Because we know students do not have a lot of money, we are here to help')?></p>
                 </div>
@@ -100,7 +99,7 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-7">
                 <br>
-                //TODO : Put an image of Nessi (UI not the monster)
+                //TODO : Put an image of Nessi (UI, not the monster)
             </div>
             <div class="col-sm-5">
                 <h3 class="title">Available on all platforms</h3>
@@ -156,7 +155,7 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h3 class="title text-white"><?=('Subscribe to our newsletter')?></h3>
-                <p class="text-light sub-title">If you want to be kept in the known......</p>
+                <p class="text-light sub-title">If you want to be kept in the known...</p>
             </div>
         </div><!-- End row -->
 

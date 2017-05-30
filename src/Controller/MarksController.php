@@ -23,21 +23,26 @@ class MarksController extends AppController
      */
     public function index()
     {
+
         $tblSchoolClasses = TableRegistry::get('SchoolClasses');
         $tblSubjects = TableRegistry::get('Subjects');
         $tblTerms = TableRegistry::get('Terms');
-        $schoolClasses = $tblSchoolClasses
+        $tblAcademicyears = TableRegistry::get('Academicyears');
+        $tblEstablishments = TableRegistry::get('Establishments');
+
+       /* $schoolClasses = $tblSchoolClasses
             ->find()
             ->contain(['Subjects' => ['Marks', 'Terms' => 'Academicyears'], 'Establishments'])
             ->where(['user_id' => $this->Auth->User('id')]);
-
-        $subjects = $tblSubjects
+*/
+        $listsubjects = $tblSubjects
             ->find()
             ->contain(['SchoolClasses', 'Terms'])
             ->where(['user_id' => $this->Auth->User('id')])
-            ->combine('id', 'name', 'school_class.name');
+            ->combine('id', 'name', 'school_class.name')
+            ->toArray();
 
-        $qryTerms = $tblSubjects
+     /*   $qryTerms = $tblSubjects
             ->find()
             ->contain([
                 'SchoolClasses',
@@ -47,16 +52,23 @@ class MarksController extends AppController
             ->where([
                 'SchoolClasses.user_id' => $this->Auth->User('id')
             ])->first();
+*/
 
-        $academicyears = (new Collection($qryTerms['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+        $qry = $tblAcademicyears->find();
+        $acyears = $qry
+            ->contain(['Terms' => ['Subjects' => ['SchoolClasses'], 'Marks']])
+            ->where(['user_id' => $this->Auth->User('id')]);
+
+        $academicyears = $acyears->orderDesc('end_date')->extract(function ($entity) { return $entity->start_date->year." - ".$entity->end_date->year; })->toArray();
+
+        $establishments = $tblEstablishments
+            ->find('list', ['keyField' => 'id', 'valueField' => 'name']);
 
 
+      //  $academicyears = (new Collection($qryTerms['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
 
 
-
-        $maxMarksCount = $tblSubjects->find()->max('marks_count')->marks_count;
-
-        $this->set(compact('schoolClasses', 'subjects', 'maxMarksCount', 'academicyears'));
+        $this->set(compact('listsubjects', 'acyears', 'academicyears', 'establishments'));
         $this->set('_serialize', ['schoolClasses']);
     }
 
@@ -95,6 +107,29 @@ class MarksController extends AppController
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
         $this->set(compact('mark'));
+        $this->set('_serialize', ['mark']);
+    }
+
+    public function bulkadd()
+    {
+        $tblSubjects = TableRegistry::get('Subjects');
+        $mark = $this->Marks->newEntity();
+        if ($this->request->is('post')) {
+            $mark = $this->Marks->patchEntity($mark, $this->request->getData());
+            if ($this->Marks->save($mark)) {
+                $this->Flash->success(__('The mark has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The mark could not be saved. Please, try again.'));
+        }
+        $subjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses', 'Terms'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->groupBy('school_class.name')
+            ->toArray();
+        $this->set(compact('mark', 'subjects'));
         $this->set('_serialize', ['mark']);
     }
 
