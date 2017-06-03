@@ -49,6 +49,9 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
         <div class="card">
             <div class="card-content">
                 <span class="card-title">Schools</span>
+                <?php if($academicyears->count() < 1 || $academicyears->extract('terms') < 1){ ?>
+                    <p>Please add an academic year and a term first</p>
+                <?php }else{ ?>
                 <?php foreach ($schoolClasses->groupBy('establishment.name') as $establishment => $classes){ ?>
                     <h4><?= $establishment ?></h4>
                     <ul class="collapsible" data-collapsible="accordion">
@@ -73,6 +76,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                     <div class="divider"></div>
                 <?php } ?>
                 <a class="waves-effect waves-light btn m-t-20 modal-trigger" href="#modal-add-school">Add a school class</a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -80,11 +84,19 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
 
 </div>
 
+
+<!-- ----------------- -->
+<!-- ----- Modal ----- -->
+<!-- ----------------- -->
+
+
+<!-- Modal Add Subject -->
+
 <div id="modal-add-subject" class="modal modal-fixed-footer">
     <?= $this->Form->create(null, ['url' => ['controller' => 'Subjects', 'action' => 'add']]) ?>
     <div class="modal-content">
         <div class="row">
-            <div class="col s8">
+            <div class="col m8">
                 <?php
                 $this->Form->setTemplates(['nestingLabel' => '{{hidden}}{{input}}<label{{attrs}}>{{text}}</label>']);
 
@@ -98,8 +110,10 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                 echo $this->Form->control('avg_sup', ['label' => __('Rounded up (e.g. 5.25 = 5.5)'), 'type' => 'checkbox', 'checked']);
 
                 ?>
+                <br>
+                <br>
             </div>
-            <div class="col s4">
+            <div class="col m4">
                 <h3>Help</h3>
                 <h4><?= __('Average rounding') ?></h4>
                 <p>Round of your average on this subject.</p>
@@ -119,11 +133,13 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
     <?= $this->Form->end() ?>
 </div>
 
+<!-- Modal Add Term -->
+
 <div id="modal-add-term" class="modal modal-fixed-footer">
     <?= $this->Form->create(null, ['url' => ['controller' => 'Terms', 'action' => 'add']]) ?>
     <div class="modal-content">
         <div class="row">
-            <div class="col s8">
+            <div class="col m8">
                 <?= $this->Form->hidden('academicyear_id', ['id' => 'academicyear-id']) ?>
                 <?= $this->Form->control('name', ['type' => 'text']) ?>
                 <?= $this->Form->control('start_date', ['class' => 'datepicker', 'type' => 'text']) ?>
@@ -138,15 +154,20 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
     <?= $this->Form->end() ?>
 </div>
 
+<!-- Modal Add Year -->
+
 <div id="modal-add-year" class="modal modal-fixed-footer">
     <?= $this->Form->create(null, ['url' => ['controller' => 'Academicyears', 'action' => 'add']]) ?>
     <div class="modal-content">
         <div class="row">
-            <div class="col s8">
+            <div class="col m8">
                 <?= $this->Form->control('start_date', ['class' => 'datepicker', 'type' => 'text']) ?>
                 <?= $this->Form->control('end_date', ['class' => 'datepicker', 'type' => 'text']) ?>
+                <br>
             </div>
-            <div class="col s4">
+        </div>
+        <div class="row">
+            <div class="col m8">
                 <h4>What Are Academic Years?</h4>
                 <p>An academic year and its terms are used to represent your school year and any terms (eg. semesters, trimesters, quarters) that you may have.</p>
             </div>
@@ -160,6 +181,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
 </div>
 
 
+<!-- Modal Add School -->
 
 <div id="modal-add-school" class="modal modal-fixed-footer">
     <?= $this->Form->create(null, ['url' => ['controller' => 'SchoolClasses', 'action' => 'add']]) ?>
