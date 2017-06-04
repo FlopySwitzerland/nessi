@@ -14,27 +14,6 @@ $this->assign('title', __('Establishment'));
 
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title"><?= __('Reviews') ?></span>
-                <?php foreach ($googledetails['result']['reviews'] as $review) { ?>
-                    <div class="row">
-                        <div class="col s2">
-                            <img src="<?= $review['profile_photo_url'] ?>" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-                        </div>
-                        <div class="col s10">
-                            <a class="black-text" href="<?= $review['author_url'] ?>" target="_blank"><?= $review['author_name'] ?></a>
-                            <p>
-                                <span class="rating-system rating-<?= $review['rating']; ?>"></span>
-                                <span class="valign-sup"> - <?= $review['relative_time_description'] ?></span>
-                            </p>
-                            <p><?= $review['text'] ?></p>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                <?php } ?>
-            </div>
-        </div>
     </div>
     <div class="col s12 m4 l5">
         <div class="card">
@@ -58,27 +37,24 @@ $this->assign('title', __('Establishment'));
     </div>
     <div class="col s12 m4 l4">
         <div class="card">
-            <div class="card-content ">
-
-            </div>
-            <div class="card-content ">
-                <span class="card-title">Let's keep in touch</span>
-                <form class="m-t-md">
+            <div class="card-content">
+                <span class="card-title"><?= __('Reviews') ?></span>
+                <?php foreach ($googledetails['result']['reviews'] as $review) { ?>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="first_name" type="text" class="validate">
-                            <label for="first_name">Subject</label>
+                        <div class="col s2">
+                            <img src="<?= $review['profile_photo_url'] ?>" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
                         </div>
-                        <div class="input-field col s12">
-                            <input id="email" type="email" class="validate">
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <textarea id="message" class="materialize-textarea"></textarea>
-                            <label for="message">Message</label>
+                        <div class="col s10">
+                            <a class="black-text" href="<?= $review['author_url'] ?>" target="_blank"><?= $review['author_name'] ?></a>
+                            <p>
+                                <span class="rating-system rating-<?= $review['rating']; ?>"></span>
+                                <span class="valign-sup"> - <?= $review['relative_time_description'] ?></span>
+                            </p>
+                            <p><?= $review['text'] ?></p>
                         </div>
                     </div>
-                </form>
+                    <div class="divider"></div>
+                <?php } ?>
             </div>
         </div>
     </div>

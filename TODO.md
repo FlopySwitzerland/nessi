@@ -6,8 +6,8 @@
 - [x] Login/Register
 - [x] Forgot Password
 - [x] Two Factor
-- [x] Update Profile
-- [ ] Update Password
+- [ ] Update Profile*
+- [ ] Update Password*
 - [ ] Crop Profile Image
 - [ ] Personal Settings (Locale i18n)
 
@@ -22,26 +22,26 @@
 
 ### School Classes
 
-- [ ] View
+- [x] View
 - [x] Add/Edit
-- [ ] Delete
+- [ ] Delete*
 
 ### Subject
 
 - [x] View
 - [x] Add/Edit
-- [ ] Delete
+- [ ] Delete*
 
 ### Marks
 
 - [x] View
 - [x] Add/Edit
-- [ ] Delete
+- [ ] Delete*
 
 
 ## Dashboard
 
-- [ ] Chart for Subjects
+- [ ] Chart for Subjects*
 - [ ] Radar Chart by Terms (To Compare marks with other terms)
 - [ ] Preview of latest marks added to Nessi 
 
@@ -55,5 +55,8 @@
 
 - [ ] Apprentice manager System
 - [ ] Apprentice manager Dashboard
-- [ ] Calendar
+- [ ] Calendar*
+
+
+**\* Priority**
 
