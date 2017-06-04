@@ -47,6 +47,11 @@ $(document).ready(function() {
         formwrap.show();
         
     })
+$('#ac-select').change(function () {
 
+    $('.ac-ytabs').hide();
+    $('#'+this.value).show();
+})
+    
     
 });

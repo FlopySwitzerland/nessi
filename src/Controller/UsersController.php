@@ -23,7 +23,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['register', 'forgot']);
+        $this->Auth->allow(['register', 'forgot', 'reset']);
     }
 
     /**
@@ -149,6 +149,57 @@ class UsersController extends AppController
 
             }
         }
+    }
+
+    /**
+     * reset
+     */
+    public function reset($code){
+        $this->viewBuilder()->setLayout('login');
+
+            if(substr($code, 0, 3) == 'xxb' && substr($code, -3, 3) == 'bxx'){
+                $user = $this->Users->find()
+                    ->where(['token' => substr($code, 3, -3)]);
+
+                if($user->count() == 1){
+                    $udata = $user->first();
+
+                    if($udata->token_expiration->isWithinNext(1)){
+
+                        if ($this->request->is('post')) {
+                            $udata->token = null;
+                            $udata->token_expiration = null;
+                            $user = $this->Users->patchEntity($udata, $this->request->getData(), ['validate' => 'updatePassword']);
+                            if ($this->Users->save($user)) {
+                                $this->Flash->success(__('The password was successfully changed'));
+                                return $this->redirect(['action' => 'login']);
+                            }else{
+                                $this->Flash->error(__('The password have to be at least 8 characters!'));
+                            }
+                        }
+                        $this->set(compact('udata'));
+
+
+                    }else{
+                        $this->Flash->error(__('Token Expired'));
+                        return $this->redirect(['action' => 'forgot']);
+                    }
+
+                }else{
+                    $this->Flash->error(__('Invalid Token'));
+                    return $this->redirect(['action' => 'login']);
+                }
+
+            }else{
+                $this->Flash->error(__('Invalid Token Length'));
+                return $this->redirect(['action' => 'login']);
+            }
+
+
+
+
+
+
     }
 
 

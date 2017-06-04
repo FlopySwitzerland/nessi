@@ -144,6 +144,40 @@ class UsersTable extends Table
         return $validator;
     }
 
+    public function validationResetPassword(Validator $validator ) {
+
+        $validator
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password',[
+                'match'=>[
+                    'rule'=> ['compareWith','password2'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password');
+
+        $validator
+            ->add('password2', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password2',[
+                'match'=>[
+                    'rule'=> ['compareWith','password'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password2');
+        return $validator;
+    }
+
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.

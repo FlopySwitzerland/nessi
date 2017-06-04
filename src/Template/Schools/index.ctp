@@ -49,7 +49,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
         <div class="card">
             <div class="card-content">
                 <span class="card-title">Schools</span>
-                <?php if($academicyears->count() < 1 || $academicyears->extract('terms') < 1){ ?>
+                <?php if($academicyears->count() < 1){ ?>
                     <p>Please add an academic year and a term first</p>
                 <?php }else{ ?>
                 <?php foreach ($schoolClasses->groupBy('establishment.name') as $establishment => $classes){ ?>
