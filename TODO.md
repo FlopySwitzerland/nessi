@@ -4,7 +4,7 @@
 ## Authentication and Account
 
 - [x] Login/Register
-- [ ] Forgot Password
+- [x] Forgot Password
 - [x] Two Factor
 - [x] Update Profile
 - [ ] Update Password
@@ -17,25 +17,25 @@
 ### Establishments 
 
 - [ ] View (From Google Places)
-- [ ] Add (From Google Places)
-- [ ] Academic Years and Terms
+- [x] Add (From Google Places)
+- [x] Academic Years and Terms
 
 ### School Classes
 
 - [ ] View
-- [ ] Add/Edit
+- [x] Add/Edit
 - [ ] Delete
 
 ### Subject
 
-- [ ] View
-- [ ] Add/Edit
+- [x] View
+- [x] Add/Edit
 - [ ] Delete
 
 ### Marks
 
-- [ ] View
-- [ ] Add/Edit
+- [x] View
+- [x] Add/Edit
 - [ ] Delete
 
 
