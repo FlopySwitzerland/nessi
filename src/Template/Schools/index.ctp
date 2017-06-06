@@ -18,7 +18,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                 <?php foreach ($academicyears as $academicyear) { ?>
                     <h4><?= $academicyear->start_date->year." - ".$academicyear->end_date->year ?></h4>
                     <p><?= $academicyear->start_date->i18nFormat('MMMM d Y')." - ".$academicyear->end_date->i18nFormat('MMMM d Y') ?>
-                        <a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $academicyear->id]) ?>" class="tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></p>
+                        <a href="<?= $this->Url->build(['controller' => 'Academicyears', 'action' => 'edit', $academicyear->id]) ?>" class="tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></p>
                     <ul class="collapsible" data-collapsible="accordion">
                         <?php foreach ($academicyear->terms as $term) { ?>
                             <li>

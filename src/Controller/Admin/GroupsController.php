@@ -69,6 +69,7 @@ class GroupsController extends AdminAppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->setTemplate('add');
         $group = $this->Groups->get($id, [
             'contain' => []
         ]);

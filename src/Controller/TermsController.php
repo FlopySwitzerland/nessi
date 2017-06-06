@@ -47,7 +47,7 @@ class TermsController extends AppController
                 'SchoolClasses.user_id' => $this->Auth->User('id')
             ]);
         if(!empty($this->request->getQuery('subject_id'))){
-            $qrySubjects->where(['Subjects.id' => $this->request->getQuery('subject_id')]);
+            $qrySubjects->andWhere(['Subjects.id' => $this->request->getQuery('subject_id')]);
         }
         $results = $qrySubjects->first();
 
@@ -91,8 +91,8 @@ class TermsController extends AppController
             }
             $this->Flash->error(__('The term could not be saved. Please, try again.'));
         }
-        $academicyears = $this->Terms->Academicyears->find('list', ['limit' => 200]);
-        $subjects = $this->Terms->Subjects->find('list', ['limit' => 200]);
+        $academicyears = $this->Terms->Academicyears->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->User('id')]);
+        $subjects = $this->Terms->Subjects->find('list', ['limit' => 200])->contain(['SchoolClasses'])->where(['SchoolClasses.user_id' => $this->Auth->User('id')]);
         $this->set(compact('term', 'academicyears', 'subjects'));
         $this->set('_serialize', ['term']);
         return $this->redirect(['controller' => 'schools', 'action' => 'index']);
@@ -107,6 +107,7 @@ class TermsController extends AppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->setTemplate('add');
         $term = $this->Terms->get($id, [
             'contain' => ['Subjects']
         ]);
@@ -119,8 +120,8 @@ class TermsController extends AppController
             }
             $this->Flash->error(__('The term could not be saved. Please, try again.'));
         }
-        $academicyears = $this->Terms->Academicyears->find('list', ['limit' => 200]);
-        $subjects = $this->Terms->Subjects->find('list', ['limit' => 200]);
+        $academicyears = $this->Terms->Academicyears->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->User('id')]);
+        $subjects = $this->Terms->Subjects->find('list', ['limit' => 200])->contain(['SchoolClasses'])->where(['SchoolClasses.user_id' => $this->Auth->User('id')]);
         $this->set(compact('term', 'academicyears', 'subjects'));
         $this->set('_serialize', ['term']);
     }

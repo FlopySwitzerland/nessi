@@ -47,7 +47,7 @@ if($acyears->count() > 0){
                                 <?php foreach((new Collection($term->subjects))->groupBy('school_class.name') as $classname => $subjects){ ?>
                                     <div class="card">
                                         <div class="card-content">
-                                            <span class="card-title"><?= " - ".$classname ?></span>
+                                            <span class="card-title"><?= $classname ?></span>
                                             <table class="bordered">
                                                 <tbody>
                                                 <?php foreach($subjects as $subject){ ?>
@@ -86,11 +86,8 @@ if($acyears->count() > 0){
 
         <!-- FLOAT FAB BUTTON -->
         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large waves-effect waves-light green darken-4"><i class="material-icons">add</i></a>
-            <ul>
-                <li><a class="btn-floating green darken-4" href="<?= $this->Url->build(['action' => 'bulkadd']) ?>" data-position="bottom" data-delay="10" data-tooltip="Bulk Add"><i class="material-icons">playlist_add</i></a></li>
-                <li><a class="btn-floating green darken-4 modal-trigger" href="#add-mark-modal" data-position="bottom" data-delay="10" data-tooltip="Add One"><i class="material-icons">add_circle</i></a></li>
-            </ul>
+            <a class="btn-floating btn-large waves-effect waves-light green darken-4 modal-trigger" href="#add-mark-modal"><i class="material-icons">add</i></a>
+
         </div>
 
 
@@ -101,9 +98,9 @@ if($acyears->count() > 0){
                 <div class="row">
                     <div class="col s8">
                         <?php
-                        echo $this->Form->control('subject_id', ['options' => $listsubjects], ['v-model' => 'subject']);
+                        echo $this->Form->control('subject_id', ['options' => $listsubjects, 'empty' => 'Please Select a Subject'], ['v-model' => 'subject']);
                         ?>
-                        <div id="loading" style="display: none">
+                        <div id="loading">
                             <div class="preloader-wrapper small active">
                                 <div class="spinner-layer spinner-blue">
                                     <div class="circle-clipper left">
@@ -146,7 +143,7 @@ if($acyears->count() > 0){
                                 </div>
                             </div>
                         </div>
-                        <div id="form-loading">
+                        <div id="form-loading"  style="display: none">
                             <?php
                             echo $this->Form->control('term_id', ['options' => []]);
                             ?>

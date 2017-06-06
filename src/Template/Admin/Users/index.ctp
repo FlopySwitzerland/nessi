@@ -18,12 +18,10 @@ $this->assign('title', __('Users'));
                     <thead>
                     <tr>
                         <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('parent_id') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('group_id') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('firstname') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('lastname') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -33,12 +31,10 @@ $this->assign('title', __('Users'));
                     <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?= $this->Number->format($user->id) ?></td>
-                            <td><?= $user->has('parent_user') ? $this->Html->link($user->parent_user->id, ['controller' => 'Users', 'action' => 'view', $user->parent_user->id]) : '' ?></td>
                             <td><?= $user->has('group') ? $this->Html->link($user->group->name, ['controller' => 'Groups', 'action' => 'view', $user->group->id]) : '' ?></td>
                             <td><?= h($user->firstname) ?></td>
                             <td><?= h($user->lastname) ?></td>
                             <td><?= h($user->email) ?></td>
-                            <td><?= h($user->password) ?></td>
                             <td><?= h($user->created) ?></td>
                             <td><?= h($user->modified) ?></td>
                             <td>

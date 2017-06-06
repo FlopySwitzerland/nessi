@@ -46,7 +46,7 @@ $this->Form->setTemplates(['inputContainer' => '<div class="form-control">{{cont
             <div class="card-content">
                 <span class="card-title">Profile</span><br>
                 <div class="row">
-                    <?= $this->Form->create($user, ['class' => 'col s12', 'id' => 'updateProfileForm']) ?>
+                    <?= $this->Form->create($user, ['class' => 'col s12', 'url' => ['controller'=> 'Users', 'action' => 'updateProfile']]) ?>
                     <?php $this->Form->templates(['formGroup' => '{{input}}{{label}}']); ?>
                     <div class="input-field col s12">
                         <?= $this->Form->control('firstname') ?>
@@ -77,7 +77,7 @@ $this->Form->setTemplates(['inputContainer' => '<div class="form-control">{{cont
             <div class="card-content">
                 <span class="card-title">Password</span><br>
                 <div class="row">
-                    <?= $this->Form->create(null, ['class' => 'col s12', 'id' => 'changePwdForm']) ?>
+                    <?= $this->Form->create(null, ['class' => 'col s12', 'url' => ['controller'=> 'Users', 'action' => 'changePwd']]) ?>
                     <?php $this->Form->templates(['formGroup' => '{{input}}{{label}}']); ?>
                     <div class="input-field col s12">
                         <?= $this->Form->control('oldpassword', ['type' => 'password', 'label' => 'Old Password']) ?>

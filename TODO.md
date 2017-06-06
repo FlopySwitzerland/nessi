@@ -49,7 +49,7 @@
 ## Administration (for Nessi Admins)
 
 - [x] Users Management
-- [ ] Groups Management
+- [x] Groups Management
 
 ## More
 

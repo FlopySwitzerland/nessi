@@ -96,19 +96,36 @@ class UsersController extends AppController
     public function changePwd(){
         $id = $this->Auth->User('id');
         $user = $this->Users->get($id);
-        $results = ['success' => 0, 'msg' => 'Unknown Error'];
 
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'updatePassword']);
             if ($this->Users->save($user)) {
-                $results = ['success' => 1, 'msg' => __('The password was successfully changed')];
+                $this->Flash->success(__('The password was successfully changed'));
             }else{
-                $results = ['success' => 0, 'msg' => $user->getErrors()];
+                $this->Flash->error(__('The password have to be at least 8 characters!'));
+            }
+        }
+        return $this->redirect(['controller' => 'Users', 'action' => 'settings']);
+    }
+
+    /**
+     * updateProfile
+     * @return \Cake\Http\Response|null
+     */
+    public function updateProfile(){
+        $id = $this->Auth->User('id');
+        $user = $this->Users->get($id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+            }else{
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
 
         }
-        $this->set(compact('results'));
-        $this->set('_serialize', ['results']);
+        return $this->redirect(['controller' => 'Users', 'action' => 'settings']);
     }
 
     /**

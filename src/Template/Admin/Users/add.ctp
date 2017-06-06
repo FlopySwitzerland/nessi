@@ -1,34 +1,29 @@
 <?php
 /**
-  * @var \App\View\AppView $this
-  */
+ * @var \App\View\AppView $this
+ */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Parent Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parent User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List School Classes'), ['controller' => 'SchoolClasses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New School Class'), ['controller' => 'SchoolClasses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Add User') ?></legend>
-        <?php
-            echo $this->Form->control('parent_id', ['options' => $parentUsers, 'empty' => true]);
-            echo $this->Form->control('group_id', ['options' => $groups]);
-            echo $this->Form->control('firstname');
-            echo $this->Form->control('lastname');
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
-            echo $this->Form->control('school_classes._ids', ['options' => $schoolClasses]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="row">
+    <div class="col m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title"><?= __('Edit User') ?></span>
+                <?= $this->Form->create($user) ?>
+
+                <?php
+
+                echo $this->Form->hidden('id');
+                echo $this->Form->control('group_id', ['options' => $groups]);
+                echo $this->Form->control('firstname');
+                echo $this->Form->control('lastname');
+                echo $this->Form->control('email');
+                echo $this->Form->control('password');
+                ?>
+
+                <?= $this->Form->button(__('Save'), ['class' => 'waves-effect waves-light btn teal']); ?>
+
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>

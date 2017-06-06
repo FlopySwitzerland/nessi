@@ -5,7 +5,8 @@ $(document).ready(function() {
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 25, // Creates a dropdown of 15 years to control year
-        max: true
+        max: true,
+        format: 'yyyy-mm-dd'
     });
 
     $('#changePwdForm').submit(function (e) {

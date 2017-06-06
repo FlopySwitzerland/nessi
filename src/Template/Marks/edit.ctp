@@ -1,33 +1,29 @@
 <?php
 /**
-  * @var \App\View\AppView $this
-  */
+ * @var \App\View\AppView $this
+ */
+
+echo $this->Html->script('scripts/marks/index.js', ['block' => 'script']);
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $mark->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $mark->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Marks'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Subjects'), ['controller' => 'Subjects', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Subject'), ['controller' => 'Subjects', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="marks form large-9 medium-8 columns content">
-    <?= $this->Form->create($mark) ?>
-    <fieldset>
-        <legend><?= __('Edit Mark') ?></legend>
-        <?php
-            echo $this->Form->control('subject_id', ['options' => $subjects]);
-            echo $this->Form->control('value');
-            echo $this->Form->control('coefficient');
-            echo $this->Form->control('exam_date', ['empty' => true]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+
+<div class="row">
+    <div class="col m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title"><?= __('Edit Mark') ?></span>
+                <?= $this->Form->create($mark) ?>
+                <?php
+                echo $this->Form->hidden('id');
+                echo $this->Form->hidden('subject_id');
+                echo $this->Form->hidden('term_id', ['options' => []]);
+                echo $this->Form->control('value');
+                echo $this->Form->control('coefficient');
+                echo $this->Form->control('exam_date', ['empty' => true, 'class' => 'datepicker', 'type' => 'text']);
+                ?>
+                <?= $this->Form->button(__('Save'), ['class' => 'waves-effect waves-light btn teal']) ?>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>
+
