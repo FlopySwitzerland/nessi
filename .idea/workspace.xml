@@ -23,10 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="421cf55b-864c-4933-85b5-bfcd709fc03b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Dashboard/index.ctp" afterPath="$PROJECT_DIR$/src/Template/Dashboard/index.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Error/error400.ctp" afterPath="$PROJECT_DIR$/src/Template/Error/error400.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Error/error500.ctp" afterPath="$PROJECT_DIR$/src/Template/Error/error500.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Schools/index.ctp" afterPath="$PROJECT_DIR$/src/Template/Schools/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Pages/home.ctp" afterPath="$PROJECT_DIR$/src/Template/Pages/home.ctp" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,11 +37,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.ctp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.ctp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Template/Schools/index.ctp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="531">
               <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="landing.ctp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Template/Layout/landing.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.ctp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Template/Pages/home.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="99" column="76" lean-forward="false" selection-start-line="99" selection-start-column="76" selection-end-line="99" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -124,26 +141,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Template/Subjects/index.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Template/Terms/add.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="15" column="54" lean-forward="false" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="118" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -202,7 +199,6 @@
         <option value="$PROJECT_DIR$/src/Model/Table/TermsTable.php" />
         <option value="$PROJECT_DIR$/src/Model/Entity/Term.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/Template/Pages/home.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Pages/about.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Element/search-results.ctp" />
         <option value="$PROJECT_DIR$/src/Model/Entity/Subject.php" />
@@ -250,6 +246,7 @@
         <option value="$PROJECT_DIR$/src/Template/Error/error500.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Error/error400.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Schools/index.ctp" />
+        <option value="$PROJECT_DIR$/src/Template/Pages/home.ctp" />
       </list>
     </option>
   </component>
@@ -800,12 +797,12 @@
       <workItem from="1496477137810" duration="2249000" />
       <workItem from="1496564868250" duration="12577000" />
       <workItem from="1496663468278" duration="2043000" />
-      <workItem from="1496729980878" duration="10272000" />
+      <workItem from="1496729980878" duration="11543000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168975000" />
+    <option name="totallyTimeSpent" value="170246000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -888,13 +885,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Template/Users/two_factor.ctp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Template/Plugin/TwoFactorAuth/TwoFactorAuth/verify.ctp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -944,14 +934,6 @@
             <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#a#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Template/Pages/home.ctp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="78" column="42" lean-forward="true" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1329,6 +1311,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="531">
           <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Template/Layout/landing.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Template/Pages/home.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="99" column="76" lean-forward="false" selection-start-line="99" selection-start-column="76" selection-end-line="99" selection-end-column="76" />
           <folding />
         </state>
       </provider>

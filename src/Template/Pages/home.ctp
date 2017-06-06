@@ -54,7 +54,6 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h3 class="title text-white">Powerful Yet Simple Features</h3>
-                <p class="text-muted sub-title">//TODO: Fill this line...</p>
             </div>
         </div> <!-- end row -->
 
@@ -98,8 +97,7 @@ $this->layout = 'landing';
 
         <div class="row">
             <div class="col-sm-7">
-                <br>
-                //TODO : Put an image of Nessi (UI, not the monster)
+                <?= $this->Html->image('mockup_nessi_1.png', ['width' => '80%']) ?>
             </div>
             <div class="col-sm-5">
                 <h3 class="title">Available on all platforms</h3>
