@@ -22,7 +22,7 @@ echo $this->Html->script('scripts/dashboard/index.js', ['block' => 'script']);
         <div class="card">
             <div class="card-content">
                 <h4>Subjects</h4>
-                <?= $this->Html->link(__('List'), ['controller' => 'School', 'action' => 'index'], ['class' => 'waves-effect waves-light btn teal']) ?>
+                <?= $this->Html->link(__('List'), ['controller' => 'Schools', 'action' => 'index'], ['class' => 'waves-effect waves-light btn teal']) ?>
             </div>
         </div>
     </div>

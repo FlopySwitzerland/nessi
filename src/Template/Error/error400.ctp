@@ -2,7 +2,6 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-$this->layout = 'error';
 
 if (Configure::read('debug')):
     $this->layout = 'dev_error';
@@ -31,8 +30,17 @@ if (Configure::read('debug')):
     $this->end();
 endif;
 ?>
-<h2><?= h($message) ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
-</p>
+<div class="row">
+    <div class="col m6 offset-m3">
+        <div class="row">
+            <div class="col m3">
+                <h1 style="font-size: 95px"><?= $code ?></h1>
+            </div>
+            <div class="col m9">
+                <h3><?= __d('cake', 'Oops! You\'re not lucky, it\'s a 404') ?></h3>
+                <p><?= __d('cake', 'The requested address {0} was not found on this server.', "<b>'{$url}'</b>") ?></p>
+                <p>Please contact <a href="mailto:support@flopy.ch">support@flopy.ch</a> for more assistance.</p>
+            </div>
+        </div>
+    </div>
+</div>

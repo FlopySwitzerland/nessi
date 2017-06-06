@@ -53,7 +53,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                     <p>Please add an academic year and a term first</p>
                 <?php }else{ ?>
                 <?php foreach ($schoolClasses->groupBy('establishment.name') as $establishment => $classes){ ?>
-                    <h4><?= $establishment ?></h4>
+                    <h4><?= $establishment ?> </h4>
                     <ul class="collapsible" data-collapsible="accordion">
                         <?php foreach ($classes as $class){ ?>
                             <li>

@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-$this->layout = 'error';
+//$this->layout = 'error';
 
 if (Configure::read('debug')):
     $this->layout = 'dev_error';
@@ -36,8 +36,17 @@ if (Configure::read('debug')):
     $this->end();
 endif;
 ?>
-<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= h($message) ?>
-</p>
+<div class="row">
+    <div class="col m6 offset-m3">
+        <div class="row">
+            <div class="col m3">
+                <h1 style="font-size: 95px"><?= $code ?></h1>
+            </div>
+            <div class="col m9">
+                <h3><?= __d('cake', 'Oops! Something went wrong') ?></h3>
+                <p><?= h($message) ?></p>
+                <p>Please contact <a href="mailto:support@flopy.ch">support@flopy.ch</a> for more assistance.</p>
+            </div>
+        </div>
+    </div>
+</div>
