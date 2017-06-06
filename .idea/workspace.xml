@@ -23,7 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="421cf55b-864c-4933-85b5-bfcd709fc03b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Template/Pages/home.ctp" afterPath="$PROJECT_DIR$/src/Template/Pages/home.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TODO.md" afterPath="$PROJECT_DIR$/TODO.md" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,16 +63,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
               <caret line="99" column="76" lean-forward="false" selection-start-line="99" selection-start-column="76" selection-end-line="99" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Template/Academicyears/edit.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="14" column="116" lean-forward="false" selection-start-line="14" selection-start-column="116" selection-end-line="14" selection-end-column="116" />
               <folding />
             </state>
           </provider>
@@ -226,7 +217,6 @@
         <option value="$PROJECT_DIR$/src/Template/Admin/Groups/add.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Users/settings.ctp" />
         <option value="$PROJECT_DIR$/src/Controller/UsersController.php" />
-        <option value="$PROJECT_DIR$/TODO.md" />
         <option value="$PROJECT_DIR$/src/Template/Marks/index.ctp" />
         <option value="$PROJECT_DIR$/webroot/js/scripts/marks/index.js" />
         <option value="$PROJECT_DIR$/src/Template/Element/aside/notifications-dropdown.ctp" />
@@ -247,6 +237,7 @@
         <option value="$PROJECT_DIR$/src/Template/Error/error400.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Schools/index.ctp" />
         <option value="$PROJECT_DIR$/src/Template/Pages/home.ctp" />
+        <option value="$PROJECT_DIR$/TODO.md" />
       </list>
     </option>
   </component>
@@ -797,12 +788,12 @@
       <workItem from="1496477137810" duration="2249000" />
       <workItem from="1496564868250" duration="12577000" />
       <workItem from="1496663468278" duration="2043000" />
-      <workItem from="1496729980878" duration="11543000" />
+      <workItem from="1496729980878" duration="12222000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170246000" />
+    <option name="totallyTimeSpent" value="170925000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -1020,17 +1011,6 @@
         <state relative-caret-position="-112">
           <caret line="35" column="9" lean-forward="false" selection-start-line="33" selection-start-column="41" selection-end-line="35" selection-end-column="9" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TODO.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="784">
-            <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -1320,6 +1300,17 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="128">
+            <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

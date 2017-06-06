@@ -6,8 +6,8 @@
 - [x] Login/Register
 - [x] Forgot Password
 - [x] Two Factor
-- [ ] Update Profile*
-- [ ] Update Password*
+- [x] Update Profile
+- [x] Update Password
 - [ ] Crop Profile Image
 - [ ] Personal Settings (Locale i18n)
 
@@ -16,7 +16,7 @@
 
 ### Establishments 
 
-- [ ] View (From Google Places)
+- [x] View (From Google Places)
 - [x] Add (From Google Places)
 - [x] Academic Years and Terms
 
@@ -24,19 +24,19 @@
 
 - [x] View
 - [x] Add/Edit
-- [ ] Delete*
+- [x] Delete
 
 ### Subject
 
 - [x] View
 - [x] Add/Edit
-- [ ] Delete*
+- [x] Delete
 
 ### Marks
 
 - [x] View
 - [x] Add/Edit
-- [ ] Delete*
+- [x] Delete
 
 
 ## Dashboard
@@ -55,7 +55,7 @@
 
 - [ ] Apprentice manager System
 - [ ] Apprentice manager Dashboard
-- [ ] Calendar*
+- ([x]) Calendar*
 
 
 **\* Priority**
