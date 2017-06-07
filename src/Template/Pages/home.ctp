@@ -15,7 +15,11 @@ $this->layout = 'landing';
                             With Nessi you calculate your grades and track your average progress in a fully responsive web app.<br>
                             Our app works regardless of your school or grading scales.
                         </h4>
-                        <a href="" class="btn btn-white-bordered">Learn More</a>
+                        <?php if ($this->request->session()->read('Auth.User')) { ?>
+                            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-bordered">Go to app</a>
+                        <?php }else{ ?>
+                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-bordered">Sign Up</a>
+                        <?php } ?>
                     </div>
                 </div> <!-- end col -->
 
@@ -38,7 +42,7 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h3 class="title text-white">Powerful Yet Simple Features</h3>
-                <p>Your marks, any time, anywhere</p>
+                <p>Your marks, anytime, anywhere</p>
             </div>
         </div> <!-- end row -->
 
@@ -115,7 +119,7 @@ $this->layout = 'landing';
 <!-- End Pricing -->
 
 
-<section class="section bg-light" id="morefeature">
+<!--<section class="section bg-light" id="morefeature">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 text-left">
@@ -126,38 +130,8 @@ $this->layout = 'landing';
                 <?= $this->Html->image('boss.svg',['width' => '30%']);?>
             </div>
         </div>
-        <!-- end row -->
+        <!-- end row
     </div>
-</section>
+</section>-->
 
 
-<!-- Subscribe -->
-<section class="section bg-custom">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h3 class="title text-white"><?=('Subscribe to our newsletter')?></h3>
-                <p class="text-light sub-title">If you want to be kept in the known...</p>
-            </div>
-        </div><!-- End row -->
-
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <form class="text-center" action="action" id="subscribe-form" method="get">
-                    <div class="form-group m-b-0">
-                        <input type="email" class="form-control input-subscribe" id="mce-EMAIL" name="EMAIL" placeholder="Enter e-mail address" required>
-                        <label for="mce-EMAIL"></label>
-                    </div>
-
-                    <button type="submit" class="btn btn-white-fill">Subscribe</button>
-                    <p class="text-light">
-                        <small>You can un-subscribe at any time.</small>
-                    </p>
-                </form>
-            </div>
-        </div><!-- End row -->
-
-    </div> <!-- end container -->
-</section>
-<!-- End Subscribe -->

@@ -18,7 +18,9 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                 <?php foreach ($academicyears as $academicyear) { ?>
                     <h4><?= $academicyear->start_date->year." - ".$academicyear->end_date->year ?></h4>
                     <p><?= $academicyear->start_date->i18nFormat('MMMM d Y')." - ".$academicyear->end_date->i18nFormat('MMMM d Y') ?>
-                        <a href="<?= $this->Url->build(['controller' => 'Academicyears', 'action' => 'edit', $academicyear->id]) ?>" class="tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></p>
+                        <a href="<?= $this->Url->build(['controller' => 'Academicyears', 'action' => 'edit', $academicyear->id]) ?>" class="tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a>
+                    <?= $this->Form->postLink('<i class="material-icons">delete_forever</i>', ['action' => 'delete', $academicyear->id], ['confirm' => __('Are you sure you want to delete {0} ?', $academicyear->start_date->year." - ".$academicyear->end_date->year), 'escape' => false, 'class' => 'tooltipped', 'data-position' => 'right', 'data-delay' => '1', 'data-tooltip' => 'Delete']) ?>
+                    </p>
                     <ul class="collapsible" data-collapsible="accordion">
                         <?php foreach ($academicyear->terms as $term) { ?>
                             <li>
@@ -27,7 +29,13 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                                     <div class="row">
                                         <div class="col s12">
                                             <ul class="collection">
-                                                <li class="collection-item"><div>From <b><?= $term->start_date->format('m/d/Y') ?></b> to <b><?= $term->end_date->format('m/d/Y') ?></b><a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $term->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></div></li>
+                                                <li class="collection-item">
+                                                    <div>
+                                                        From <b><?= $term->start_date->format('m/d/Y') ?></b> to <b><?= $term->end_date->format('m/d/Y') ?></b>
+                                                        <?= $this->Form->postLink('<i class="material-icons">delete_forever</i>', ['action' => 'delete', $term->id], ['confirm' => __('Are you sure you want to delete {0} ?', $term->name), 'escape' => false, 'class' => 'secondary-content tooltipped', 'data-position' => 'right', 'data-delay' => '1', 'data-tooltip' => 'Delete']) ?>
+                                                        <a href="<?= $this->Url->build(['controller' => 'terms', 'action' => 'edit', $term->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a>
+                                                    </div>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -57,13 +65,24 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                     <ul class="collapsible" data-collapsible="accordion">
                         <?php foreach ($classes as $class){ ?>
                             <li>
-                                <div class="collapsible-header"><?= $class->name ?></div>
+                                <div class="collapsible-header">
+                                    <?= $class->name ?>
+                                    <?= $this->Form->postLink('<i class="material-icons">delete_forever</i>', ['action' => 'delete', $class->id], ['confirm' => __('Are you sure you want to delete {0} ?', $class->name), 'escape' => false, 'class' => 'secondary-content tooltipped', 'data-position' => 'right', 'data-delay' => '1', 'data-tooltip' => 'Delete']) ?>
+                                    <a href="<?= $this->Url->build(['controller' => 'school_classes', 'action' => 'edit', $class->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a>
+                                    <a href="<?= $this->Url->build(['controller' => 'school_classes', 'action' => 'view', $class->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Detail') ?>"><i class="material-icons">remove_red_eye</i></a>
+                                </div>
                                 <div class="collapsible-body">
                                     <div class="row">
                                         <div class="col s12">
                                             <ul class="collection">
                                                 <?php foreach ($class->subjects as $subject){ ?>
-                                                    <li class="collection-item"><div><?= $subject->name ?><a href="<?= $this->Url->build(['controller' => 'subjects', 'action' => 'edit', $subject->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a></div></li>
+                                                    <li class="collection-item">
+                                                        <div>
+                                                            <a href="<?= $this->Url->build(['controller' => 'subjects', 'action' => 'view', $class->id]) ?>"><?= $subject->name ?></a>
+                                                            <?= $this->Form->postLink('<i class="material-icons">delete_forever</i>', ['action' => 'delete', $subject->id], ['confirm' => __('Are you sure you want to delete {0} ?', $subject->name), 'escape' => false, 'class' => 'secondary-content tooltipped', 'data-position' => 'right', 'data-delay' => '1', 'data-tooltip' => 'Delete']) ?>
+                                                            <a href="<?= $this->Url->build(['controller' => 'subjects', 'action' => 'edit', $subject->id]) ?>" class="secondary-content tooltipped" data-position="right" data-delay="1" data-tooltip="<?= __('Edit') ?>"><i class="material-icons">edit</i></a>
+                                                        </div>
+                                                    </li>
                                                 <?php } ?>
                                                 <li class="collection-item"><a class="modal-trigger add-subject-trigger" href="#modal-add-subject" data-classid="<?= $class->id ?>"><?= __('Add a Subject') ?></a></li>
                                             </ul>
@@ -103,7 +122,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                 echo $this->Form->hidden('school_class_id', ['id' => 'school-class-id']);
                 echo $this->Form->control('name');
                 // echo $this->Form->control('img');
-                echo $this->Form->control('terms._ids', ['options' => $termslist, 'empty' => true]);
+                echo $this->Form->control('terms._ids', ['options' => $termslist]);
                 echo '<br>';
                 echo $this->Form->control('avg_round', ['label' => __('Average rounding'), 'value' => 0.5]);
                 echo $this->Form->control('avg_semester', ['label' => __('Average rounding on Terms'), 'value' => 0.1]);

@@ -89,9 +89,9 @@ class SchoolClassesController extends AppController
             $this->Flash->error(__('The school class could not be saved. Please, try again.'));
         }
         $establishments = $this->SchoolClasses->Establishments->find('list', ['limit' => 200]);
-        $users = $this->SchoolClasses->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schoolClass', 'establishments', 'users'));
+        $this->set(compact('schoolClass', 'establishments'));
         $this->set('_serialize', ['schoolClass']);
+        return $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**

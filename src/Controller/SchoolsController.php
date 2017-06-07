@@ -67,9 +67,7 @@ class SchoolsController extends AppController
 
         foreach ($qryTerms as $ac) {
             foreach ($ac['terms'] as $term) {
-                $termslist[$ac['start_date']->year." - ".$ac['end_date']->year] = [
-                    $term['id'] => $term['name']
-                ];
+                $termslist[$term['id']] = $term['name']." (".$ac['start_date']->year." - ".$ac['end_date']->year.")";
             }
         }
 

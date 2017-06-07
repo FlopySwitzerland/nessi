@@ -73,7 +73,7 @@
 
 
 <!-- FOOTER -->
-<footer class="section bg-gray footer">
+<footer class="section bg-light">
     <div class="container">
 
         <div class="row">

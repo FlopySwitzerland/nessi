@@ -107,9 +107,7 @@ class SubjectsController extends AppController
 
             foreach ($qrySubjects as $ac) {
                 foreach ($ac['terms'] as $term) {
-                    $terms[$ac['start_date']->year." - ".$ac['end_date']->year] = [
-                        $term['id'] => $term['name']
-                    ];
+                    $terms[$term['id']] = $term['name']." (".$ac['start_date']->year." - ".$ac['end_date']->year.")";
                 }
             }
 

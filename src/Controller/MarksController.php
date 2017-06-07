@@ -118,6 +118,11 @@ class MarksController extends AppController
         $this->set('_serialize', ['mark']);
     }
 
+    /**
+     * bulkadd
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
     public function bulkadd()
     {
         $tblSubjects = TableRegistry::get('Subjects');

@@ -15,7 +15,7 @@
                 echo $this->Form->control('school_class_id', ['options' => $schoolClasses]);
                 echo $this->Form->control('name');
                 // echo $this->Form->control('img');
-                echo $this->Form->control('terms._ids', ['options' => $terms, 'empty' => true]);
+                echo $this->Form->control('terms._ids', ['options' => $terms]);
                 echo $this->Form->control('avg_round', ['label' => __('Average rounding'), 'value' => 0.5]);
                 echo $this->Form->control('avg_semester', ['label' => __('Average rounding on Terms'), 'value' => 0.1]);
                 echo $this->Form->control('avg_sup', ['label' => __('Rounded up (e.g. 5.25 = 5.5)'), 'type' => 'checkbox', 'checked']);

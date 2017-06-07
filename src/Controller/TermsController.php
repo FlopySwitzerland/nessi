@@ -68,9 +68,7 @@ class TermsController extends AppController
 
             foreach ($qrySubjects as $ac) {
                 foreach ($ac['terms'] as $term) {
-                    $results[$ac['start_date']->year." - ".$ac['end_date']->year] = [
-                        $term['id'] => $term['name']
-                    ];
+                    $results[$term['id']] = $term['name']." (".$ac['start_date']->year." - ".$ac['end_date']->year.")";
                 }
             }
         }
