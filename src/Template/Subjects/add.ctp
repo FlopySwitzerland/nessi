@@ -27,7 +27,7 @@
             echo $this->Form->control('avg_round');
             echo $this->Form->control('avg_semester');
             echo $this->Form->control('avg_sup');
-            echo $this->Form->control('terms._ids', ['options' => $terms]);
+            echo $this->Form->control('terms._ids', ['options' => $terms, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

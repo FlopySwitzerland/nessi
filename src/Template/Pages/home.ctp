@@ -19,25 +19,9 @@ $this->layout = 'landing';
                     </div>
                 </div> <!-- end col -->
 
-                <div class="col-md-4 col-md-offset-2 col-sm-5">
-                    <?php if (!$this->request->session()->read('Auth.User')) { ?>
-                    <form role="form" class="intro-form">
-                        <h3 class="text-center"> Register for free </h3>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Full name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email Address" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Password" required="required">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-custom btn-sm btn-block">Start Now</button>
-                        </div>
-                        <span class="help-block m-b-0 m-t-20 text-muted"><small>By registering, you agree to the Nessi <a href="#">Terms of Use</a></small></span>
-                    </form>
-                    <?php } ?>
+                <div class="col-md-6 col-sm-5">
+                    <?= $this->Html->image('mockup_nessi_2.png', ['width' => '100%']) ?>
+
                 </div><!-- end col -->
             </div>
         </div>
@@ -54,6 +38,7 @@ $this->layout = 'landing';
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h3 class="title text-white">Powerful Yet Simple Features</h3>
+                <p>Your marks, any time, anywhere</p>
             </div>
         </div> <!-- end row -->
 

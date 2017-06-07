@@ -103,7 +103,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
                 echo $this->Form->hidden('school_class_id', ['id' => 'school-class-id']);
                 echo $this->Form->control('name');
                 // echo $this->Form->control('img');
-                echo $this->Form->control('terms._ids', ['options' => ['Loading....']]);
+                echo $this->Form->control('terms._ids', ['options' => $termslist, 'empty' => true]);
                 echo '<br>';
                 echo $this->Form->control('avg_round', ['label' => __('Average rounding'), 'value' => 0.5]);
                 echo $this->Form->control('avg_semester', ['label' => __('Average rounding on Terms'), 'value' => 0.1]);
@@ -196,7 +196,7 @@ echo $this->Html->script('scripts/schools/index.js', ['block' => 'script']);
             <div class="col s12 m-b-xs">
                 <p>If your school is not in this list, you can add it by clicking <a href="<?= $this->Url->build(['controller' => 'establishments', 'action' => 'add']) ?>">here</a>.</p>
             </div>
-            <div class="input-field col s12">
+            <div class="col s12">
                 <?= $this->Form->control('name'); ?>
             </div>
         </div>

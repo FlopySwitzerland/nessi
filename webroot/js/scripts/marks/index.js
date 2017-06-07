@@ -8,8 +8,7 @@ $(document).ready(function() {
         format: 'yyyy-mm-dd'
     });
 
-
-    $('#subject-id').change(function () {
+    var plopfunction = function () {
         var loadingspin = $('#loading'),
             formwrap = $('#form-loading');
 
@@ -41,17 +40,25 @@ $(document).ready(function() {
                 });
 
                 termselect.material_select();
+                loadingspin.hide();
+                formwrap.show();
             }
         });
-        loadingspin.hide();
-        formwrap.show();
-        
-    })
+
+
+    }
+
+    if($('#subject-id').val() != ""){
+        plopfunction();
+    }
+
+    $('#subject-id').change(plopfunction);
+
 $('#ac-select').change(function () {
 
     $('.ac-ytabs').hide();
     $('#'+this.value).show();
-})
+});
     
     
 });

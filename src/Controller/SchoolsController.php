@@ -56,8 +56,25 @@ class SchoolsController extends AppController
             ]);
 
 
+        $qryTerms = $tblAcademicyears
+            ->find()
+            ->contain(['Terms'])
+            ->where([
+                'Academicyears.user_id' => $this->Auth->User('id')
+            ]);
 
-        $this->set(compact('schoolClasses', 'academicyears'));
+        $termslist = [];
+
+        foreach ($qryTerms as $ac) {
+            foreach ($ac['terms'] as $term) {
+                $termslist[$ac['start_date']->year." - ".$ac['end_date']->year] = [
+                    $term['id'] => $term['name']
+                ];
+            }
+        }
+
+
+        $this->set(compact('schoolClasses', 'academicyears', 'termslist'));
         $this->set('_serialize', ['schoolClasses']);
     }
 }

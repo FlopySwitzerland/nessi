@@ -73,7 +73,7 @@ class MarksTable extends Table
 
         $validator
             ->numeric('coefficient')
-            ->allowEmpty('coefficient');
+            ->notEmpty('coefficient');
 
         $validator
             ->date('exam_date')

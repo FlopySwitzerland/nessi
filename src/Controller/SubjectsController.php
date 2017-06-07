@@ -95,19 +95,23 @@ class SubjectsController extends AppController
         }
         $schoolClasses = $this->Subjects->SchoolClasses->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->User('id')]);
 
-        $qrySubjects = $this->Subjects
-            ->find()
-            ->contain([
-                'SchoolClasses',
-                'Terms',
-                'Terms.Academicyears'
-            ])
-            ->where([
-                'SchoolClasses.user_id' => $this->Auth->User('id')
-            ]);
-        $results = $qrySubjects->first();
+            $tblSubjects = TableRegistry::get('Academicyears');
+            $qrySubjects = $tblSubjects
+                ->find()
+                ->contain(['Terms'])
+                ->where([
+                    'Academicyears.user_id' => $this->Auth->User('id')
+                ]);
 
-        $terms = (new Collection($results['terms']))->combine('id', function ($entity) { return $entity->name." (".$entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year.")"; });
+            $terms = [];
+
+            foreach ($qrySubjects as $ac) {
+                foreach ($ac['terms'] as $term) {
+                    $terms[$ac['start_date']->year." - ".$ac['end_date']->year] = [
+                        $term['id'] => $term['name']
+                    ];
+                }
+            }
 
         $this->set(compact('subject', 'schoolClasses', 'terms'));
         $this->set('_serialize', ['subject']);

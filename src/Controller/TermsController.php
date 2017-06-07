@@ -35,23 +35,50 @@ class TermsController extends AppController
      * list
      */
     public function getList(){
-        $tblSubjects = TableRegistry::get('Subjects');
-        $qrySubjects = $tblSubjects
-            ->find()
-            ->contain([
-                'SchoolClasses',
-                'Terms',
-                'Terms.Academicyears'
-            ])
-            ->where([
-                'SchoolClasses.user_id' => $this->Auth->User('id')
-            ]);
-        if(!empty($this->request->getQuery('subject_id'))){
-            $qrySubjects->andWhere(['Subjects.id' => $this->request->getQuery('subject_id')]);
-        }
-        $results = $qrySubjects->first();
 
-        $results = (new Collection($results['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+        if(!empty($this->request->getQuery('subject_id'))){
+            $tblSubjects = TableRegistry::get('Subjects');
+            $qrySubjects = $tblSubjects
+                ->find()
+                ->contain([
+                    'SchoolClasses',
+                    'Terms',
+                    'Terms.Academicyears'
+                ])
+                ->where([
+                    'SchoolClasses.user_id' => $this->Auth->User('id')
+                ]);
+            if(!empty($this->request->getQuery('subject_id'))){
+                $qrySubjects->where(['Subjects.id' => $this->request->getQuery('subject_id')]);
+            }
+            $results = $qrySubjects->first();
+
+            $results = (new Collection($results['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+
+        }else{
+            $tblSubjects = TableRegistry::get('Academicyears');
+            $qrySubjects = $tblSubjects
+                ->find()
+                ->contain(['Terms'])
+                ->where([
+                    'Academicyears.user_id' => $this->Auth->User('id')
+                ]);
+
+            $results = [];
+
+            foreach ($qrySubjects as $ac) {
+                foreach ($ac['terms'] as $term) {
+                    $results[$ac['start_date']->year." - ".$ac['end_date']->year] = [
+                        $term['id'] => $term['name']
+                    ];
+                }
+            }
+        }
+       // $results = $qrySubjects->first();
+
+
+
+       // $results = $qrySubjects->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
 
         $this->set(compact('results'));
         $this->set('_serialize', ['results']);
