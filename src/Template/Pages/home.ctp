@@ -15,27 +15,17 @@ $this->layout = 'landing';
                             With Nessi you calculate your grades and track your average progress in a fully responsive web app.<br>
                             Our app works regardless of your school or grading scales.
                         </h4>
-                        <a href="" class="btn btn-white-bordered">Learn More</a>
+                        <?php if ($this->request->session()->read('Auth.User')) { ?>
+                            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-bordered">Go to app</a>
+                        <?php }else{ ?>
+                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'login', 'prefix' => false, 'plugin' => false]) ?>" class="btn btn-white-bordered">Sign Up</a>
+                        <?php } ?>
                     </div>
                 </div> <!-- end col -->
 
-                <div class="col-md-4 col-md-offset-2 col-sm-5">
-                    <form role="form" class="intro-form">
-                        <h3 class="text-center"> Register for free </h3>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Full name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email Address" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Password" required="required">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-custom btn-sm btn-block">Start Now</button>
-                        </div>
-                        <span class="help-block m-b-0 m-t-20 text-muted"><small>By registering, you agree to the Nessi <a href="#">Terms of Use</a></small></span>
-                    </form>
+                <div class="col-md-6 col-sm-5">
+                    <?= $this->Html->image('mockup_nessi_2.png', ['width' => '100%']) ?>
+
                 </div><!-- end col -->
             </div>
         </div>
@@ -51,8 +41,8 @@ $this->layout = 'landing';
 
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h3 class="title text-white">//TODO: Find a cool slogan</h3>
-                <p class="text-muted sub-title">//TODO: Fill this line...</p>
+                <h3 class="title text-white">Powerful Yet Simple Features</h3>
+                <p>Your marks, anytime, anywhere</p>
             </div>
         </div> <!-- end row -->
 
@@ -75,8 +65,7 @@ $this->layout = 'landing';
 
             <div class="col-sm-4">
                 <div class="features-box">
-                    <!--                    TODO: Find a better suiting     icon-->
-                    <i class="pe-7s-refresh-2"></i>
+                    <i class="pe-7s-piggy"></i>
                     <h4 class="text-white">Free</h4>
                     <p class="text-muted"><?=__('Nessi will always be free and without adds. Because we know students do not have a lot of money, we are here to help')?></p>
                 </div>
@@ -97,8 +86,7 @@ $this->layout = 'landing';
 
         <div class="row">
             <div class="col-sm-7">
-                <br>
-                //TODO : Put an image of Nessi (UI not the monster)
+                <?= $this->Html->image('mockup_nessi_1.png', ['width' => '80%']) ?>
             </div>
             <div class="col-sm-5">
                 <h3 class="title">Available on all platforms</h3>
@@ -131,7 +119,7 @@ $this->layout = 'landing';
 <!-- End Pricing -->
 
 
-<section class="section bg-light" id="morefeature">
+<!--<section class="section bg-light" id="morefeature">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 text-left">
@@ -142,38 +130,8 @@ $this->layout = 'landing';
                 <?= $this->Html->image('boss.svg',['width' => '30%']);?>
             </div>
         </div>
-        <!-- end row -->
+        <!-- end row
     </div>
-</section>
+</section>-->
 
 
-<!-- Subscribe -->
-<section class="section bg-custom">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h3 class="title text-white"><?=('Subscribe to our newsletter')?></h3>
-                <p class="text-light sub-title">If you want to be kept in the known......</p>
-            </div>
-        </div><!-- End row -->
-
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <form class="text-center" action="action" id="subscribe-form" method="get">
-                    <div class="form-group m-b-0">
-                        <input type="email" class="form-control input-subscribe" id="mce-EMAIL" name="EMAIL" placeholder="Enter e-mail address" required>
-                        <label for="mce-EMAIL"></label>
-                    </div>
-
-                    <button type="submit" class="btn btn-white-fill">Subscribe</button>
-                    <p class="text-light">
-                        <small>You can un-subscribe at any time.</small>
-                    </p>
-                </form>
-            </div>
-        </div><!-- End row -->
-
-    </div> <!-- end container -->
-</section>
-<!-- End Subscribe -->

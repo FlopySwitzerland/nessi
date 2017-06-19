@@ -45,6 +45,11 @@ class TermsTable extends Table
             'joinType' => 'INNER'
         ]);
 
+        $this->hasMany('Marks', [
+            'className' => 'Marks',
+            'foreignKey' => 'term_id'
+        ]);
+
         $this->belongsToMany('Subjects', [
             'foreignKey' => 'term_id',
             'targetForeignKey' => 'subject_id',
@@ -66,19 +71,14 @@ class TermsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->dateTime('start_date')
+            ->date('start_date')
             ->requirePresence('start_date', 'create')
             ->notEmpty('start_date');
 
         $validator
-            ->dateTime('end_date')
+            ->date('end_date')
             ->requirePresence('end_date', 'create')
             ->notEmpty('end_date');
-
-        $validator
-            ->dateTime('modifed')
-            ->requirePresence('modifed', 'create')
-            ->notEmpty('modifed');
 
         return $validator;
     }

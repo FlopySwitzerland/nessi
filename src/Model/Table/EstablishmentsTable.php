@@ -40,10 +40,11 @@ class EstablishmentsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Academicyears', [
-            'foreignKey' => 'academicyear_id',
-            'joinType' => 'INNER'
+        $this->hasMany('SchoolClasses', [
+            'className' => 'SchoolClasses',
+            'foreignKey' => 'establishment_id'
         ]);
+
     }
 
     /**
@@ -63,7 +64,8 @@ class EstablishmentsTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->allowEmpty('gmapid');
+            ->requirePresence('gmapid', 'create')
+            ->notEmpty('gmapid');
 
         return $validator;
     }
@@ -77,8 +79,8 @@ class EstablishmentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['academicyear_id'], 'Academicyears'));
-
+        //$rules->add($rules->existsIn(['academicyear_id'], 'Academicyears'));
+        $rules->add($rules->isUnique(['gmapid']));
         return $rules;
     }
 }

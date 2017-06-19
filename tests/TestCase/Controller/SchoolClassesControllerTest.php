@@ -20,11 +20,11 @@ class SchoolClassesControllerTest extends IntegrationTestCase
         'app.establishments',
         'app.academicyears',
         'app.terms',
-        'app.branches',
-        'app.branches_school_classes',
+        'app.subjects',
+        'app.marks',
+        'app.subjects_terms',
         'app.users',
-        'app.groups',
-        'app.school_classes_users'
+        'app.groups'
     ];
 
     /**

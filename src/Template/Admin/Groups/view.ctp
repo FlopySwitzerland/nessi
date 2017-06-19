@@ -3,76 +3,69 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Group'), ['action' => 'edit', $group->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Group'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Groups'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Group'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="groups view large-9 medium-8 columns content">
-    <h3><?= h($group->name) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Name') ?></th>
-            <td><?= h($group->name) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($group->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($group->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($group->modified) ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Users') ?></h4>
-        <?php if (!empty($group->users)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Parent Id') ?></th>
-                <th scope="col"><?= __('Group Id') ?></th>
-                <th scope="col"><?= __('Firstname') ?></th>
-                <th scope="col"><?= __('Lastname') ?></th>
-                <th scope="col"><?= __('Email') ?></th>
-                <th scope="col"><?= __('Password') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Lft') ?></th>
-                <th scope="col"><?= __('Rght') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($group->users as $users): ?>
-            <tr>
-                <td><?= h($users->id) ?></td>
-                <td><?= h($users->parent_id) ?></td>
-                <td><?= h($users->group_id) ?></td>
-                <td><?= h($users->firstname) ?></td>
-                <td><?= h($users->lastname) ?></td>
-                <td><?= h($users->email) ?></td>
-                <td><?= h($users->password) ?></td>
-                <td><?= h($users->created) ?></td>
-                <td><?= h($users->modified) ?></td>
-                <td><?= h($users->lft) ?></td>
-                <td><?= h($users->rght) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
+<div class="row">
+    <div class="col m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Details</span>
+                <table class="table">
+                    <tr>
+                        <th scope="row"><?= __('Name') ?></th>
+                        <td><?= h($group->name) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?= __('Created') ?></th>
+                        <td><?= h($group->created) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?= __('Modified') ?></th>
+                        <td><?= h($group->modified) ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col m8">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title"><?= __('Related Users') ?></span>
+                <?php if (!empty($group->users)): ?>
+                    <table class="responsive-table bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col"><?= __('id') ?></th>
+                            <th scope="col"><?= __('firstname') ?></th>
+                            <th scope="col"><?= __('lastname') ?></th>
+                            <th scope="col"><?= __('email') ?></th>
+                            <th scope="col"><?= __('created') ?></th>
+                            <th scope="col"><?= __('modified') ?></th>
+                            <th scope="col" class="actions"><?= __('Actions') ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($group->users as $user): ?>
+                            <tr>
+                                <td><?= $this->Number->format($user->id) ?></td>
+                                <td><?= h($user->firstname) ?></td>
+                                <td><?= h($user->lastname) ?></td>
+                                <td><?= h($user->email) ?></td>
+                                <td><?= h($user->created) ?></td>
+                                <td><?= h($user->modified) ?></td>
+                                <td>
+                                    <a class="dropdown-button" href="#" data-activates="action_<?= $user->id ?>"><i class="material-icons">more_vert</i></a>
+                                    <ul id="action_<?= $user->id ?>" class="dropdown-content">
+                                        <li><?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></li>
+                                        <li><?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $user->id]) ?></li>
+                                        <li class="divider"></li>
+                                        <li><?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </div>

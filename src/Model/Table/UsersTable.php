@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -92,6 +93,88 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
+        return $validator;
+    }
+
+    public function validationUpdatePassword(Validator $validator ) {
+        $validator
+            ->add('oldpassword','custom',[
+                'rule'=> function($value, $context){
+                    $user = $this->get($context['data']['id']);
+                    if ($user) {
+                        if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                'message'=>'The old password does not match the current password!',
+            ])
+            ->notEmpty('oldpassword');
+
+        $validator
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password',[
+                'match'=>[
+                    'rule'=> ['compareWith','password2'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password');
+
+        $validator
+            ->add('password2', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password2',[
+                'match'=>[
+                    'rule'=> ['compareWith','password'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password2');
+        return $validator;
+    }
+
+    public function validationResetPassword(Validator $validator ) {
+
+        $validator
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password',[
+                'match'=>[
+                    'rule'=> ['compareWith','password2'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password');
+
+        $validator
+            ->add('password2', [
+                'length' => [
+                    'rule' => ['minLength', 8],
+                    'message' => 'The password have to be at least 8 characters!',
+                ]
+            ])
+            ->add('password2',[
+                'match'=>[
+                    'rule'=> ['compareWith','password'],
+                    'message'=>'The passwords does not match!',
+                ]
+            ])
+            ->notEmpty('password2');
         return $validator;
     }
 

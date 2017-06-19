@@ -2,43 +2,44 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Aura\Intl\Exception;
 
 /**
- * Schoolclasses Controller
+ * SchoolClasses Controller
  *
- * @property \App\Model\Table\SchoolclassesTable $Schoolclasses
+ * @property \App\Model\Table\SchoolClassesTable $SchoolClasses
+ *
+ * @method \App\Model\Entity\SchoolClass[] paginate($object = null, array $settings = [])
  */
-class SchoolclassesController extends AppController
+class SchoolClassesController extends AppController
 {
 
     /**
      * Index method
      *
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Establishments']
+            'contain' => ['Establishments', 'Users']
         ];
-        $Schoolclasses = $this->paginate($this->Schoolclasses);
+        $schoolClasses = $this->paginate($this->SchoolClasses);
 
-        $this->set(compact('Schoolclasses'));
-        $this->set('_serialize', ['Schoolclasses']);
+        $this->set(compact('schoolClasses'));
+        $this->set('_serialize', ['schoolClasses']);
     }
 
     /**
      * View method
      *
      * @param string|null $id School Class id.
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $schoolClass = $this->Schoolclasses->get($id, [
-            'contain' => ['Establishments', 'Subjects', 'Users']
+        $schoolClass = $this->SchoolClasses->get($id, [
+            'contain' => ['Establishments', 'Users', 'Subjects']
         ]);
 
         $this->set('schoolClass', $schoolClass);
@@ -48,71 +49,63 @@ class SchoolclassesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
-        $schoolClass = $this->Schoolclasses->newEntity();
+        $schoolClass = $this->SchoolClasses->newEntity();
         if ($this->request->is('post')) {
-            $jsonData =  $this->request->input('json_decode');
-            $schoolClass->user_id = $this->Auth->user('id');
-            $schoolClass->establishment_id = 1;
-            $schoolClass = $this->Schoolclasses->patchEntity($schoolClass, $jsonData);
+            $schoolClass->user_id = $this->Auth->User('id');
+            $schoolClass = $this->SchoolClasses->patchEntity($schoolClass, $this->request->getData());
+            if ($this->SchoolClasses->save($schoolClass)) {
+                $this->Flash->success(__('The school class has been saved.'));
 
-            try {
-                $this->Schoolclasses->save($schoolClass);
-                $msg = __('The school class has been saved.');
-                $success = true;
-            }catch (Exception $e){
-                $msg =  __('The school class could not be saved. Please, try again.');
-                $success = false;
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
             }
-
+            $this->Flash->error(__('The school class could not be saved. Please, try again.'));
         }
-        $this->set(compact('success', 'msg'));
-        $this->set('_serialize', ['success', 'msg']);
+        $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**
      * Edit method
      *
      * @param string|null $id School Class id.
-     * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $schoolClass = $this->Schoolclasses->get($id, [
-            'contain' => ['Branches', 'Users']
+        $schoolClass = $this->SchoolClasses->get($id, [
+            'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $schoolClass = $this->Schoolclasses->patchEntity($schoolClass, $this->request->getData());
-            if ($this->Schoolclasses->save($schoolClass)) {
+            $schoolClass = $this->SchoolClasses->patchEntity($schoolClass, $this->request->getData());
+            if ($this->SchoolClasses->save($schoolClass)) {
                 $this->Flash->success(__('The school class has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The school class could not be saved. Please, try again.'));
         }
-        $establishments = $this->Schoolclasses->Establishments->find('list', ['limit' => 200]);
-        $branches = $this->Schoolclasses->Branches->find('list', ['limit' => 200]);
-        $users = $this->Schoolclasses->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schoolClass', 'establishments', 'branches', 'users'));
+        $establishments = $this->SchoolClasses->Establishments->find('list', ['limit' => 200]);
+        $this->set(compact('schoolClass', 'establishments'));
         $this->set('_serialize', ['schoolClass']);
+        return $this->redirect(['controller' => 'schools', 'action' => 'index']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $id School Class id.
-     * @return \Cake\Network\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $schoolClass = $this->Schoolclasses->get($id);
-        if ($this->Schoolclasses->delete($schoolClass)) {
+        $schoolClass = $this->SchoolClasses->get($id);
+        if ($this->SchoolClasses->delete($schoolClass)) {
             $this->Flash->success(__('The school class has been deleted.'));
         } else {
             $this->Flash->error(__('The school class could not be deleted. Please, try again.'));

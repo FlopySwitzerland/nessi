@@ -1,46 +1,141 @@
 <?php
-/**
- * Projet : nessi-api
- * Auteur : Raphaël Gabriel
- * Date: 21.04.2017
- */
-
 namespace App\Controller;
 
-
-use Cake\ORM\Query;
+use App\Controller\AppController;
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
 
-class SubjectsController extends ApiController
+/**
+ * Subjects Controller
+ *
+ * @property \App\Model\Table\SubjectsTable $Subjects
+ *
+ * @method \App\Model\Entity\Subject[] paginate($object = null, array $settings = [])
+ */
+class SubjectsController extends AppController
 {
 
     /**
-     * getSubjects
+     * Index method
+     *
+     * @return \Cake\Http\Response|null
      */
-    public function getSubjects(){
-        // Retrieve the current user id
-        $userId = $this->Auth->user('id');
+    public function index()
+    {
+        $this->paginate = [
+            'contain' => ['SchoolClasses']
+        ];
+        $subjects = $this->paginate($this->Subjects);
 
-        try{
-            $results = $this->Subjects->find()
-                ->select(['Subjects.name', 'Subjects.img', 'marks_count'])
-                ->matching('SchoolClasses.Users', function(Query $q) use ($userId) {
-                    return $q->where(['Users.id' => $userId]);
-                })
-                ->matching('SchoolClasses', function(Query $q) {
-                    return $q->select(['name']);
-                })
-                ->matching('SchoolClasses.Establishments', function(Query $q) {
-                    return $q->select(['name']);
-                })
-                ->matching('Terms.Academicyears', function(Query $q) {
-                    return $q->select(['start_date']);
-                });
-        }catch (\Exception $e){
-            $this->response->withStatus(500, 'Unable to find the Subjects for the current user');
-        }
-
-        $this->set(['results' => $results->toArray(), '_serialize' => ['results']]);
+        $this->set(compact('subjects'));
+        $this->set('_serialize', ['subjects']);
     }
 
+    /**
+     * View method
+     *
+     * @param string|null $id Subject id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $subject = $this->Subjects->get($id, [
+            'contain' => ['SchoolClasses', 'Terms', 'Marks']
+        ]);
+
+        $this->set('subject', $subject);
+        $this->set('_serialize', ['subject']);
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $subject = $this->Subjects->newEntity();
+        if ($this->request->is('post')) {
+            $subject->user_id = $this->Auth->User('id');
+            $subject = $this->Subjects->patchEntity($subject, $this->request->getData());
+            if ($this->Subjects->save($subject)) {
+                $this->Flash->success(__('The subject has been saved.'));
+
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
+            }
+            $this->Flash->error(__('The subject could not be saved. Please, try again.'));
+        }
+        $this->redirect(['controller' => 'schools', 'action' => 'index']);
+    }
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id Subject id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $subject = $this->Subjects->get($id, [
+            'contain' => ['Terms', 'SchoolClasses']
+        ]);
+        if($subject->school_class->user_id == $this->Auth->User('id')){
+
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $subject = $this->Subjects->patchEntity($subject, $this->request->getData());
+            if ($this->Subjects->save($subject)) {
+                $this->Flash->success(__('The subject has been saved.'));
+
+                return $this->redirect(['controller' => 'schools', 'action' => 'index']);
+            }
+            $this->Flash->error(__('The subject could not be saved. Please, try again.'));
+        }
+        $schoolClasses = $this->Subjects->SchoolClasses->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->User('id')]);
+
+            $tblSubjects = TableRegistry::get('Academicyears');
+            $qrySubjects = $tblSubjects
+                ->find()
+                ->contain(['Terms'])
+                ->where([
+                    'Academicyears.user_id' => $this->Auth->User('id')
+                ]);
+
+            $terms = [];
+
+            foreach ($qrySubjects as $ac) {
+                foreach ($ac['terms'] as $term) {
+                    $terms[$term['id']] = $term['name']." (".$ac['start_date']->year." - ".$ac['end_date']->year.")";
+                }
+            }
+
+        $this->set(compact('subject', 'schoolClasses', 'terms'));
+        $this->set('_serialize', ['subject']);
+        }else{
+            $this->Flash->error(__('HEY ! You want to cheat ?'));
+            return $this->redirect(['controller' => 'schools', 'action' => 'index']);
+        }
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Subject id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $subject = $this->Subjects->get($id);
+        if ($this->Subjects->delete($subject)) {
+            $this->Flash->success(__('The subject has been deleted.'));
+        } else {
+            $this->Flash->error(__('The subject could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
 }

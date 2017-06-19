@@ -2,79 +2,87 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * Marks Controller
  *
  * @property \App\Model\Table\MarksTable $Marks
+ *
+ * @method \App\Model\Entity\Mark[] paginate($object = null, array $settings = [])
  */
-class MarksController extends ApiController
+class MarksController extends AppController
 {
-
-
-    public function find($type = "all", $render = "json"){
-        $this->apiSearch('Marks', $type, $render);
-    }
-
-
-    public function getMarks($render){
-        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
-        $tblBranches = TableRegistry::get('Branches');
-
-        $userId = $this->Auth->user('id');
-        if(in_array($render, ['xml', 'json', 'jsonp'])) {
-            if ($render == 'jsonp') {
-                $this->set(['_jsonp' => true]);
-                $render = 'json';
-            }
-        }else{
-            $render = 'json';
-        }
-
-        try{
-            $results = $tblBranches->find()
-                ->select(['Branches.name', 'Branches.img', 'marks_count'])
-                ->matching('SchoolClasses.Users', function(\Cake\ORM\Query $q) {
-                    return $q->where(['Users.id' => 3]);
-                });
-        }catch (\Exception $e){
-            $this->response->withStatus(500, 'Unable to find the marks with the current filter');
-        }
-
-        $this->RequestHandler->renderAs($this, $render);
-        $this->response->type('application/'.$render);
-        $this->set(['results' => $results->toArray(), '_serialize' => ['results']]);
-    }
-
 
     /**
      * Index method
      *
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Branches']
-        ];
-        $marks = $this->paginate($this->Marks);
 
-        $this->set(compact('marks'));
-        $this->set('_serialize', ['marks']);
+        $tblSchoolClasses = TableRegistry::get('SchoolClasses');
+        $tblSubjects = TableRegistry::get('Subjects');
+        $tblTerms = TableRegistry::get('Terms');
+        $tblAcademicyears = TableRegistry::get('Academicyears');
+        $tblEstablishments = TableRegistry::get('Establishments');
+
+       /* $schoolClasses = $tblSchoolClasses
+            ->find()
+            ->contain(['Subjects' => ['Marks', 'Terms' => 'Academicyears'], 'Establishments'])
+            ->where(['user_id' => $this->Auth->User('id')]);
+*/
+        $listsubjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses', 'Terms'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->combine('id', 'name', 'school_class.name')
+            ->toArray();
+
+     /*   $qryTerms = $tblSubjects
+            ->find()
+            ->contain([
+                'SchoolClasses',
+                'Terms',
+                'Terms.Academicyears'
+            ])
+            ->where([
+                'SchoolClasses.user_id' => $this->Auth->User('id')
+            ])->first();
+*/
+
+        $qry = $tblAcademicyears->find();
+        $acyears = $qry
+            ->contain(['Terms' => ['Subjects' => ['SchoolClasses'], 'Marks']])
+            ->where(['user_id' => $this->Auth->User('id')]);
+
+        $academicyears = $acyears->orderDesc('end_date')->extract(function ($entity) { return $entity->start_date->year." - ".$entity->end_date->year; })->toArray();
+
+        $establishments = $tblEstablishments
+            ->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray();
+
+
+      //  $academicyears = (new Collection($qryTerms['terms']))->combine('id', 'name', function ($entity) { return $entity->academicyear->start_date->year." - ".$entity->academicyear->end_date->year; });
+
+
+        $this->set(compact('listsubjects', 'acyears', 'academicyears', 'establishments'));
+        $this->set('_serialize', ['schoolClasses']);
     }
 
     /**
      * View method
      *
      * @param string|null $id Mark id.
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
         $mark = $this->Marks->get($id, [
-            'contain' => ['Branches']
+            'contain' => ['Subjects']
         ]);
 
         $this->set('mark', $mark);
@@ -84,10 +92,12 @@ class MarksController extends ApiController
     /**
      * Add method
      *
-     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
+        $tblSubjects = TableRegistry::get('Subjects');
+
         $mark = $this->Marks->newEntity();
         if ($this->request->is('post')) {
             $mark = $this->Marks->patchEntity($mark, $this->request->getData());
@@ -98,8 +108,41 @@ class MarksController extends ApiController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $branches = $this->Marks->Branches->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'branches'));
+        $listsubjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses', 'Terms'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->combine('id', 'name', 'school_class.name')
+            ->toArray();
+        $this->set(compact('mark', 'listsubjects'));
+        $this->set('_serialize', ['mark']);
+    }
+
+    /**
+     * bulkadd
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function bulkadd()
+    {
+        $tblSubjects = TableRegistry::get('Subjects');
+        $mark = $this->Marks->newEntity();
+        if ($this->request->is('post')) {
+            $mark = $this->Marks->patchEntity($mark, $this->request->getData());
+            if ($this->Marks->save($mark)) {
+                $this->Flash->success(__('The mark has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The mark could not be saved. Please, try again.'));
+        }
+        $subjects = $tblSubjects
+            ->find()
+            ->contain(['SchoolClasses', 'Terms'])
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->groupBy('school_class.name')
+            ->toArray();
+        $this->set(compact('mark', 'subjects'));
         $this->set('_serialize', ['mark']);
     }
 
@@ -107,7 +150,7 @@ class MarksController extends ApiController
      * Edit method
      *
      * @param string|null $id Mark id.
-     * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -124,8 +167,8 @@ class MarksController extends ApiController
             }
             $this->Flash->error(__('The mark could not be saved. Please, try again.'));
         }
-        $branches = $this->Marks->Branches->find('list', ['limit' => 200]);
-        $this->set(compact('mark', 'branches'));
+        $subjects = $this->Marks->Subjects->find('list', ['limit' => 200]);
+        $this->set(compact('mark', 'subjects'));
         $this->set('_serialize', ['mark']);
     }
 
@@ -133,7 +176,7 @@ class MarksController extends ApiController
      * Delete method
      *
      * @param string|null $id Mark id.
-     * @return \Cake\Network\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)

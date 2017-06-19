@@ -15,9 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Database\Type;
 use Cake\Event\Event;
-use Cake\I18n\I18n;
 use Cake\I18n\Number;
 
 /**
@@ -47,26 +45,6 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-        $this->loadComponent('Auth', [
-            'storage' => 'Memory',
-            'authenticate' => [
-                'Form' => [
-                    'fields' => [
-                        'username' => 'email',
-                    ]
-                ],
-                'ADmad/JwtAuth.Jwt' => [
-                    'parameter' => 'token',
-                    'userModel' => 'Users',
-                    'fields' => [
-                        'username' => 'id'
-                    ],
-                    'queryDatasource' => true
-                ]
-            ],
-            'unauthorizedRedirect' => false,
-            'checkAuthIn' => 'Controller.initialize'
-        ]);
         /*
         $this->loadComponent('Auth', [
             'authenticate' => [
@@ -104,11 +82,11 @@ class AppController extends Controller
             'flash' => [
                 'element' => 'warning'
             ]
-        ]);
-*/
+        ]);*/
+
         // Configuration I18N
         //I18n::locale(APP_DEFAULT_LOCALE);
-       // Type::build('datetime')->useLocaleParser()->setLocaleFormat(APP_ICU_DATE_FORMAT);
+        // Type::build('datetime')->useLocaleParser()->setLocaleFormat(APP_ICU_DATE_FORMAT);
 
         Number::config('fr-CH', \NumberFormatter::CURRENCY, [
             'before' => '',
@@ -129,7 +107,79 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
+        $this->loadComponent('TwoFactorAuth.Auth', [
+            'authenticate' => [
+                'TwoFactorAuth.Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password',
+                        'secret' => 'secret', // database field
+                        'remember' => 'remember' // checkbox form field name for "Trust this device" feature
+                    ],
+                    'remember' => true, // enable "Trust this device" feature
+                    'cookie' => [ // cookie settings for "Trust this device" feature
+                        'name' => 'TwoFactorAuth',
+                        'httpOnly' => true,
+                        'expires' => '+30 days'
+                    ]
+                ],
+            ],
+            'TwoFactorAuth' => [
+                'remember' => true, // enable "Trust this device" feature
+                'cookie' => [ // cookie settings for "Trust this device" feature
+                    'name' => 'TwoFactorAuth',
+                    'httpOnly' => true,
+                    'expires' => '+30 days'
+                ],
+                'verifyAction' => [
+                    'prefix' => false,
+                    'controller' => 'TwoFactorAuth',
+                    'action' => 'verify',
+                    'plugin' => 'TwoFactorAuth'
+                ]
+            ],
+            'loginAction' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Dashboard',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'prefix' => false,
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => false
+            ],
+            //'authError' => 'Vous n\'avez pas les autorisations nécéssaire pour accéder à cette page.',
+            'flash' => [
+                'element' => 'warning'
+            ]
+        ]);
     }
+
+    /**
+     * beforeFilter
+     *
+     * @param Event $event
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow('display');
+    }
+
     /**
      * Before render callback.
      *
@@ -138,29 +188,10 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if($this->request->is('ajax')){
-            $this->RequestHandler->renderAs($this, 'json');
-            $this->response->type('application/json');
-        }
-
-        if (!array_key_exists('_serialize', $this->viewVars) && in_array($this->response->type(), ['application/json', 'application/xml'])) {
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])
+        ) {
             $this->set('_serialize', true);
         }
-
-        /*$this->response->header('Access-Control-Allow-Origin', 'http://localhost:4200');
-        $this->response->header('Access-Control-Allow-Headers', 'origin, x-requested-with, content-type, Authorization');
-        $this->response->header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');*/
     }
-
-    public function beforeFilter(Event $event)
-    {
-        if($this->request->is("options")){
-            // Set the headers
-            $this->response->withHeader('Access-Control-Allow-Origin','*');
-            $this->response->withHeader('Access-Control-Allow-Methods','*');
-            $this->response->withHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
-        }
-        return parent::beforeFilter($event);
-    }
-
 }

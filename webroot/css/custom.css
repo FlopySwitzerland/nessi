@@ -1,0 +1,148 @@
+.green.darken-3 {
+    background-color: #1E824C !important;
+}
+
+.rating-system{
+    font-family: 'Material Icons';
+    letter-spacing: -3px;
+    font-size: 17px;
+    color: #f9a825;
+}
+
+.rating-1:after{
+    content: 'star star_border star_border star_border star_border';
+}
+.rating-2:after{
+    content: 'star star star_border star_border star_border';
+}
+.rating-3:after{
+    content: 'star star star star_border star_border';
+}
+.rating-4:after{
+    content: 'star star star star star_border';
+}
+.rating-5:after{
+    content: 'star star star star star';
+}
+
+.valign-sup{
+    vertical-align: super;
+}
+.f-s-42{
+    font-size: 42px;
+}
+
+
+    table.vertical-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: table;
+        position: relative;
+        /* sort out borders */
+    }
+    table.vertical-table td:empty:before {
+        content: '\00a0';
+    }
+    table.vertical-table th,
+    table.vertical-table td {
+        margin: 0;
+        vertical-align: top;
+    }
+    table.vertical-table th {
+        text-align: left;
+    }
+    table.vertical-table thead {
+        display: block;
+        float: left;
+    }
+    table.vertical-table thead tr {
+        display: block;
+        padding: 0 10px 0 0;
+    }
+    table.vertical-table thead tr th::before {
+        content: "\00a0";
+    }
+    table.vertical-table tbody {
+        display: block;
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table.vertical-table tbody tr {
+        display: inline-block;
+        vertical-align: top;
+    }
+    table.vertical-table th {
+        display: block;
+        text-align: right;
+    }
+    table.vertical-table td {
+        display: block;
+        min-height: 1.25em;
+        text-align: left;
+    }
+    table.vertical-table tr {
+        padding: 0 10px;
+    }
+    table.vertical-table thead {
+        border: 0;
+        border-right: 1px solid #d0d0d0;
+    }
+    table.vertical-table.bordered th {
+        border-bottom: 0;
+        border-left: 0;
+    }
+    table.vertical-table.bordered td {
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+    }
+    table.vertical-table.bordered tr {
+        border: 0;
+    }
+    table.vertical-table.bordered tbody tr {
+        border-right: 1px solid #d0d0d0;
+    }
+
+label{
+    width: 100%;
+}
+
+.secondary-content{
+    color: #0277bb !important;
+}
+
+.message{
+    height: 60px;
+    line-height: 60px;
+    padding: 0 30px;
+}
+.message.error{
+    color: #fff;
+    background-color: #f44336;
+}
+.message.error{
+    color: #fff;
+    background-color: #f44336;
+}
+.message.success{
+    color: #fff;
+    background-color: #1E824C;
+}
+.message.warning{
+    color: #fff;
+    background-color: #ff9800;
+}
+.message.info{
+    color: #fff;
+    background-color: #03a9f4;
+}
+
+.subjectname{
+    max-width: 25%;
+}
+.select-dropdown label{
+    width:auto !important;
+}
